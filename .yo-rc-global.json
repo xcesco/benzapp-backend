@@ -1,0 +1,8 @@
+{
+  "generator-jhipster:7.0.0-beta.1": {
+    "promptValues": {
+      "packageName": "it.insiel.innovazione.poc.benzapp",
+      "nativeLanguage": "it"
+    }
+  }
+}

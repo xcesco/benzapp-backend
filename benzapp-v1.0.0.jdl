@@ -1,0 +1,84 @@
+// Benzapp
+application {
+  config {
+    baseName benzapp,
+    applicationType monolith,
+    packageName it.insiel.innovazione.poc,
+    authenticationType jwt,
+    prodDatabaseType postgresql,
+    clientFramework angular
+  }
+  entities *
+}
+
+entity Gestore(gestori) {
+	provincia String,
+    comune String
+    indirizzo String,
+    longitudine Float,
+    latitudine Float,
+    marchio String
+}
+
+entity Cittadino(cittadini) {
+	nome String,
+    cognome String,
+    codiceFiscale String
+}
+
+entity Fascia {
+   descrizione String, // area1 o area2
+   scontoBenzina Float, // centesimi per litro
+   scontoGasolio Float // centesimi per litro
+}
+
+entity Tessera(tessere) {
+    codice String required,
+    dataEmissione ZonedDateTime required,
+    immagine ImageBlob,
+	targa String required,
+	veicolo TipoVeicolo required,
+    carburante TipoCarburante required
+}
+
+entity Rifornimento(rifornimenti) {
+	data ZonedDateTime required,
+    progressivo Integer required,
+    litriErogati Float required,
+    sconto Float required,
+    prezzoAlLitro Float required,
+    tipoCarburante TipoCarburante required
+}
+
+enum TipoVeicolo {
+    CICLOMOTORE, MOTOVEICOLO, AUTOVEICOLO
+}
+
+enum TipoCarburante {
+    BENZINA, DIESEL
+}
+
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+    Fascia to Tessera,
+    Cittadino to Tessera,
+    Gestore to Rifornimento,
+    Tessera to Rifornimento,
+    Sconto to Rifornimento
+}
+
+
+// Set pagination options
+//paginate JobHistory, Employee with infinite-scroll
+paginate Gestore, Sconto, Cittadino, Tessera with pagination
+
+// Use Data Transfert Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+//rvice all with serviceImpl except Employee, Job
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
