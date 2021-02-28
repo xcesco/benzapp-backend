@@ -48,6 +48,15 @@ public class CacheConfiguration {
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.User.class.getName());
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Authority.class.getName());
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.User.class.getName() + ".authorities");
+            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Gestore.class.getName());
+            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Gestore.class.getName() + ".rifornimentos");
+            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Cittadino.class.getName());
+            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Cittadino.class.getName() + ".tesseras");
+            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Fascia.class.getName());
+            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Fascia.class.getName() + ".tesseras");
+            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Tessera.class.getName());
+            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Tessera.class.getName() + ".rifornimentos");
+            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Rifornimento.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

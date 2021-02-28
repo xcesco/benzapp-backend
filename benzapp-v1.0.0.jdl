@@ -1,5 +1,10 @@
 // Benzapp
 application {
+  config {
+    baseName benzapp,
+    applicationType monolith,
+    packageName it.insiel.innovazione.poc.benzapp
+  }
   entities *
 }
 
