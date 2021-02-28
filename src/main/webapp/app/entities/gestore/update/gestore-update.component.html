@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-gestore-heading" data-cy="GestoreCreateUpdateHeading" jhiTranslate="benzappApp.gestore.home.createOrEditLabel">
+        Create or edit a Gestore
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.gestore.provincia" for="field_provincia">Provincia</label>
+          <input type="text" class="form-control" name="provincia" id="field_provincia" data-cy="provincia" formControlName="provincia" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.gestore.comune" for="field_comune">Comune</label>
+          <input type="text" class="form-control" name="comune" id="field_comune" data-cy="comune" formControlName="comune" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.gestore.indirizzo" for="field_indirizzo">Indirizzo</label>
+          <input type="text" class="form-control" name="indirizzo" id="field_indirizzo" data-cy="indirizzo" formControlName="indirizzo" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.gestore.longitudine" for="field_longitudine">Longitudine</label>
+          <input
+            type="number"
+            class="form-control"
+            name="longitudine"
+            id="field_longitudine"
+            data-cy="longitudine"
+            formControlName="longitudine"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.gestore.latitudine" for="field_latitudine">Latitudine</label>
+          <input
+            type="number"
+            class="form-control"
+            name="latitudine"
+            id="field_latitudine"
+            data-cy="latitudine"
+            formControlName="latitudine"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.gestore.marchio" for="field_marchio">Marchio</label>
+          <input type="text" class="form-control" name="marchio" id="field_marchio" data-cy="marchio" formControlName="marchio" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

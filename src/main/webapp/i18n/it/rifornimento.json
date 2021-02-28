@@ -1,0 +1,31 @@
+{
+  "benzappApp": {
+    "rifornimento": {
+      "home": {
+        "title": "Rifornimentos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Rifornimento",
+        "createOrEditLabel": "Genera o modifica un Rifornimento",
+        "notFound": "No Rifornimentos found"
+      },
+      "created": "&Egrave; stato generato un nuovo Rifornimento con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Rifornimento identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Rifornimento con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Rifornimento {{ id }}?"
+      },
+      "detail": {
+        "title": "Rifornimento"
+      },
+      "id": "ID",
+      "data": "Data",
+      "progressivo": "Progressivo",
+      "litriErogati": "Litri Erogati",
+      "sconto": "Sconto",
+      "prezzoAlLitro": "Prezzo Al Litro",
+      "tipoCarburante": "Tipo Carburante",
+      "gestore": "Gestore",
+      "tessera": "Tessera"
+    }
+  }
+}

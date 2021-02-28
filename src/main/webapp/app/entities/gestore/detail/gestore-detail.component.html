@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="gestore">
+      <h2 data-cy="gestoreDetailsHeading"><span jhiTranslate="benzappApp.gestore.detail.title">Gestore</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ gestore.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.gestore.provincia">Provincia</span></dt>
+        <dd>
+          <span>{{ gestore.provincia }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.gestore.comune">Comune</span></dt>
+        <dd>
+          <span>{{ gestore.comune }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.gestore.indirizzo">Indirizzo</span></dt>
+        <dd>
+          <span>{{ gestore.indirizzo }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.gestore.longitudine">Longitudine</span></dt>
+        <dd>
+          <span>{{ gestore.longitudine }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.gestore.latitudine">Latitudine</span></dt>
+        <dd>
+          <span>{{ gestore.latitudine }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.gestore.marchio">Marchio</span></dt>
+        <dd>
+          <span>{{ gestore.marchio }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/gestore', gestore.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

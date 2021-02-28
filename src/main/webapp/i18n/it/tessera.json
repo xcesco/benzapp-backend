@@ -1,0 +1,32 @@
+{
+  "benzappApp": {
+    "tessera": {
+      "home": {
+        "title": "Tesseras",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Tessera",
+        "createOrEditLabel": "Genera o modifica un Tessera",
+        "notFound": "No Tesseras found"
+      },
+      "created": "&Egrave; stato generato un nuovo Tessera con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Tessera identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Tessera con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Tessera {{ id }}?"
+      },
+      "detail": {
+        "title": "Tessera"
+      },
+      "id": "ID",
+      "codice": "Codice",
+      "dataEmissione": "Data Emissione",
+      "immagine": "Immagine",
+      "targa": "Targa",
+      "veicolo": "Veicolo",
+      "carburante": "Carburante",
+      "rifornimento": "Rifornimento",
+      "fascia": "Fascia",
+      "cittadino": "Cittadino"
+    }
+  }
+}

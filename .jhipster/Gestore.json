@@ -1,0 +1,47 @@
+{
+  "name": "Gestore",
+  "fields": [
+    {
+      "fieldName": "provincia",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "comune",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "indirizzo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "longitudine",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "latitudine",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "marchio",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "rifornimento",
+      "otherEntityRelationshipName": "gestore",
+      "relationshipName": "rifornimento"
+    }
+  ],
+  "entityTableName": "gestori",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["benzapp"],
+  "changelogDate": "20210228213757"
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Cittadino",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cognome",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "codiceFiscale",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "tessera",
+      "otherEntityRelationshipName": "cittadino",
+      "relationshipName": "tessera"
+    }
+  ],
+  "entityTableName": "cittadini",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["benzapp"],
+  "changelogDate": "20210228213857"
+}

@@ -1,0 +1,73 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="tessera">
+      <h2 data-cy="tesseraDetailsHeading"><span jhiTranslate="benzappApp.tessera.detail.title">Tessera</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ tessera.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.tessera.codice">Codice</span></dt>
+        <dd>
+          <span>{{ tessera.codice }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.tessera.dataEmissione">Data Emissione</span></dt>
+        <dd>
+          <span>{{ tessera.dataEmissione | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.tessera.immagine">Immagine</span></dt>
+        <dd>
+          <div *ngIf="tessera.immagine">
+            <a (click)="openFile(tessera.immagine, tessera.immagineContentType)">
+              <img
+                [src]="'data:' + tessera.immagineContentType + ';base64,' + tessera.immagine"
+                style="max-width: 100%"
+                alt="tessera image"
+              />
+            </a>
+            {{ tessera.immagineContentType }}, {{ byteSize(tessera.immagine) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.tessera.targa">Targa</span></dt>
+        <dd>
+          <span>{{ tessera.targa }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.tessera.veicolo">Veicolo</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'benzappApp.TipoVeicolo.' + tessera.veicolo }}">{{ tessera.veicolo }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.tessera.carburante">Carburante</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'benzappApp.TipoCarburante.' + tessera.carburante }}">{{ tessera.carburante }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.tessera.fascia">Fascia</span></dt>
+        <dd>
+          <div *ngIf="tessera.fascia">
+            <a [routerLink]="['/fascia', tessera.fascia?.id, 'view']">{{ tessera.fascia?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.tessera.cittadino">Cittadino</span></dt>
+        <dd>
+          <div *ngIf="tessera.cittadino">
+            <a [routerLink]="['/cittadino', tessera.cittadino?.id, 'view']">{{ tessera.cittadino?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/tessera', tessera.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

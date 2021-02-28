@@ -1,0 +1,10 @@
+{
+  "benzappApp": {
+    "TipoVeicolo": {
+      "null": "",
+      "CICLOMOTORE": "CICLOMOTORE",
+      "MOTOVEICOLO": "MOTOVEICOLO",
+      "AUTOVEICOLO": "AUTOVEICOLO"
+    }
+  }
+}

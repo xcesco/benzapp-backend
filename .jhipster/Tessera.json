@@ -1,0 +1,67 @@
+{
+  "name": "Tessera",
+  "fields": [
+    {
+      "fieldName": "codice",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dataEmissione",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "immagine",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "targa",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "veicolo",
+      "fieldType": "TipoVeicolo",
+      "fieldValues": "CICLOMOTORE,MOTOVEICOLO,AUTOVEICOLO",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "carburante",
+      "fieldType": "TipoCarburante",
+      "fieldValues": "BENZINA,DIESEL",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "rifornimento",
+      "otherEntityRelationshipName": "tessera",
+      "relationshipName": "rifornimento"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "fascia",
+      "otherEntityRelationshipName": "tessera",
+      "relationshipName": "fascia"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cittadino",
+      "otherEntityRelationshipName": "tessera",
+      "relationshipName": "cittadino"
+    }
+  ],
+  "entityTableName": "tessere",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["benzapp"],
+  "changelogDate": "20210228214057"
+}

@@ -1,0 +1,30 @@
+{
+  "benzappApp": {
+    "gestore": {
+      "home": {
+        "title": "Gestores",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Gestore",
+        "createOrEditLabel": "Genera o modifica un Gestore",
+        "notFound": "No Gestores found"
+      },
+      "created": "&Egrave; stato generato un nuovo Gestore con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Gestore identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Gestore con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Gestore {{ id }}?"
+      },
+      "detail": {
+        "title": "Gestore"
+      },
+      "id": "ID",
+      "provincia": "Provincia",
+      "comune": "Comune",
+      "indirizzo": "Indirizzo",
+      "longitudine": "Longitudine",
+      "latitudine": "Latitudine",
+      "marchio": "Marchio",
+      "rifornimento": "Rifornimento"
+    }
+  }
+}

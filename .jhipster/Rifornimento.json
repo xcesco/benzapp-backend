@@ -1,0 +1,60 @@
+{
+  "name": "Rifornimento",
+  "fields": [
+    {
+      "fieldName": "data",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "progressivo",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "litriErogati",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sconto",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "prezzoAlLitro",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tipoCarburante",
+      "fieldType": "TipoCarburante",
+      "fieldValues": "BENZINA,DIESEL",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "gestore",
+      "otherEntityRelationshipName": "rifornimento",
+      "relationshipName": "gestore"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "tessera",
+      "otherEntityRelationshipName": "rifornimento",
+      "relationshipName": "tessera"
+    }
+  ],
+  "entityTableName": "rifornimenti",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["benzapp"],
+  "changelogDate": "20210228214157"
+}

@@ -1,0 +1,27 @@
+{
+  "benzappApp": {
+    "fascia": {
+      "home": {
+        "title": "Fascias",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Fascia",
+        "createOrEditLabel": "Genera o modifica un Fascia",
+        "notFound": "No Fascias found"
+      },
+      "created": "&Egrave; stato generato un nuovo Fascia con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Fascia identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Fascia con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Fascia {{ id }}?"
+      },
+      "detail": {
+        "title": "Fascia"
+      },
+      "id": "ID",
+      "descrizione": "Descrizione",
+      "scontoBenzina": "Sconto Benzina",
+      "scontoGasolio": "Sconto Gasolio",
+      "tessera": "Tessera"
+    }
+  }
+}

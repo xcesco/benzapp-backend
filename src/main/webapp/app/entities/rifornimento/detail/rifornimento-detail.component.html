@@ -1,0 +1,64 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="rifornimento">
+      <h2 data-cy="rifornimentoDetailsHeading"><span jhiTranslate="benzappApp.rifornimento.detail.title">Rifornimento</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ rifornimento.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.rifornimento.data">Data</span></dt>
+        <dd>
+          <span>{{ rifornimento.data | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.rifornimento.progressivo">Progressivo</span></dt>
+        <dd>
+          <span>{{ rifornimento.progressivo }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.rifornimento.litriErogati">Litri Erogati</span></dt>
+        <dd>
+          <span>{{ rifornimento.litriErogati }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.rifornimento.sconto">Sconto</span></dt>
+        <dd>
+          <span>{{ rifornimento.sconto }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.rifornimento.prezzoAlLitro">Prezzo Al Litro</span></dt>
+        <dd>
+          <span>{{ rifornimento.prezzoAlLitro }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.rifornimento.tipoCarburante">Tipo Carburante</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'benzappApp.TipoCarburante.' + rifornimento.tipoCarburante }}">{{ rifornimento.tipoCarburante }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.rifornimento.gestore">Gestore</span></dt>
+        <dd>
+          <div *ngIf="rifornimento.gestore">
+            <a [routerLink]="['/gestore', rifornimento.gestore?.id, 'view']">{{ rifornimento.gestore?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.rifornimento.tessera">Tessera</span></dt>
+        <dd>
+          <div *ngIf="rifornimento.tessera">
+            <a [routerLink]="['/tessera', rifornimento.tessera?.id, 'view']">{{ rifornimento.tessera?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/rifornimento', rifornimento.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

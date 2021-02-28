@@ -1,0 +1,9 @@
+{
+  "benzappApp": {
+    "TipoCarburante": {
+      "null": "",
+      "BENZINA": "BENZINA",
+      "DIESEL": "DIESEL"
+    }
+  }
+}

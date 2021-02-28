@@ -1,0 +1,192 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-tessera-heading" data-cy="TesseraCreateUpdateHeading" jhiTranslate="benzappApp.tessera.home.createOrEditLabel">
+        Create or edit a Tessera
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.tessera.codice" for="field_codice">Codice</label>
+          <input type="text" class="form-control" name="codice" id="field_codice" data-cy="codice" formControlName="codice" />
+          <div *ngIf="editForm.get('codice')!.invalid && (editForm.get('codice')!.dirty || editForm.get('codice')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('codice')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.tessera.dataEmissione" for="field_dataEmissione">Data Emissione</label>
+          <div class="d-flex">
+            <input
+              id="field_dataEmissione"
+              data-cy="dataEmissione"
+              type="datetime-local"
+              class="form-control"
+              name="dataEmissione"
+              formControlName="dataEmissione"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="
+              editForm.get('dataEmissione')!.invalid && (editForm.get('dataEmissione')!.dirty || editForm.get('dataEmissione')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dataEmissione')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('dataEmissione')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.tessera.immagine" for="field_immagine">Immagine</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('immagineContentType')!.value + ';base64,' + editForm.get('immagine')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('immagine')!.value"
+              alt="tessera image"
+            />
+            <div *ngIf="editForm.get('immagine')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left"
+                >{{ editForm.get('immagineContentType')!.value }}, {{ byteSize(editForm.get('immagine')!.value) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('immagine', 'immagineContentType', 'file_immagine')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_immagine"
+              data-cy="immagine"
+              (change)="setFileData($event, 'immagine', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="immagine" id="field_immagine" data-cy="immagine" formControlName="immagine" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="immagineContentType"
+            id="field_immagineContentType"
+            formControlName="immagineContentType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.tessera.targa" for="field_targa">Targa</label>
+          <input type="text" class="form-control" name="targa" id="field_targa" data-cy="targa" formControlName="targa" />
+          <div *ngIf="editForm.get('targa')!.invalid && (editForm.get('targa')!.dirty || editForm.get('targa')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('targa')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.tessera.veicolo" for="field_veicolo">Veicolo</label>
+          <select class="form-control" name="veicolo" formControlName="veicolo" id="field_veicolo" data-cy="veicolo">
+            <option [ngValue]="null">{{ 'benzappApp.TipoVeicolo.null' | translate }}</option>
+            <option value="CICLOMOTORE">{{ 'benzappApp.TipoVeicolo.CICLOMOTORE' | translate }}</option>
+            <option value="MOTOVEICOLO">{{ 'benzappApp.TipoVeicolo.MOTOVEICOLO' | translate }}</option>
+            <option value="AUTOVEICOLO">{{ 'benzappApp.TipoVeicolo.AUTOVEICOLO' | translate }}</option>
+          </select>
+          <div *ngIf="editForm.get('veicolo')!.invalid && (editForm.get('veicolo')!.dirty || editForm.get('veicolo')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('veicolo')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.tessera.carburante" for="field_carburante">Carburante</label>
+          <select class="form-control" name="carburante" formControlName="carburante" id="field_carburante" data-cy="carburante">
+            <option [ngValue]="null">{{ 'benzappApp.TipoCarburante.null' | translate }}</option>
+            <option value="BENZINA">{{ 'benzappApp.TipoCarburante.BENZINA' | translate }}</option>
+            <option value="DIESEL">{{ 'benzappApp.TipoCarburante.DIESEL' | translate }}</option>
+          </select>
+          <div *ngIf="editForm.get('carburante')!.invalid && (editForm.get('carburante')!.dirty || editForm.get('carburante')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('carburante')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.tessera.fascia" for="field_fascia">Fascia</label>
+          <select class="form-control" id="field_fascia" data-cy="fascia" name="fascia" formControlName="fascia">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="fasciaOption.id === editForm.get('fascia')!.value?.id ? editForm.get('fascia')!.value : fasciaOption"
+              *ngFor="let fasciaOption of fascias; trackBy: trackFasciaById"
+            >
+              {{ fasciaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.tessera.cittadino" for="field_cittadino">Cittadino</label>
+          <select class="form-control" id="field_cittadino" data-cy="cittadino" name="cittadino" formControlName="cittadino">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="cittadinoOption.id === editForm.get('cittadino')!.value?.id ? editForm.get('cittadino')!.value : cittadinoOption"
+              *ngFor="let cittadinoOption of cittadinos; trackBy: trackCittadinoById"
+            >
+              {{ cittadinoOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

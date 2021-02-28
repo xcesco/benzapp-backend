@@ -1,0 +1,35 @@
+{
+  "name": "Fascia",
+  "fields": [
+    {
+      "fieldName": "descrizione",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "scontoBenzina",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "scontoGasolio",
+      "fieldType": "Float"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "tessera",
+      "otherEntityRelationshipName": "fascia",
+      "relationshipName": "tessera"
+    }
+  ],
+  "entityTableName": "fascia",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["benzapp"],
+  "changelogDate": "20210228213957"
+}

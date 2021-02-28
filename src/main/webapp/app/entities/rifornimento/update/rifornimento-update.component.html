@@ -1,0 +1,228 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-rifornimento-heading"
+        data-cy="RifornimentoCreateUpdateHeading"
+        jhiTranslate="benzappApp.rifornimento.home.createOrEditLabel"
+      >
+        Create or edit a Rifornimento
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.data" for="field_data">Data</label>
+          <div class="d-flex">
+            <input
+              id="field_data"
+              data-cy="data"
+              type="datetime-local"
+              class="form-control"
+              name="data"
+              formControlName="data"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('data')!.invalid && (editForm.get('data')!.dirty || editForm.get('data')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('data')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('data')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.progressivo" for="field_progressivo">Progressivo</label>
+          <input
+            type="number"
+            class="form-control"
+            name="progressivo"
+            id="field_progressivo"
+            data-cy="progressivo"
+            formControlName="progressivo"
+          />
+          <div *ngIf="editForm.get('progressivo')!.invalid && (editForm.get('progressivo')!.dirty || editForm.get('progressivo')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('progressivo')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('progressivo')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.litriErogati" for="field_litriErogati"
+            >Litri Erogati</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="litriErogati"
+            id="field_litriErogati"
+            data-cy="litriErogati"
+            formControlName="litriErogati"
+          />
+          <div
+            *ngIf="editForm.get('litriErogati')!.invalid && (editForm.get('litriErogati')!.dirty || editForm.get('litriErogati')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('litriErogati')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('litriErogati')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.sconto" for="field_sconto">Sconto</label>
+          <input type="number" class="form-control" name="sconto" id="field_sconto" data-cy="sconto" formControlName="sconto" />
+          <div *ngIf="editForm.get('sconto')!.invalid && (editForm.get('sconto')!.dirty || editForm.get('sconto')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('sconto')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('sconto')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.prezzoAlLitro" for="field_prezzoAlLitro"
+            >Prezzo Al Litro</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="prezzoAlLitro"
+            id="field_prezzoAlLitro"
+            data-cy="prezzoAlLitro"
+            formControlName="prezzoAlLitro"
+          />
+          <div
+            *ngIf="
+              editForm.get('prezzoAlLitro')!.invalid && (editForm.get('prezzoAlLitro')!.dirty || editForm.get('prezzoAlLitro')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('prezzoAlLitro')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('prezzoAlLitro')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.tipoCarburante" for="field_tipoCarburante"
+            >Tipo Carburante</label
+          >
+          <select
+            class="form-control"
+            name="tipoCarburante"
+            formControlName="tipoCarburante"
+            id="field_tipoCarburante"
+            data-cy="tipoCarburante"
+          >
+            <option [ngValue]="null">{{ 'benzappApp.TipoCarburante.null' | translate }}</option>
+            <option value="BENZINA">{{ 'benzappApp.TipoCarburante.BENZINA' | translate }}</option>
+            <option value="DIESEL">{{ 'benzappApp.TipoCarburante.DIESEL' | translate }}</option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('tipoCarburante')!.invalid && (editForm.get('tipoCarburante')!.dirty || editForm.get('tipoCarburante')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tipoCarburante')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.gestore" for="field_gestore">Gestore</label>
+          <select class="form-control" id="field_gestore" data-cy="gestore" name="gestore" formControlName="gestore">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="gestoreOption.id === editForm.get('gestore')!.value?.id ? editForm.get('gestore')!.value : gestoreOption"
+              *ngFor="let gestoreOption of gestores; trackBy: trackGestoreById"
+            >
+              {{ gestoreOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.tessera" for="field_tessera">Tessera</label>
+          <select class="form-control" id="field_tessera" data-cy="tessera" name="tessera" formControlName="tessera">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="tesseraOption.id === editForm.get('tessera')!.value?.id ? editForm.get('tessera')!.value : tesseraOption"
+              *ngFor="let tesseraOption of tesseras; trackBy: trackTesseraById"
+            >
+              {{ tesseraOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="fascia">
+      <h2 data-cy="fasciaDetailsHeading"><span jhiTranslate="benzappApp.fascia.detail.title">Fascia</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ fascia.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.fascia.descrizione">Descrizione</span></dt>
+        <dd>
+          <span>{{ fascia.descrizione }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.fascia.scontoBenzina">Sconto Benzina</span></dt>
+        <dd>
+          <span>{{ fascia.scontoBenzina }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.fascia.scontoGasolio">Sconto Gasolio</span></dt>
+        <dd>
+          <span>{{ fascia.scontoGasolio }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/fascia', fascia.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,204 @@
+package it.insiel.innovazione.poc.benzapp.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+/**
+ * A Gestore.
+ */
+@Entity
+@Table(name = "gestori")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class Gestore implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
+
+    @Column(name = "provincia")
+    private String provincia;
+
+    @Column(name = "comune")
+    private String comune;
+
+    @Column(name = "indirizzo")
+    private String indirizzo;
+
+    @Column(name = "longitudine")
+    private Float longitudine;
+
+    @Column(name = "latitudine")
+    private Float latitudine;
+
+    @Column(name = "marchio")
+    private String marchio;
+
+    @OneToMany(mappedBy = "gestore")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "gestore", "tessera" }, allowSetters = true)
+    private Set<Rifornimento> rifornimentos = new HashSet<>();
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Gestore id(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getProvincia() {
+        return this.provincia;
+    }
+
+    public Gestore provincia(String provincia) {
+        this.provincia = provincia;
+        return this;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getComune() {
+        return this.comune;
+    }
+
+    public Gestore comune(String comune) {
+        this.comune = comune;
+        return this;
+    }
+
+    public void setComune(String comune) {
+        this.comune = comune;
+    }
+
+    public String getIndirizzo() {
+        return this.indirizzo;
+    }
+
+    public Gestore indirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+        return this;
+    }
+
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+
+    public Float getLongitudine() {
+        return this.longitudine;
+    }
+
+    public Gestore longitudine(Float longitudine) {
+        this.longitudine = longitudine;
+        return this;
+    }
+
+    public void setLongitudine(Float longitudine) {
+        this.longitudine = longitudine;
+    }
+
+    public Float getLatitudine() {
+        return this.latitudine;
+    }
+
+    public Gestore latitudine(Float latitudine) {
+        this.latitudine = latitudine;
+        return this;
+    }
+
+    public void setLatitudine(Float latitudine) {
+        this.latitudine = latitudine;
+    }
+
+    public String getMarchio() {
+        return this.marchio;
+    }
+
+    public Gestore marchio(String marchio) {
+        this.marchio = marchio;
+        return this;
+    }
+
+    public void setMarchio(String marchio) {
+        this.marchio = marchio;
+    }
+
+    public Set<Rifornimento> getRifornimentos() {
+        return this.rifornimentos;
+    }
+
+    public Gestore rifornimentos(Set<Rifornimento> rifornimentos) {
+        this.setRifornimentos(rifornimentos);
+        return this;
+    }
+
+    public Gestore addRifornimento(Rifornimento rifornimento) {
+        this.rifornimentos.add(rifornimento);
+        rifornimento.setGestore(this);
+        return this;
+    }
+
+    public Gestore removeRifornimento(Rifornimento rifornimento) {
+        this.rifornimentos.remove(rifornimento);
+        rifornimento.setGestore(null);
+        return this;
+    }
+
+    public void setRifornimentos(Set<Rifornimento> rifornimentos) {
+        if (this.rifornimentos != null) {
+            this.rifornimentos.forEach(i -> i.setGestore(null));
+        }
+        if (rifornimentos != null) {
+            rifornimentos.forEach(i -> i.setGestore(this));
+        }
+        this.rifornimentos = rifornimentos;
+    }
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Gestore)) {
+            return false;
+        }
+        return id != null && id.equals(((Gestore) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
+    }
+
+    // prettier-ignore
+    @Override
+    public String toString() {
+        return "Gestore{" +
+            "id=" + getId() +
+            ", provincia='" + getProvincia() + "'" +
+            ", comune='" + getComune() + "'" +
+            ", indirizzo='" + getIndirizzo() + "'" +
+            ", longitudine=" + getLongitudine() +
+            ", latitudine=" + getLatitudine() +
+            ", marchio='" + getMarchio() + "'" +
+            "}";
+    }
+}
