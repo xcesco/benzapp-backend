@@ -8,8 +8,8 @@ services:
       - SPRING_PROFILES_ACTIVE=prod,api-docs
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
 
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://benzapp-postgresql:5432/Benzapp
-      - SPRING_LIQUIBASE_URL=jdbc:postgresql://benzapp-postgresql:5432/Benzapp
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://benzapp-postgresql:5432/benzapp
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://benzapp-postgresql:5432/benzapp
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
@@ -18,9 +18,9 @@ services:
   benzapp-postgresql:
     image: postgres:13.1
     # volumes:
-    #     - ~/volumes/jhipster/Benzapp/postgresql/:/var/lib/postgresql/data/
+    #     - ~/volumes/jhipster/benzapp/postgresql/:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=Benzapp
+      - POSTGRES_USER=benzapp
       - POSTGRES_PASSWORD=
       - POSTGRES_HOST_AUTH_METHOD=trust
     # If you want to expose these ports outside your dev PC,

@@ -1,19 +1,11 @@
 // Benzapp
 application {
-  config {
-    baseName benzapp,
-    applicationType monolith,
-    packageName it.insiel.innovazione.poc,
-    authenticationType jwt,
-    prodDatabaseType postgresql,
-    clientFramework angular
-  }
   entities *
 }
 
 entity Gestore(gestori) {
 	provincia String,
-    comune String
+    comune String,
     indirizzo String,
     longitudine Float,
     latitudine Float,
@@ -36,18 +28,18 @@ entity Tessera(tessere) {
     codice String required,
     dataEmissione ZonedDateTime required,
     immagine ImageBlob,
-	targa String required,
-	veicolo TipoVeicolo required,
+	  targa String required,
+	  veicolo TipoVeicolo required,
     carburante TipoCarburante required
 }
 
 entity Rifornimento(rifornimenti) {
 	data ZonedDateTime required,
-    progressivo Integer required,
-    litriErogati Float required,
-    sconto Float required,
-    prezzoAlLitro Float required,
-    tipoCarburante TipoCarburante required
+  progressivo Integer required,
+  litriErogati Float required,
+  sconto Float required,
+  prezzoAlLitro Float required,
+  tipoCarburante TipoCarburante required
 }
 
 enum TipoVeicolo {
@@ -64,14 +56,13 @@ relationship OneToMany {
     Fascia to Tessera,
     Cittadino to Tessera,
     Gestore to Rifornimento,
-    Tessera to Rifornimento,
-    Sconto to Rifornimento
+    Tessera to Rifornimento
 }
 
 
 // Set pagination options
 //paginate JobHistory, Employee with infinite-scroll
-paginate Gestore, Sconto, Cittadino, Tessera with pagination
+paginate Gestore, Cittadino, Fascia, Tessera, Rifornimento with pagination
 
 // Use Data Transfert Objects (DTO)
 // dto * with mapstruct

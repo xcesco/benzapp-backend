@@ -3,7 +3,7 @@
     "blueprints": [],
     "otherModules": [],
     "applicationType": "monolith",
-    "baseName": "Benzapp",
+    "baseName": "benzapp",
     "jhipsterVersion": "7.0.0-beta.1",
     "skipClient": false,
     "skipServer": false,
@@ -15,7 +15,7 @@
     "dtoSuffix": "DTO",
     "testFrameworks": ["cucumber"],
     "pages": [],
-    "creationTimestamp": 1614545392108,
+    "creationTimestamp": 1614548217890,
     "promptValues": {
       "packageName": "it.insiel.innovazione.poc.benzapp",
       "nativeLanguage": "it"
@@ -28,7 +28,7 @@
     "cacheProvider": "ehcache",
     "enableHibernateCache": true,
     "databaseType": "sql",
-    "devDatabaseType": "h2Memory",
+    "devDatabaseType": "h2Disk",
     "prodDatabaseType": "postgresql",
     "buildTool": "maven",
     "serverSideOptions": ["enableSwaggerCodegen:true"],
@@ -43,7 +43,7 @@
     "enableTranslation": true,
     "nativeLanguage": "it",
     "packageFolder": "it/insiel/innovazione/poc/benzapp",
-    "jwtSecretKey": "MTY2ZTA3NDg5OTQzOWJkNjVhYzU5ZDJhMmE5M2RjMDAwMTRmYTg1ODQ3MGZiZGFmYTk2OTUwYzkxOGMzZTlhZjc0YzQwOWI3NGY2YWFlYzgwNTliYWUwYzM2YWViNzY4ZjUxOGQxN2UyZWI4YmFhOGRkNzcyMmRmMGUxNzk3MmU=",
+    "jwtSecretKey": "MmQ3OTk0N2VlOWY2Y2NhNjI0ZGExMGQ5YWFkZjZhM2Q5NmEyZmJhMmNhZTczMzJlNGRmYjJkODgwZGQwZTQ3MzQ2ZTU2Y2JkODQ4MGY2ZmU4YWZmZmQzYzAwYmEwNGJhYThkZmNmM2RmMjM2NzNkZGZkZDQyN2JiMzBjY2JhZTA=",
     "clientPackageManager": "npm",
     "languages": ["it"]
   }

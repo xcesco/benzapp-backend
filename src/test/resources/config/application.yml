@@ -18,7 +18,7 @@ spring:
     # Uncomment the following line to enable tests against production database type rather than H2, using Testcontainers
     #active: testcontainers
   application:
-    name: Benzapp
+    name: benzapp
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:h2:mem:benzapp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
@@ -97,7 +97,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: MTY2ZTA3NDg5OTQzOWJkNjVhYzU5ZDJhMmE5M2RjMDAwMTRmYTg1ODQ3MGZiZGFmYTk2OTUwYzkxOGMzZTlhZjc0YzQwOWI3NGY2YWFlYzgwNTliYWUwYzM2YWViNzY4ZjUxOGQxN2UyZWI4YmFhOGRkNzcyMmRmMGUxNzk3MmU=
+        base64-secret: MmQ3OTk0N2VlOWY2Y2NhNjI0ZGExMGQ5YWFkZjZhM2Q5NmEyZmJhMmNhZTczMzJlNGRmYjJkODgwZGQwZTQ3MzQ2ZTU2Y2JkODQ4MGY2ZmU4YWZmZmQzYzAwYmEwNGJhYThkZmNmM2RmMjM2NzNkZGZkZDQyN2JiMzBjY2JhZTA=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
 # ===================================================================

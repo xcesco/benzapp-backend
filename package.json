@@ -2,7 +2,7 @@
   "name": "benzapp",
   "version": "0.0.1-SNAPSHOT",
   "private": true,
-  "description": "Description for Benzapp",
+  "description": "Description for benzapp",
   "license": "UNLICENSED",
   "scripts": {
     "backend:doc:test": "./mvnw -ntp javadoc:javadoc --batch-mode",

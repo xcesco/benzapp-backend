@@ -4,9 +4,9 @@ services:
   benzapp-postgresql:
     image: postgres:13.1
     # volumes:
-    #     - ~/volumes/jhipster/Benzapp/postgresql/:/var/lib/postgresql/data/
+    #     - ~/volumes/jhipster/benzapp/postgresql/:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=Benzapp
+      - POSTGRES_USER=benzapp
       - POSTGRES_PASSWORD=
       - POSTGRES_HOST_AUTH_METHOD=trust
     # If you want to expose these ports outside your dev PC,
