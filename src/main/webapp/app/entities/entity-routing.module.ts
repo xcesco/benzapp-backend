@@ -10,6 +10,11 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./gestore/gestore.module').then(m => m.GestoreModule),
       },
       {
+        path: 'marchio',
+        data: { pageTitle: 'benzappApp.marchio.home.title' },
+        loadChildren: () => import('./marchio/marchio.module').then(m => m.MarchioModule),
+      },
+      {
         path: 'cittadino',
         data: { pageTitle: 'benzappApp.cittadino.home.title' },
         loadChildren: () => import('./cittadino/cittadino.module').then(m => m.CittadinoModule),

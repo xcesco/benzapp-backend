@@ -1,4 +1,6 @@
 import { IRifornimento } from 'app/entities/rifornimento/rifornimento.model';
+import { IMarchio } from 'app/entities/marchio/marchio.model';
+import { TipoImpianto } from 'app/entities/enumerations/tipo-impianto.model';
 
 export interface IGestore {
   id?: number;
@@ -7,8 +9,9 @@ export interface IGestore {
   indirizzo?: string | null;
   longitudine?: number | null;
   latitudine?: number | null;
-  marchio?: string | null;
+  tipo?: TipoImpianto | null;
   rifornimentos?: IRifornimento[] | null;
+  marchio?: IMarchio | null;
 }
 
 export class Gestore implements IGestore {
@@ -19,7 +22,8 @@ export class Gestore implements IGestore {
     public indirizzo?: string | null,
     public longitudine?: number | null,
     public latitudine?: number | null,
-    public marchio?: string | null,
-    public rifornimentos?: IRifornimento[] | null
+    public tipo?: TipoImpianto | null,
+    public rifornimentos?: IRifornimento[] | null,
+    public marchio?: IMarchio | null
   ) {}
 }

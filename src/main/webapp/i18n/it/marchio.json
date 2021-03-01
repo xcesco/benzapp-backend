@@ -1,0 +1,26 @@
+{
+  "benzappApp": {
+    "marchio": {
+      "home": {
+        "title": "Marchios",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Marchio",
+        "createOrEditLabel": "Genera o modifica un Marchio",
+        "notFound": "No Marchios found"
+      },
+      "created": "&Egrave; stato generato un nuovo Marchio con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Marchio identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Marchio con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Marchio {{ id }}?"
+      },
+      "detail": {
+        "title": "Marchio"
+      },
+      "id": "ID",
+      "immagine": "Immagine",
+      "nome": "Nome",
+      "gestore": "Gestore"
+    }
+  }
+}

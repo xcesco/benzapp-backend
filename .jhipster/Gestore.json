@@ -22,8 +22,9 @@
       "fieldType": "Float"
     },
     {
-      "fieldName": "marchio",
-      "fieldType": "String"
+      "fieldName": "tipo",
+      "fieldType": "TipoImpianto",
+      "fieldValues": "AUTOSTRADALE,STRADALE,NAVALE"
     }
   ],
   "relationships": [
@@ -32,6 +33,12 @@
       "otherEntityName": "rifornimento",
       "otherEntityRelationshipName": "gestore",
       "relationshipName": "rifornimento"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "marchio",
+      "otherEntityRelationshipName": "gestore",
+      "relationshipName": "marchio"
     }
   ],
   "entityTableName": "gestori",

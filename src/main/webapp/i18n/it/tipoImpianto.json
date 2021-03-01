@@ -1,0 +1,10 @@
+{
+  "benzappApp": {
+    "TipoImpianto": {
+      "null": "",
+      "AUTOSTRADALE": "AUTOSTRADALE",
+      "STRADALE": "STRADALE",
+      "NAVALE": "NAVALE"
+    }
+  }
+}

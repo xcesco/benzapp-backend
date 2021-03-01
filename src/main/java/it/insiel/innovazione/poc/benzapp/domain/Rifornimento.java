@@ -50,7 +50,7 @@ public class Rifornimento implements Serializable {
     private TipoCarburante tipoCarburante;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "rifornimentos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "rifornimentos", "marchio" }, allowSetters = true)
     private Gestore gestore;
 
     @ManyToOne

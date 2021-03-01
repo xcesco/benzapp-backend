@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import it.insiel.innovazione.poc.benzapp.IntegrationTest;
 import it.insiel.innovazione.poc.benzapp.domain.Gestore;
+import it.insiel.innovazione.poc.benzapp.domain.enumeration.TipoImpianto;
 import it.insiel.innovazione.poc.benzapp.repository.GestoreRepository;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -42,8 +43,8 @@ class GestoreResourceIT {
     private static final Float DEFAULT_LATITUDINE = 1F;
     private static final Float UPDATED_LATITUDINE = 2F;
 
-    private static final String DEFAULT_MARCHIO = "AAAAAAAAAA";
-    private static final String UPDATED_MARCHIO = "BBBBBBBBBB";
+    private static final TipoImpianto DEFAULT_TIPO = TipoImpianto.AUTOSTRADALE;
+    private static final TipoImpianto UPDATED_TIPO = TipoImpianto.STRADALE;
 
     @Autowired
     private GestoreRepository gestoreRepository;
@@ -69,7 +70,7 @@ class GestoreResourceIT {
             .indirizzo(DEFAULT_INDIRIZZO)
             .longitudine(DEFAULT_LONGITUDINE)
             .latitudine(DEFAULT_LATITUDINE)
-            .marchio(DEFAULT_MARCHIO);
+            .tipo(DEFAULT_TIPO);
         return gestore;
     }
 
@@ -86,7 +87,7 @@ class GestoreResourceIT {
             .indirizzo(UPDATED_INDIRIZZO)
             .longitudine(UPDATED_LONGITUDINE)
             .latitudine(UPDATED_LATITUDINE)
-            .marchio(UPDATED_MARCHIO);
+            .tipo(UPDATED_TIPO);
         return gestore;
     }
 
@@ -113,7 +114,7 @@ class GestoreResourceIT {
         assertThat(testGestore.getIndirizzo()).isEqualTo(DEFAULT_INDIRIZZO);
         assertThat(testGestore.getLongitudine()).isEqualTo(DEFAULT_LONGITUDINE);
         assertThat(testGestore.getLatitudine()).isEqualTo(DEFAULT_LATITUDINE);
-        assertThat(testGestore.getMarchio()).isEqualTo(DEFAULT_MARCHIO);
+        assertThat(testGestore.getTipo()).isEqualTo(DEFAULT_TIPO);
     }
 
     @Test
@@ -151,7 +152,7 @@ class GestoreResourceIT {
             .andExpect(jsonPath("$.[*].indirizzo").value(hasItem(DEFAULT_INDIRIZZO)))
             .andExpect(jsonPath("$.[*].longitudine").value(hasItem(DEFAULT_LONGITUDINE.doubleValue())))
             .andExpect(jsonPath("$.[*].latitudine").value(hasItem(DEFAULT_LATITUDINE.doubleValue())))
-            .andExpect(jsonPath("$.[*].marchio").value(hasItem(DEFAULT_MARCHIO)));
+            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())));
     }
 
     @Test
@@ -171,7 +172,7 @@ class GestoreResourceIT {
             .andExpect(jsonPath("$.indirizzo").value(DEFAULT_INDIRIZZO))
             .andExpect(jsonPath("$.longitudine").value(DEFAULT_LONGITUDINE.doubleValue()))
             .andExpect(jsonPath("$.latitudine").value(DEFAULT_LATITUDINE.doubleValue()))
-            .andExpect(jsonPath("$.marchio").value(DEFAULT_MARCHIO));
+            .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()));
     }
 
     @Test
@@ -199,7 +200,7 @@ class GestoreResourceIT {
             .indirizzo(UPDATED_INDIRIZZO)
             .longitudine(UPDATED_LONGITUDINE)
             .latitudine(UPDATED_LATITUDINE)
-            .marchio(UPDATED_MARCHIO);
+            .tipo(UPDATED_TIPO);
 
         restGestoreMockMvc
             .perform(
@@ -216,7 +217,7 @@ class GestoreResourceIT {
         assertThat(testGestore.getIndirizzo()).isEqualTo(UPDATED_INDIRIZZO);
         assertThat(testGestore.getLongitudine()).isEqualTo(UPDATED_LONGITUDINE);
         assertThat(testGestore.getLatitudine()).isEqualTo(UPDATED_LATITUDINE);
-        assertThat(testGestore.getMarchio()).isEqualTo(UPDATED_MARCHIO);
+        assertThat(testGestore.getTipo()).isEqualTo(UPDATED_TIPO);
     }
 
     @Test
@@ -265,7 +266,7 @@ class GestoreResourceIT {
         assertThat(testGestore.getIndirizzo()).isEqualTo(UPDATED_INDIRIZZO);
         assertThat(testGestore.getLongitudine()).isEqualTo(DEFAULT_LONGITUDINE);
         assertThat(testGestore.getLatitudine()).isEqualTo(DEFAULT_LATITUDINE);
-        assertThat(testGestore.getMarchio()).isEqualTo(DEFAULT_MARCHIO);
+        assertThat(testGestore.getTipo()).isEqualTo(DEFAULT_TIPO);
     }
 
     @Test
@@ -286,7 +287,7 @@ class GestoreResourceIT {
             .indirizzo(UPDATED_INDIRIZZO)
             .longitudine(UPDATED_LONGITUDINE)
             .latitudine(UPDATED_LATITUDINE)
-            .marchio(UPDATED_MARCHIO);
+            .tipo(UPDATED_TIPO);
 
         restGestoreMockMvc
             .perform(
@@ -305,7 +306,7 @@ class GestoreResourceIT {
         assertThat(testGestore.getIndirizzo()).isEqualTo(UPDATED_INDIRIZZO);
         assertThat(testGestore.getLongitudine()).isEqualTo(UPDATED_LONGITUDINE);
         assertThat(testGestore.getLatitudine()).isEqualTo(UPDATED_LATITUDINE);
-        assertThat(testGestore.getMarchio()).isEqualTo(UPDATED_MARCHIO);
+        assertThat(testGestore.getTipo()).isEqualTo(UPDATED_TIPO);
     }
 
     @Test

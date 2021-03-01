@@ -46,7 +46,7 @@
     "jwtSecretKey": "MmQ3OTk0N2VlOWY2Y2NhNjI0ZGExMGQ5YWFkZjZhM2Q5NmEyZmJhMmNhZTczMzJlNGRmYjJkODgwZGQwZTQ3MzQ2ZTU2Y2JkODQ4MGY2ZmU4YWZmZmQzYzAwYmEwNGJhYThkZmNmM2RmMjM2NzNkZGZkZDQyN2JiMzBjY2JhZTA=",
     "clientPackageManager": "npm",
     "languages": ["it"],
-    "entities": ["Gestore", "Cittadino", "Fascia", "Tessera", "Rifornimento"],
+    "entities": ["Gestore", "Cittadino", "Fascia", "Tessera", "Rifornimento", "Marchio"],
     "lastLiquibaseTimestamp": 1614548517000
   }
 }

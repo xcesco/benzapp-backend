@@ -1,0 +1,33 @@
+{
+  "name": "Marchio",
+  "fields": [
+    {
+      "fieldName": "immagine",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "gestore",
+      "otherEntityRelationshipName": "marchio",
+      "relationshipName": "gestore"
+    }
+  ],
+  "entityTableName": "marchi",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["benzapp"],
+  "changelogDate": "20210228213757"
+}

@@ -34,9 +34,15 @@
         <dd>
           <span>{{ gestore.latitudine }}</span>
         </dd>
+        <dt><span jhiTranslate="benzappApp.gestore.tipo">Tipo</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'benzappApp.TipoImpianto.' + gestore.tipo }}">{{ gestore.tipo }}</span>
+        </dd>
         <dt><span jhiTranslate="benzappApp.gestore.marchio">Marchio</span></dt>
         <dd>
-          <span>{{ gestore.marchio }}</span>
+          <div *ngIf="gestore.marchio">
+            <a [routerLink]="['/marchio', gestore.marchio?.id, 'view']">{{ gestore.marchio?.id }}</a>
+          </div>
         </dd>
       </dl>
 

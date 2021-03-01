@@ -1,6 +1,7 @@
 package it.insiel.innovazione.poc.benzapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.insiel.innovazione.poc.benzapp.domain.enumeration.TipoImpianto;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,13 +39,18 @@ public class Gestore implements Serializable {
     @Column(name = "latitudine")
     private Float latitudine;
 
-    @Column(name = "marchio")
-    private String marchio;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo")
+    private TipoImpianto tipo;
 
     @OneToMany(mappedBy = "gestore")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "gestore", "tessera" }, allowSetters = true)
     private Set<Rifornimento> rifornimentos = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "gestores" }, allowSetters = true)
+    private Marchio marchio;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -125,17 +131,17 @@ public class Gestore implements Serializable {
         this.latitudine = latitudine;
     }
 
-    public String getMarchio() {
-        return this.marchio;
+    public TipoImpianto getTipo() {
+        return this.tipo;
     }
 
-    public Gestore marchio(String marchio) {
-        this.marchio = marchio;
+    public Gestore tipo(TipoImpianto tipo) {
+        this.tipo = tipo;
         return this;
     }
 
-    public void setMarchio(String marchio) {
-        this.marchio = marchio;
+    public void setTipo(TipoImpianto tipo) {
+        this.tipo = tipo;
     }
 
     public Set<Rifornimento> getRifornimentos() {
@@ -169,6 +175,19 @@ public class Gestore implements Serializable {
         this.rifornimentos = rifornimentos;
     }
 
+    public Marchio getMarchio() {
+        return this.marchio;
+    }
+
+    public Gestore marchio(Marchio marchio) {
+        this.setMarchio(marchio);
+        return this;
+    }
+
+    public void setMarchio(Marchio marchio) {
+        this.marchio = marchio;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -198,7 +217,7 @@ public class Gestore implements Serializable {
             ", indirizzo='" + getIndirizzo() + "'" +
             ", longitudine=" + getLongitudine() +
             ", latitudine=" + getLatitudine() +
-            ", marchio='" + getMarchio() + "'" +
+            ", tipo='" + getTipo() + "'" +
             "}";
     }
 }

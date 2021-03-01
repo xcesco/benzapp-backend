@@ -32,24 +32,37 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="id">
+            <span jhiTranslate="global.field.id">ID</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="marchio.id">
+            <span jhiTranslate="benzappApp.gestore.marchio">Marchio</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="provincia">
-            <span jhiTranslate="benzappApp.gestore.provincia">Provincia</span> <fa-icon icon="sort"></fa-icon>
+            <span jhiTranslate="benzappApp.gestore.provincia">Provincia</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="comune">
-            <span jhiTranslate="benzappApp.gestore.comune">Comune</span> <fa-icon icon="sort"></fa-icon>
+            <span jhiTranslate="benzappApp.gestore.comune">Comune</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="indirizzo">
-            <span jhiTranslate="benzappApp.gestore.indirizzo">Indirizzo</span> <fa-icon icon="sort"></fa-icon>
+            <span jhiTranslate="benzappApp.gestore.indirizzo">Indirizzo</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="longitudine">
-            <span jhiTranslate="benzappApp.gestore.longitudine">Longitudine</span> <fa-icon icon="sort"></fa-icon>
+            <span jhiTranslate="benzappApp.gestore.longitudine">Longitudine</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="latitudine">
-            <span jhiTranslate="benzappApp.gestore.latitudine">Latitudine</span> <fa-icon icon="sort"></fa-icon>
+            <span jhiTranslate="benzappApp.gestore.latitudine">Latitudine</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="marchio">
-            <span jhiTranslate="benzappApp.gestore.marchio">Marchio</span> <fa-icon icon="sort"></fa-icon>
+          <th scope="col" jhiSortBy="tipo">
+            <span jhiTranslate="benzappApp.gestore.tipo">Tipo</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
         </tr>
@@ -59,12 +72,23 @@
           <td>
             <a [routerLink]="['/gestore', gestore.id, 'view']">{{ gestore.id }}</a>
           </td>
+          <td>
+            <div *ngIf="gestore.marchio">
+              <a [routerLink]="['/marchio', gestore.marchio?.id, 'view']">
+                <img
+                  style="width: 32px"
+                  src="data:{{ gestore.marchio.immagineContentType }};base64,{{ gestore.marchio.immagine }}"
+                  alt="{{ gestore.marchio.nome }}"
+                />
+              </a>
+            </div>
+          </td>
           <td>{{ gestore.provincia }}</td>
           <td>{{ gestore.comune }}</td>
           <td>{{ gestore.indirizzo }}</td>
           <td>{{ gestore.longitudine }}</td>
           <td>{{ gestore.latitudine }}</td>
-          <td>{{ gestore.marchio }}</td>
+          <td jhiTranslate="{{ 'benzappApp.TipoImpianto.' + gestore.tipo }}">{{ gestore.tipo }}</td>
           <td class="text-right">
             <div class="btn-group">
               <button

@@ -29,7 +29,10 @@
             <column name="latitudine" type="${floatType}">
                 <constraints nullable="true" />
             </column>
-            <column name="marchio" type="varchar(255)">
+            <column name="tipo" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="marchio_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -57,7 +60,8 @@
             <column name="indirizzo" type="string"/>
             <column name="longitudine" type="numeric"/>
             <column name="latitudine" type="numeric"/>
-            <column name="marchio" type="string"/>
+            <column name="tipo" type="string"/>
+            <column name="marchio_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

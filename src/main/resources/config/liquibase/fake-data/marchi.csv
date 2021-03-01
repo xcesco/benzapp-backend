@@ -1,0 +1,8 @@
+id;immagine;immagine_content_type;nome
+1;../fake-data/blob/marchi/eni.jpg;image/jpg;Eni
+2;../fake-data/blob/marchi/esso.jpg;image/jpg;Esso
+3;../fake-data/blob/marchi/kerotris.jpg;image/jpg;Kerotris
+4;../fake-data/blob/marchi/oil_italia.jpg;image/jpg;Oil Italia
+5;../fake-data/blob/marchi/q8.jpg;image/jpg;Q8
+6;../fake-data/blob/marchi/sconosciuto.jpg;image/jpg;N.D.
+7;../fake-data/blob/marchi/tamoil.jpg;image/jpg;Tamoil
