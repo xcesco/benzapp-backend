@@ -1,0 +1,84 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-marchio-heading" data-cy="MarchioCreateUpdateHeading" jhiTranslate="benzappApp.marchio.home.createOrEditLabel">
+        Create or edit a Marchio
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.marchio.immagine" for="field_immagine">Immagine</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('immagineContentType')!.value + ';base64,' + editForm.get('immagine')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('immagine')!.value"
+              alt="marchio image"
+            />
+            <div *ngIf="editForm.get('immagine')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left"
+                >{{ editForm.get('immagineContentType')!.value }}, {{ byteSize(editForm.get('immagine')!.value) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('immagine', 'immagineContentType', 'file_immagine')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_immagine"
+              data-cy="immagine"
+              (change)="setFileData($event, 'immagine', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="immagine" id="field_immagine" data-cy="immagine" formControlName="immagine" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="immagineContentType"
+            id="field_immagineContentType"
+            formControlName="immagineContentType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.marchio.nome" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

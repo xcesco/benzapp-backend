@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="marchio">
+      <h2 data-cy="marchioDetailsHeading"><span jhiTranslate="benzappApp.marchio.detail.title">Marchio</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ marchio.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.marchio.immagine">Immagine</span></dt>
+        <dd>
+          <div *ngIf="marchio.immagine">
+            <a (click)="openFile(marchio.immagine, marchio.immagineContentType)">
+              <img
+                [src]="'data:' + marchio.immagineContentType + ';base64,' + marchio.immagine"
+                style="max-width: 100%"
+                alt="marchio image"
+              />
+            </a>
+            {{ marchio.immagineContentType }}, {{ byteSize(marchio.immagine) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.marchio.nome">Nome</span></dt>
+        <dd>
+          <span>{{ marchio.nome }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/marchio', marchio.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

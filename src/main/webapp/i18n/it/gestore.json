@@ -23,8 +23,9 @@
       "indirizzo": "Indirizzo",
       "longitudine": "Longitudine",
       "latitudine": "Latitudine",
-      "marchio": "Marchio",
-      "rifornimento": "Rifornimento"
+      "tipo": "Tipo",
+      "rifornimento": "Rifornimento",
+      "marchio": "Marchio"
     }
   }
 }

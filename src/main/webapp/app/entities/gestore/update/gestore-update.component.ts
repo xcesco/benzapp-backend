@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 
 import { IGestore, Gestore } from '../gestore.model';
 import { GestoreService } from '../service/gestore.service';
+import { IMarchio } from 'app/entities/marchio/marchio.model';
+import { MarchioService } from 'app/entities/marchio/service/marchio.service';
 
 @Component({
   selector: 'jhi-gestore-update',
@@ -13,6 +15,7 @@ import { GestoreService } from '../service/gestore.service';
 })
 export class GestoreUpdateComponent implements OnInit {
   isSaving = false;
+  marchios: IMarchio[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -21,14 +24,22 @@ export class GestoreUpdateComponent implements OnInit {
     indirizzo: [],
     longitudine: [],
     latitudine: [],
+    tipo: [],
     marchio: [],
   });
 
-  constructor(protected gestoreService: GestoreService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected gestoreService: GestoreService,
+    protected marchioService: MarchioService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ gestore }) => {
       this.updateForm(gestore);
+
+      this.marchioService.query().subscribe((res: HttpResponse<IMarchio[]>) => (this.marchios = res.body ?? []));
     });
   }
 
@@ -40,6 +51,7 @@ export class GestoreUpdateComponent implements OnInit {
       indirizzo: gestore.indirizzo,
       longitudine: gestore.longitudine,
       latitudine: gestore.latitudine,
+      tipo: gestore.tipo,
       marchio: gestore.marchio,
     });
   }
@@ -67,6 +79,7 @@ export class GestoreUpdateComponent implements OnInit {
       indirizzo: this.editForm.get(['indirizzo'])!.value,
       longitudine: this.editForm.get(['longitudine'])!.value,
       latitudine: this.editForm.get(['latitudine'])!.value,
+      tipo: this.editForm.get(['tipo'])!.value,
       marchio: this.editForm.get(['marchio'])!.value,
     };
   }
@@ -85,5 +98,9 @@ export class GestoreUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackMarchioById(index: number, item: IMarchio): number {
+    return item.id!;
   }
 }

@@ -8,6 +8,7 @@
       "entities": {
         "main": "Entità",
         "gestore": "Gestore",
+        "marchio": "Marchio",
         "cittadino": "Cittadino",
         "fascia": "Fascia",
         "tessera": "Tessera",

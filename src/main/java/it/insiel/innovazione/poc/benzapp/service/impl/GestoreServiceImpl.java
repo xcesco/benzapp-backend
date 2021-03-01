@@ -60,8 +60,8 @@ public class GestoreServiceImpl implements GestoreService {
                         existingGestore.setLatitudine(gestore.getLatitudine());
                     }
 
-                    if (gestore.getMarchio() != null) {
-                        existingGestore.setMarchio(gestore.getMarchio());
+                    if (gestore.getTipo() != null) {
+                        existingGestore.setTipo(gestore.getTipo());
                     }
 
                     return existingGestore;

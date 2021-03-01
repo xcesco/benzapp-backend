@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 
 import { GestoreService } from '../service/gestore.service';
 import { Gestore } from '../gestore.model';
+import { Marchio } from 'app/entities/marchio/marchio.model';
 
 import { GestoreUpdateComponent } from './gestore-update.component';
 
@@ -60,6 +61,16 @@ describe('Component Tests', () => {
         expect(service.create).toHaveBeenCalledWith(entity);
         expect(comp.isSaving).toEqual(false);
       }));
+    });
+
+    describe('Tracking relationships identifiers', () => {
+      describe('trackMarchioById', () => {
+        it('Should return tracked Marchio primary key', () => {
+          const entity = new Marchio(123);
+          const trackResult = comp.trackMarchioById(0, entity);
+          expect(trackResult).toEqual(entity.id);
+        });
+      });
     });
   });
 });

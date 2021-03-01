@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
+import { TipoImpianto } from 'app/entities/enumerations/tipo-impianto.model';
 import { IGestore, Gestore } from '../gestore.model';
 
 import { GestoreService } from './gestore.service';
@@ -20,7 +21,7 @@ describe('Service Tests', () => {
       service = TestBed.inject(GestoreService);
       httpMock = TestBed.inject(HttpTestingController);
 
-      elemDefault = new Gestore(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 0, 0, 'AAAAAAA');
+      elemDefault = new Gestore(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 0, 0, TipoImpianto.AUTOSTRADALE);
     });
 
     describe('Service methods', () => {
@@ -60,7 +61,7 @@ describe('Service Tests', () => {
             indirizzo: 'BBBBBB',
             longitudine: 1,
             latitudine: 1,
-            marchio: 'BBBBBB',
+            tipo: 'BBBBBB',
           },
           elemDefault
         );
@@ -83,7 +84,7 @@ describe('Service Tests', () => {
             indirizzo: 'BBBBBB',
             longitudine: 1,
             latitudine: 1,
-            marchio: 'BBBBBB',
+            tipo: 'BBBBBB',
           },
           elemDefault
         );
