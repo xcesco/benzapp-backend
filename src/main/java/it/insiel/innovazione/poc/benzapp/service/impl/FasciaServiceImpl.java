@@ -3,11 +3,10 @@ package it.insiel.innovazione.poc.benzapp.service.impl;
 import it.insiel.innovazione.poc.benzapp.domain.Fascia;
 import it.insiel.innovazione.poc.benzapp.repository.FasciaRepository;
 import it.insiel.innovazione.poc.benzapp.service.FasciaService;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,9 +59,9 @@ public class FasciaServiceImpl implements FasciaService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Fascia> findAll(Pageable pageable) {
+    public List<Fascia> findAll() {
         log.debug("Request to get all Fascias");
-        return fasciaRepository.findAll(pageable);
+        return fasciaRepository.findAll();
     }
 
     @Override

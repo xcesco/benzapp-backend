@@ -43,12 +43,6 @@
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "fascia",
-      "otherEntityRelationshipName": "tessera",
-      "relationshipName": "fascia"
-    },
-    {
-      "relationshipType": "many-to-one",
       "otherEntityName": "cittadino",
       "otherEntityRelationshipName": "tessera",
       "relationshipName": "cittadino"

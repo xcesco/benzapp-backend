@@ -17,14 +17,14 @@
   "relationships": [
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "tessera",
+      "otherEntityName": "gestore",
       "otherEntityRelationshipName": "fascia",
-      "relationshipName": "tessera"
+      "relationshipName": "gestore"
     }
   ],
   "entityTableName": "fascia",
   "dto": "no",
-  "pagination": "pagination",
+  "pagination": "no",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,

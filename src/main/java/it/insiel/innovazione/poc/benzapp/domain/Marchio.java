@@ -37,7 +37,7 @@ public class Marchio implements Serializable {
 
     @OneToMany(mappedBy = "marchio")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "rifornimentos", "marchio" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "rifornimentos", "fascia", "marchio" }, allowSetters = true)
     private Set<Gestore> gestores = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

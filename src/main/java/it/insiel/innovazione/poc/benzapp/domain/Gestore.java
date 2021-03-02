@@ -50,6 +50,10 @@ public class Gestore implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "gestores" }, allowSetters = true)
+    private Fascia fascia;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "gestores" }, allowSetters = true)
     private Marchio marchio;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -173,6 +177,19 @@ public class Gestore implements Serializable {
             rifornimentos.forEach(i -> i.setGestore(this));
         }
         this.rifornimentos = rifornimentos;
+    }
+
+    public Fascia getFascia() {
+        return this.fascia;
+    }
+
+    public Gestore fascia(Fascia fascia) {
+        this.setFascia(fascia);
+        return this;
+    }
+
+    public void setFascia(Fascia fascia) {
+        this.fascia = fascia;
     }
 
     public Marchio getMarchio() {

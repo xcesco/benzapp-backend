@@ -25,6 +25,7 @@
       "latitudine": "Latitudine",
       "tipo": "Tipo",
       "rifornimento": "Rifornimento",
+      "fascia": "Fascia",
       "marchio": "Marchio"
     }
   }

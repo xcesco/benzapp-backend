@@ -67,9 +67,11 @@ enum TipoImpianto {
 
 // defining multiple OneToMany relationships with comments
 relationship OneToMany {
-    Fascia to Tessera,
-    Cittadino to Tessera,
+    Fascia to Gestore,
     Marchio to Gestore,
+
+    Cittadino to Tessera,
+
     Gestore to Rifornimento,
     Tessera to Rifornimento
 }
@@ -77,7 +79,7 @@ relationship OneToMany {
 
 // Set pagination options
 //paginate JobHistory, Employee with infinite-scroll
-paginate Marchio, Gestore, Cittadino, Fascia, Tessera, Rifornimento with pagination
+paginate Marchio, Gestore, Cittadino, Tessera, Rifornimento with pagination
 
 // Use Data Transfert Objects (DTO)
 // dto * with mapstruct

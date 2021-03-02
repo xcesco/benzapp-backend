@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 
 import { IGestore, Gestore } from '../gestore.model';
 import { GestoreService } from '../service/gestore.service';
+import { IFascia } from 'app/entities/fascia/fascia.model';
+import { FasciaService } from 'app/entities/fascia/service/fascia.service';
 import { IMarchio } from 'app/entities/marchio/marchio.model';
 import { MarchioService } from 'app/entities/marchio/service/marchio.service';
 
@@ -15,6 +17,7 @@ import { MarchioService } from 'app/entities/marchio/service/marchio.service';
 })
 export class GestoreUpdateComponent implements OnInit {
   isSaving = false;
+  fascias: IFascia[] = [];
   marchios: IMarchio[] = [];
 
   editForm = this.fb.group({
@@ -25,11 +28,13 @@ export class GestoreUpdateComponent implements OnInit {
     longitudine: [],
     latitudine: [],
     tipo: [],
+    fascia: [],
     marchio: [],
   });
 
   constructor(
     protected gestoreService: GestoreService,
+    protected fasciaService: FasciaService,
     protected marchioService: MarchioService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -38,6 +43,8 @@ export class GestoreUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ gestore }) => {
       this.updateForm(gestore);
+
+      this.fasciaService.query().subscribe((res: HttpResponse<IFascia[]>) => (this.fascias = res.body ?? []));
 
       this.marchioService.query().subscribe((res: HttpResponse<IMarchio[]>) => (this.marchios = res.body ?? []));
     });
@@ -52,6 +59,7 @@ export class GestoreUpdateComponent implements OnInit {
       longitudine: gestore.longitudine,
       latitudine: gestore.latitudine,
       tipo: gestore.tipo,
+      fascia: gestore.fascia,
       marchio: gestore.marchio,
     });
   }
@@ -80,6 +88,7 @@ export class GestoreUpdateComponent implements OnInit {
       longitudine: this.editForm.get(['longitudine'])!.value,
       latitudine: this.editForm.get(['latitudine'])!.value,
       tipo: this.editForm.get(['tipo'])!.value,
+      fascia: this.editForm.get(['fascia'])!.value,
       marchio: this.editForm.get(['marchio'])!.value,
     };
   }
@@ -98,6 +107,10 @@ export class GestoreUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackFasciaById(index: number, item: IFascia): number {
+    return item.id!;
   }
 
   trackMarchioById(index: number, item: IMarchio): number {

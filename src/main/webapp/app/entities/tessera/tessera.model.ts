@@ -1,6 +1,5 @@
 import * as dayjs from 'dayjs';
 import { IRifornimento } from 'app/entities/rifornimento/rifornimento.model';
-import { IFascia } from 'app/entities/fascia/fascia.model';
 import { ICittadino } from 'app/entities/cittadino/cittadino.model';
 import { TipoVeicolo } from 'app/entities/enumerations/tipo-veicolo.model';
 import { TipoCarburante } from 'app/entities/enumerations/tipo-carburante.model';
@@ -15,7 +14,6 @@ export interface ITessera {
   veicolo?: TipoVeicolo;
   carburante?: TipoCarburante;
   rifornimentos?: IRifornimento[] | null;
-  fascia?: IFascia | null;
   cittadino?: ICittadino | null;
 }
 
@@ -30,7 +28,6 @@ export class Tessera implements ITessera {
     public veicolo?: TipoVeicolo,
     public carburante?: TipoCarburante,
     public rifornimentos?: IRifornimento[] | null,
-    public fascia?: IFascia | null,
     public cittadino?: ICittadino | null
   ) {}
 }

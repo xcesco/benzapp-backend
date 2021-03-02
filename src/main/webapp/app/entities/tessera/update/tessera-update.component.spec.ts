@@ -9,7 +9,6 @@ import { of } from 'rxjs';
 
 import { TesseraService } from '../service/tessera.service';
 import { Tessera } from '../tessera.model';
-import { Fascia } from 'app/entities/fascia/fascia.model';
 import { Cittadino } from 'app/entities/cittadino/cittadino.model';
 
 import { TesseraUpdateComponent } from './tessera-update.component';
@@ -65,14 +64,6 @@ describe('Component Tests', () => {
     });
 
     describe('Tracking relationships identifiers', () => {
-      describe('trackFasciaById', () => {
-        it('Should return tracked Fascia primary key', () => {
-          const entity = new Fascia(123);
-          const trackResult = comp.trackFasciaById(0, entity);
-          expect(trackResult).toEqual(entity.id);
-        });
-      });
-
       describe('trackCittadinoById', () => {
         it('Should return tracked Cittadino primary key', () => {
           const entity = new Cittadino(123);
