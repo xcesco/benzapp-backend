@@ -2,7 +2,7 @@
   "benzappApp": {
     "cittadino": {
       "home": {
-        "title": "Cittadinos",
+        "title": "Cittadini",
         "refreshListLabel": "Refresh list",
         "createLabel": "Genera un nuovo Cittadino",
         "createOrEditLabel": "Genera o modifica un Cittadino",
