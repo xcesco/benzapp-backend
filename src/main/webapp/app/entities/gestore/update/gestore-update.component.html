@@ -14,19 +14,6 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="benzappApp.gestore.marchio" for="field_marchio">Marchio</label>
-          <select class="form-control" id="field_marchio" data-cy="marchio" name="marchio" formControlName="marchio">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="marchioOption.id === editForm.get('marchio')!.value?.id ? editForm.get('marchio')!.value : marchioOption"
-              *ngFor="let marchioOption of marchios; trackBy: trackMarchioById"
-            >
-              {{ marchioOption.nome }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
           <label class="form-control-label" jhiTranslate="benzappApp.gestore.provincia" for="field_provincia">Provincia</label>
           <input type="text" class="form-control" name="provincia" id="field_provincia" data-cy="provincia" formControlName="provincia" />
         </div>
@@ -72,6 +59,32 @@
             <option value="AUTOSTRADALE">{{ 'benzappApp.TipoImpianto.AUTOSTRADALE' | translate }}</option>
             <option value="STRADALE">{{ 'benzappApp.TipoImpianto.STRADALE' | translate }}</option>
             <option value="NAVALE">{{ 'benzappApp.TipoImpianto.NAVALE' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.gestore.fascia" for="field_fascia">Fascia</label>
+          <select class="form-control" id="field_fascia" data-cy="fascia" name="fascia" formControlName="fascia">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="fasciaOption.id === editForm.get('fascia')!.value?.id ? editForm.get('fascia')!.value : fasciaOption"
+              *ngFor="let fasciaOption of fascias; trackBy: trackFasciaById"
+            >
+              {{ fasciaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.gestore.marchio" for="field_marchio">Marchio</label>
+          <select class="form-control" id="field_marchio" data-cy="marchio" name="marchio" formControlName="marchio">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="marchioOption.id === editForm.get('marchio')!.value?.id ? editForm.get('marchio')!.value : marchioOption"
+              *ngFor="let marchioOption of marchios; trackBy: trackMarchioById"
+            >
+              {{ marchioOption.id }}
+            </option>
           </select>
         </div>
       </div>

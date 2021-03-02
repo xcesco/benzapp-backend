@@ -34,8 +34,8 @@ public class Fascia implements Serializable {
 
     @OneToMany(mappedBy = "fascia")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "rifornimentos", "fascia", "cittadino" }, allowSetters = true)
-    private Set<Tessera> tesseras = new HashSet<>();
+    @JsonIgnoreProperties(value = { "rifornimentos", "fascia", "marchio" }, allowSetters = true)
+    private Set<Gestore> gestores = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -90,35 +90,35 @@ public class Fascia implements Serializable {
         this.scontoGasolio = scontoGasolio;
     }
 
-    public Set<Tessera> getTesseras() {
-        return this.tesseras;
+    public Set<Gestore> getGestores() {
+        return this.gestores;
     }
 
-    public Fascia tesseras(Set<Tessera> tesseras) {
-        this.setTesseras(tesseras);
+    public Fascia gestores(Set<Gestore> gestores) {
+        this.setGestores(gestores);
         return this;
     }
 
-    public Fascia addTessera(Tessera tessera) {
-        this.tesseras.add(tessera);
-        tessera.setFascia(this);
+    public Fascia addGestore(Gestore gestore) {
+        this.gestores.add(gestore);
+        gestore.setFascia(this);
         return this;
     }
 
-    public Fascia removeTessera(Tessera tessera) {
-        this.tesseras.remove(tessera);
-        tessera.setFascia(null);
+    public Fascia removeGestore(Gestore gestore) {
+        this.gestores.remove(gestore);
+        gestore.setFascia(null);
         return this;
     }
 
-    public void setTesseras(Set<Tessera> tesseras) {
-        if (this.tesseras != null) {
-            this.tesseras.forEach(i -> i.setFascia(null));
+    public void setGestores(Set<Gestore> gestores) {
+        if (this.gestores != null) {
+            this.gestores.forEach(i -> i.setFascia(null));
         }
-        if (tesseras != null) {
-            tesseras.forEach(i -> i.setFascia(this));
+        if (gestores != null) {
+            gestores.forEach(i -> i.setFascia(this));
         }
-        this.tesseras = tesseras;
+        this.gestores = gestores;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

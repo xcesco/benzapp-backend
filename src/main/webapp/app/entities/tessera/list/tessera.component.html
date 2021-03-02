@@ -49,9 +49,6 @@
           <th scope="col" jhiSortBy="carburante">
             <span jhiTranslate="benzappApp.tessera.carburante">Carburante</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="fascia.id">
-            <span jhiTranslate="benzappApp.tessera.fascia">Fascia</span> <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col" jhiSortBy="cittadino.id">
             <span jhiTranslate="benzappApp.tessera.cittadino">Cittadino</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -78,11 +75,6 @@
           <td>{{ tessera.targa }}</td>
           <td jhiTranslate="{{ 'benzappApp.TipoVeicolo.' + tessera.veicolo }}">{{ tessera.veicolo }}</td>
           <td jhiTranslate="{{ 'benzappApp.TipoCarburante.' + tessera.carburante }}">{{ tessera.carburante }}</td>
-          <td>
-            <div *ngIf="tessera.fascia">
-              <a [routerLink]="['/fascia', tessera.fascia?.id, 'view']">{{ tessera.fascia?.id }}</a>
-            </div>
-          </td>
           <td>
             <div *ngIf="tessera.cittadino">
               <a [routerLink]="['/cittadino', tessera.cittadino?.id, 'view']">{{ tessera.cittadino?.id }}</a>

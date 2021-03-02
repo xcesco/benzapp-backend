@@ -3,7 +3,7 @@
     <span jhiTranslate="benzappApp.fascia.home.title">Fascias</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="benzappApp.fascia.home.refreshListLabel">Refresh List</span>
       </button>
@@ -31,17 +31,11 @@
   <div class="table-responsive" id="entities" *ngIf="fascias && fascias.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="descrizione">
-            <span jhiTranslate="benzappApp.fascia.descrizione">Descrizione</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="scontoBenzina">
-            <span jhiTranslate="benzappApp.fascia.scontoBenzina">Sconto Benzina</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="scontoGasolio">
-            <span jhiTranslate="benzappApp.fascia.scontoGasolio">Sconto Gasolio</span> <fa-icon icon="sort"></fa-icon>
-          </th>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="benzappApp.fascia.descrizione">Descrizione</span></th>
+          <th scope="col"><span jhiTranslate="benzappApp.fascia.scontoBenzina">Sconto Benzina</span></th>
+          <th scope="col"><span jhiTranslate="benzappApp.fascia.scontoGasolio">Sconto Gasolio</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -74,23 +68,5 @@
         </tr>
       </tbody>
     </table>
-  </div>
-
-  <div *ngIf="fascias && fascias.length > 0">
-    <div class="row justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
-
-    <div class="row justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [(page)]="ngbPaginationPage"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="loadPage($event)"
-      ></ngb-pagination>
-    </div>
   </div>
 </div>

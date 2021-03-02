@@ -35,9 +35,6 @@
             <column name="carburante" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="fascia_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="cittadino_id" type="bigint">
                 <constraints nullable="true" />
             </column>

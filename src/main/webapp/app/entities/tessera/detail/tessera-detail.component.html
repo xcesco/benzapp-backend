@@ -47,12 +47,6 @@
         <dd>
           <span jhiTranslate="{{ 'benzappApp.TipoCarburante.' + tessera.carburante }}">{{ tessera.carburante }}</span>
         </dd>
-        <dt><span jhiTranslate="benzappApp.tessera.fascia">Fascia</span></dt>
-        <dd>
-          <div *ngIf="tessera.fascia">
-            <a [routerLink]="['/fascia', tessera.fascia?.id, 'view']">{{ tessera.fascia?.id }}</a>
-          </div>
-        </dd>
         <dt><span jhiTranslate="benzappApp.tessera.cittadino">Cittadino</span></dt>
         <dd>
           <div *ngIf="tessera.cittadino">

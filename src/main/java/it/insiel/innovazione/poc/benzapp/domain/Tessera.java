@@ -63,10 +63,6 @@ public class Tessera implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "tesseras" }, allowSetters = true)
-    private Fascia fascia;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "tesseras" }, allowSetters = true)
     private Cittadino cittadino;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -203,19 +199,6 @@ public class Tessera implements Serializable {
             rifornimentos.forEach(i -> i.setTessera(this));
         }
         this.rifornimentos = rifornimentos;
-    }
-
-    public Fascia getFascia() {
-        return this.fascia;
-    }
-
-    public Tessera fascia(Fascia fascia) {
-        this.setFascia(fascia);
-        return this;
-    }
-
-    public void setFascia(Fascia fascia) {
-        this.fascia = fascia;
     }
 
     public Cittadino getCittadino() {

@@ -11,8 +11,6 @@ import { TesseraService } from '../service/tessera.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
-import { IFascia } from 'app/entities/fascia/fascia.model';
-import { FasciaService } from 'app/entities/fascia/service/fascia.service';
 import { ICittadino } from 'app/entities/cittadino/cittadino.model';
 import { CittadinoService } from 'app/entities/cittadino/service/cittadino.service';
 
@@ -22,7 +20,6 @@ import { CittadinoService } from 'app/entities/cittadino/service/cittadino.servi
 })
 export class TesseraUpdateComponent implements OnInit {
   isSaving = false;
-  fascias: IFascia[] = [];
   cittadinos: ICittadino[] = [];
 
   editForm = this.fb.group({
@@ -34,7 +31,6 @@ export class TesseraUpdateComponent implements OnInit {
     targa: [null, [Validators.required]],
     veicolo: [null, [Validators.required]],
     carburante: [null, [Validators.required]],
-    fascia: [],
     cittadino: [],
   });
 
@@ -42,7 +38,6 @@ export class TesseraUpdateComponent implements OnInit {
     protected dataUtils: DataUtils,
     protected eventManager: EventManager,
     protected tesseraService: TesseraService,
-    protected fasciaService: FasciaService,
     protected cittadinoService: CittadinoService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
@@ -58,8 +53,6 @@ export class TesseraUpdateComponent implements OnInit {
 
       this.updateForm(tessera);
 
-      this.fasciaService.query().subscribe((res: HttpResponse<IFascia[]>) => (this.fascias = res.body ?? []));
-
       this.cittadinoService.query().subscribe((res: HttpResponse<ICittadino[]>) => (this.cittadinos = res.body ?? []));
     });
   }
@@ -74,7 +67,6 @@ export class TesseraUpdateComponent implements OnInit {
       targa: tessera.targa,
       veicolo: tessera.veicolo,
       carburante: tessera.carburante,
-      fascia: tessera.fascia,
       cittadino: tessera.cittadino,
     });
   }
@@ -133,7 +125,6 @@ export class TesseraUpdateComponent implements OnInit {
       targa: this.editForm.get(['targa'])!.value,
       veicolo: this.editForm.get(['veicolo'])!.value,
       carburante: this.editForm.get(['carburante'])!.value,
-      fascia: this.editForm.get(['fascia'])!.value,
       cittadino: this.editForm.get(['cittadino'])!.value,
     };
   }
@@ -152,10 +143,6 @@ export class TesseraUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
-  }
-
-  trackFasciaById(index: number, item: IFascia): number {
-    return item.id!;
   }
 
   trackCittadinoById(index: number, item: ICittadino): number {

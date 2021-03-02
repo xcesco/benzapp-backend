@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 
 import { GestoreService } from '../service/gestore.service';
 import { Gestore } from '../gestore.model';
+import { Fascia } from 'app/entities/fascia/fascia.model';
 import { Marchio } from 'app/entities/marchio/marchio.model';
 
 import { GestoreUpdateComponent } from './gestore-update.component';
@@ -64,6 +65,14 @@ describe('Component Tests', () => {
     });
 
     describe('Tracking relationships identifiers', () => {
+      describe('trackFasciaById', () => {
+        it('Should return tracked Fascia primary key', () => {
+          const entity = new Fascia(123);
+          const trackResult = comp.trackFasciaById(0, entity);
+          expect(trackResult).toEqual(entity.id);
+        });
+      });
+
       describe('trackMarchioById', () => {
         it('Should return tracked Marchio primary key', () => {
           const entity = new Marchio(123);

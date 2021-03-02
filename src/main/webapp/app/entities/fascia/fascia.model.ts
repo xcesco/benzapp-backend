@@ -1,11 +1,11 @@
-import { ITessera } from 'app/entities/tessera/tessera.model';
+import { IGestore } from 'app/entities/gestore/gestore.model';
 
 export interface IFascia {
   id?: number;
   descrizione?: string | null;
   scontoBenzina?: number | null;
   scontoGasolio?: number | null;
-  tesseras?: ITessera[] | null;
+  gestores?: IGestore[] | null;
 }
 
 export class Fascia implements IFascia {
@@ -14,6 +14,6 @@ export class Fascia implements IFascia {
     public descrizione?: string | null,
     public scontoBenzina?: number | null,
     public scontoGasolio?: number | null,
-    public tesseras?: ITessera[] | null
+    public gestores?: IGestore[] | null
   ) {}
 }

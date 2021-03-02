@@ -1,9 +1,8 @@
 package it.insiel.innovazione.poc.benzapp.service;
 
 import it.insiel.innovazione.poc.benzapp.domain.Fascia;
+import java.util.List;
 import java.util.Optional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 /**
  * Service Interface for managing {@link Fascia}.
@@ -28,10 +27,9 @@ public interface FasciaService {
     /**
      * Get all the fascias.
      *
-     * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<Fascia> findAll(Pageable pageable);
+    List<Fascia> findAll();
 
     /**
      * Get the "id" fascia.

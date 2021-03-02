@@ -34,7 +34,7 @@ public class Cittadino implements Serializable {
 
     @OneToMany(mappedBy = "cittadino")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "rifornimentos", "fascia", "cittadino" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "rifornimentos", "cittadino" }, allowSetters = true)
     private Set<Tessera> tesseras = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -55,7 +55,7 @@ public class CacheConfiguration {
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Cittadino.class.getName());
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Cittadino.class.getName() + ".tesseras");
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Fascia.class.getName());
-            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Fascia.class.getName() + ".tesseras");
+            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Fascia.class.getName() + ".gestores");
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Tessera.class.getName());
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Tessera.class.getName() + ".rifornimentos");
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Rifornimento.class.getName());

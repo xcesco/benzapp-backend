@@ -1,3 +1,3 @@
-id;provincia;comune;indirizzo;longitudine;latitudine;tipo;marchio_id
-1;Trieste;Trieste;STRADA DELLA ROSANDRA 62;45.61306133;13.82567854;STRADALE;1
-2;Trieste;Duino Aurisina;A4 DUINO NORD;45.74951700;13.67394400;AUTOSTRADALE;3
+id;provincia;comune;indirizzo;longitudine;latitudine;tipo;marchio_id;fascia_id
+1;Trieste;Trieste;STRADA DELLA ROSANDRA 62;45.61306133;13.82567854;STRADALE;1;1
+2;Trieste;Duino Aurisina;A4 DUINO NORD;45.74951700;13.67394400;AUTOSTRADALE;3;2

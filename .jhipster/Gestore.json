@@ -36,6 +36,12 @@
     },
     {
       "relationshipType": "many-to-one",
+      "otherEntityName": "fascia",
+      "otherEntityRelationshipName": "gestore",
+      "relationshipName": "fascia"
+    },
+    {
+      "relationshipType": "many-to-one",
       "otherEntityName": "marchio",
       "otherEntityRelationshipName": "gestore",
       "relationshipName": "marchio"
