@@ -6,9 +6,10 @@ import { RifornimentoDetailComponent } from './detail/rifornimento-detail.compon
 import { RifornimentoUpdateComponent } from './update/rifornimento-update.component';
 import { RifornimentoDeleteDialogComponent } from './delete/rifornimento-delete-dialog.component';
 import { RifornimentoRoutingModule } from './route/rifornimento-routing.module';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 @NgModule({
-  imports: [SharedModule, RifornimentoRoutingModule],
+  imports: [SharedModule, RifornimentoRoutingModule, ZXingScannerModule],
   declarations: [RifornimentoComponent, RifornimentoDetailComponent, RifornimentoUpdateComponent, RifornimentoDeleteDialogComponent],
   entryComponents: [RifornimentoDeleteDialogComponent],
 })
