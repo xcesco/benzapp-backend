@@ -4,9 +4,25 @@
 put Sass variables here:
 eg $input-color: red;
 ****************************/
+/**
+$primary-h: 0;
+$primary-s: 80;
+$primary-b: 100;
+**/
+
+
+$primary-h: 20;
+$primary-s: 76;
+$primary-b: 42;
+
+
 // Override Bootstrap variables
-@import 'bootstrap-variables';
+// @import 'bootstrap-variables';
+
 // Import Bootstrap source files from node_modules
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
+
+@import '~bootstrap-italia/src/scss/bootstrap-italia.scss';
+@import 'benzapp-custom.scss';
 
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */

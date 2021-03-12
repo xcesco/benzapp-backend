@@ -18,3 +18,11 @@ $primary-b: 100;
 
 // import libreria
 //@import "node_modules/bootstrap-italia/src/scss/bootstrap-italia.scss";
+
+.img-logo {
+    max-width: 80px;
+}
+
+div.link-list-wrapper ul.link-list li {
+    white-space: nowrap;
+}
