@@ -43,10 +43,13 @@
             ],
             "styles": [
               "src/main/webapp/content/scss/vendor.scss",
-              "src/main/webapp/content/scss/global.scss",
-              "src/main/webapp/content/scss/benzapp-custom.scss"
+              "src/main/webapp/content/scss/global.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/main/webapp/content/js/jquery-3.6.0.min.js",
+              "src/main/webapp/content/js/bootstrap-italia.min.js",
+              "src/main/webapp/content/js/custom.js"
+            ]
           },
           "configurations": {
             "production": {
