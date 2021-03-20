@@ -29,8 +29,8 @@
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="marchios && marchios.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
+    <table class="table table-hover" aria-describedby="page-heading">
+      <thead class="thead-dark">
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
           <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="immagine">

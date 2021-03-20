@@ -2,7 +2,7 @@
   "benzappApp": {
     "tessera": {
       "home": {
-        "title": "Tessere",
+        "title": "Tesseras",
         "refreshListLabel": "Refresh list",
         "createLabel": "Genera un nuovo Tessera",
         "createOrEditLabel": "Genera o modifica un Tessera",
@@ -25,6 +25,7 @@
       "veicolo": "Veicolo",
       "carburante": "Carburante",
       "rifornimento": "Rifornimento",
+      "delega": "Delega",
       "cittadino": "Cittadino"
     }
   }

@@ -11,9 +11,6 @@ const fasciaRoute: Routes = [
   {
     path: '',
     component: FasciaComponent,
-    data: {
-      defaultSort: 'id,asc',
-    },
     canActivate: [UserRouteAccessService],
   },
   {

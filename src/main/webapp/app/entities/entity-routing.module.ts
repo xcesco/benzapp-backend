@@ -5,16 +5,6 @@ import { RouterModule } from '@angular/router';
   imports: [
     RouterModule.forChild([
       {
-        path: 'gestore',
-        data: { pageTitle: 'benzappApp.gestore.home.title' },
-        loadChildren: () => import('./gestore/gestore.module').then(m => m.GestoreModule),
-      },
-      {
-        path: 'marchio',
-        data: { pageTitle: 'benzappApp.marchio.home.title' },
-        loadChildren: () => import('./marchio/marchio.module').then(m => m.MarchioModule),
-      },
-      {
         path: 'cittadino',
         data: { pageTitle: 'benzappApp.cittadino.home.title' },
         loadChildren: () => import('./cittadino/cittadino.module').then(m => m.CittadinoModule),
@@ -25,14 +15,29 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./fascia/fascia.module').then(m => m.FasciaModule),
       },
       {
-        path: 'tessera',
-        data: { pageTitle: 'benzappApp.tessera.home.title' },
-        loadChildren: () => import('./tessera/tessera.module').then(m => m.TesseraModule),
+        path: 'gestore',
+        data: { pageTitle: 'benzappApp.gestore.home.title' },
+        loadChildren: () => import('./gestore/gestore.module').then(m => m.GestoreModule),
+      },
+      {
+        path: 'marchio',
+        data: { pageTitle: 'benzappApp.marchio.home.title' },
+        loadChildren: () => import('./marchio/marchio.module').then(m => m.MarchioModule),
       },
       {
         path: 'rifornimento',
         data: { pageTitle: 'benzappApp.rifornimento.home.title' },
         loadChildren: () => import('./rifornimento/rifornimento.module').then(m => m.RifornimentoModule),
+      },
+      {
+        path: 'tessera',
+        data: { pageTitle: 'benzappApp.tessera.home.title' },
+        loadChildren: () => import('./tessera/tessera.module').then(m => m.TesseraModule),
+      },
+      {
+        path: 'delega',
+        data: { pageTitle: 'benzappApp.delega.home.title' },
+        loadChildren: () => import('./delega/delega.module').then(m => m.DelegaModule),
       },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),

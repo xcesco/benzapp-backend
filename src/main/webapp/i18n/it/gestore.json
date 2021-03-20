@@ -2,7 +2,7 @@
   "benzappApp": {
     "gestore": {
       "home": {
-        "title": "Gestori",
+        "title": "Gestores",
         "refreshListLabel": "Refresh list",
         "createLabel": "Genera un nuovo Gestore",
         "createOrEditLabel": "Genera o modifica un Gestore",

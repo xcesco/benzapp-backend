@@ -1,0 +1,28 @@
+{
+  "name": "Delega",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cittadino",
+      "otherEntityRelationshipName": "delega",
+      "relationshipName": "cittadino"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "tessera",
+      "otherEntityRelationshipName": "delega",
+      "relationshipName": "tessera"
+    }
+  ],
+  "entityTableName": "deleghe",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["benzapp"],
+  "changelogDate": "20210228214357"
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <!--
+        Added the constraints for entity Tessera.
+    -->
+    <changeSet id="20210228214257-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="cittadino_id"
+                                 baseTableName="tessere"
+                                 constraintName="fk_tessere__cittadino_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cittadini"/>
+
+    </changeSet>
+</databaseChangeLog>

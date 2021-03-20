@@ -16,7 +16,6 @@ import { TesseraService } from 'app/entities/tessera/service/tessera.service';
 @Component({
   selector: 'jhi-rifornimento-update',
   templateUrl: './rifornimento-update.component.html',
-  styleUrls: ['./rifornimento-update.component.scss'],
 })
 export class RifornimentoUpdateComponent implements OnInit {
   isSaving = false;

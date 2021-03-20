@@ -7,12 +7,13 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entità",
-        "gestore": "Gestore",
-        "marchio": "Marchio",
         "cittadino": "Cittadino",
         "fascia": "Fascia",
-        "tessera": "Tessera",
+        "gestore": "Gestore",
+        "marchio": "Marchio",
         "rifornimento": "Rifornimento",
+        "tessera": "Tessera",
+        "delega": "Delega",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -21,7 +22,6 @@
         "password": "Password",
         "sessions": "Sessioni",
         "login": "Accesso",
-        "welcome": "Benvenuto",
         "logout": "Esci",
         "register": "Registrazione"
       },
@@ -141,5 +141,5 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "Piè di pagina"
+  "footer": "Realizzato da Insiel S.p.A. - Divisione Innovazione"
 }

@@ -1,4 +1,5 @@
 @import '~bootstrap/scss/functions';
+@import '~bootswatch/dist/litera/variables';
 @import '~bootstrap/scss/variables';
 
 /* ==========================================================================
@@ -17,6 +18,11 @@ Navbar
 
 .navbar {
   padding: 0.2rem 1rem;
+  .dropdown-item.active,
+  .dropdown-item.active:focus,
+  .dropdown-item.active:hover {
+    background-color: $dark;
+  }
 
   ul.navbar-nav {
     .nav-item {
@@ -27,16 +33,43 @@ Navbar
   a.nav-link {
     font-weight: 400;
   }
+
+  .navbar-toggler {
+    &:hover {
+      color: $navbar-dark-hover-color;
+    }
+  }
 }
 
 /* ==========================================================================
 Logo styles
 ========================================================================== */
 .logo-img {
-  height: 45px;
-  width: 45px;
+  height: 86px;
+  width: 86px;
   display: inline-block;
   vertical-align: middle;
-  background: url('../../../content/images/logo-jhipster.png') no-repeat center center;
+  background: url('../../../content/images/logo-benzapp.png') no-repeat center center;
   background-size: contain;
+}
+
+.logo-fvg-img {
+  height: 27px;
+  width: 384px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/logo-fvg.png') no-repeat center center;
+  background-size: contain;
+}
+
+/*
+Gradient
+ */
+.bg-gradient {
+  position: relative;
+  height: 60px;
+  background-image: linear-gradient(#4582ec, #799dea);
+
+  border-bottom-left-radius: 50% 20%;
+  border-bottom-right-radius: 50% 20%;
 }
