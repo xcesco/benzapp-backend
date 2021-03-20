@@ -42,6 +42,12 @@
       "relationshipName": "rifornimento"
     },
     {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "delega",
+      "otherEntityRelationshipName": "tessera",
+      "relationshipName": "delega"
+    },
+    {
       "relationshipType": "many-to-one",
       "otherEntityName": "cittadino",
       "otherEntityRelationshipName": "tessera",
@@ -57,5 +63,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": ["benzapp"],
-  "changelogDate": "20210228214057"
+  "changelogDate": "20210228214257"
 }

@@ -1,4 +1,5 @@
 import { ITessera } from 'app/entities/tessera/tessera.model';
+import { IDelega } from 'app/entities/delega/delega.model';
 
 export interface ICittadino {
   id?: number;
@@ -6,6 +7,7 @@ export interface ICittadino {
   cognome?: string | null;
   codiceFiscale?: string | null;
   tesseras?: ITessera[] | null;
+  delegas?: IDelega[] | null;
 }
 
 export class Cittadino implements ICittadino {
@@ -14,6 +16,7 @@ export class Cittadino implements ICittadino {
     public nome?: string | null,
     public cognome?: string | null,
     public codiceFiscale?: string | null,
-    public tesseras?: ITessera[] | null
+    public tesseras?: ITessera[] | null,
+    public delegas?: IDelega[] | null
   ) {}
 }

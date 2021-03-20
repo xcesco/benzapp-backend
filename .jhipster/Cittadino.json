@@ -20,6 +20,12 @@
       "otherEntityName": "tessera",
       "otherEntityRelationshipName": "cittadino",
       "relationshipName": "tessera"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "delega",
+      "otherEntityRelationshipName": "cittadino",
+      "relationshipName": "delega"
     }
   ],
   "entityTableName": "cittadini",
@@ -31,5 +37,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": ["benzapp"],
-  "changelogDate": "20210228213857"
+  "changelogDate": "20210228213757"
 }

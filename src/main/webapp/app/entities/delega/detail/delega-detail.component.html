@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="delega">
+      <h2 data-cy="delegaDetailsHeading"><span jhiTranslate="benzappApp.delega.detail.title">Delega</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ delega.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.delega.cittadino">Cittadino</span></dt>
+        <dd>
+          <div *ngIf="delega.cittadino">
+            <a [routerLink]="['/cittadino', delega.cittadino?.id, 'view']">{{ delega.cittadino?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.delega.tessera">Tessera</span></dt>
+        <dd>
+          <div *ngIf="delega.tessera">
+            <a [routerLink]="['/tessera', delega.tessera?.id, 'view']">{{ delega.tessera?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/delega', delega.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

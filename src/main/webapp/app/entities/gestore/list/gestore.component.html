@@ -33,11 +33,6 @@
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
           <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-
-          <th scope="col" jhiSortBy="marchio.id">
-            <span jhiTranslate="benzappApp.gestore.marchio">Marchio</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-
           <th scope="col" jhiSortBy="provincia">
             <span jhiTranslate="benzappApp.gestore.provincia">Provincia</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -57,7 +52,9 @@
           <th scope="col" jhiSortBy="fascia.id">
             <span jhiTranslate="benzappApp.gestore.fascia">Fascia</span> <fa-icon icon="sort"></fa-icon>
           </th>
-
+          <th scope="col" jhiSortBy="marchio.id">
+            <span jhiTranslate="benzappApp.gestore.marchio">Marchio</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -66,19 +63,6 @@
           <td>
             <a [routerLink]="['/gestore', gestore.id, 'view']">{{ gestore.id }}</a>
           </td>
-
-          <td>
-            <div *ngIf="gestore.marchio">
-              <a [routerLink]="['/marchio', gestore.marchio?.id, 'view']">
-                <img
-                  style="width: 32px"
-                  src="data:{{ gestore.marchio.immagineContentType }};base64,{{ gestore.marchio.immagine }}"
-                  alt="{{ gestore.marchio.nome }}"
-                />
-              </a>
-            </div>
-          </td>
-
           <td>{{ gestore.provincia }}</td>
           <td>{{ gestore.comune }}</td>
           <td>{{ gestore.indirizzo }}</td>
@@ -90,7 +74,11 @@
               <a [routerLink]="['/fascia', gestore.fascia?.id, 'view']">{{ gestore.fascia?.id }}</a>
             </div>
           </td>
-
+          <td>
+            <div *ngIf="gestore.marchio">
+              <a [routerLink]="['/marchio', gestore.marchio?.id, 'view']">{{ gestore.marchio?.id }}</a>
+            </div>
+          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

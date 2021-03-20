@@ -52,11 +52,11 @@
           <td>{{ cittadino.cognome }}</td>
           <td>{{ cittadino.codiceFiscale }}</td>
           <td class="text-right">
-            <div class="btn-group">
+            <div>
               <button
                 type="submit"
                 [routerLink]="['/cittadino', cittadino.id, 'view']"
-                class="btn btn-info btn-sm"
+                class="btn btn-outline-primary"
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
@@ -66,14 +66,14 @@
               <button
                 type="submit"
                 [routerLink]="['/cittadino', cittadino.id, 'edit']"
-                class="btn btn-primary btn-sm"
+                class="btn btn-outline-primary"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(cittadino)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(cittadino)" class="btn btn-outline-danger" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>

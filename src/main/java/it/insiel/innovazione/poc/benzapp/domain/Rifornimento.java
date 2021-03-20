@@ -54,7 +54,7 @@ public class Rifornimento implements Serializable {
     private Gestore gestore;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "rifornimentos", "cittadino" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "rifornimentos", "delegas", "cittadino" }, allowSetters = true)
     private Tessera tessera;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
