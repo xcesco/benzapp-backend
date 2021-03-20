@@ -2,6 +2,9 @@ import * as dayjs from 'dayjs';
 import { IGestore } from 'app/entities/gestore/gestore.model';
 import { ITessera } from 'app/entities/tessera/tessera.model';
 import { TipoCarburante } from 'app/entities/enumerations/tipo-carburante.model';
+import { TipoVeicolo } from 'app/entities/enumerations/tipo-veicolo.model';
+import { IDelega } from 'app/entities/delega/delega.model';
+import { ICittadino } from 'app/entities/cittadino/cittadino.model';
 
 export interface IRifornimento {
   id?: number;
@@ -27,4 +30,13 @@ export class Rifornimento implements IRifornimento {
     public gestore?: IGestore | null,
     public tessera?: ITessera | null
   ) {}
+}
+
+export interface IQRCode {
+  codice: string;
+  codiceFiscale: string;
+  targa: string;
+  veicolo: TipoVeicolo;
+  carburante: TipoCarburante;
+  checksum: string;
 }

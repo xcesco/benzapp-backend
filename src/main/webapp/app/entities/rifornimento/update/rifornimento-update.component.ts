@@ -6,21 +6,26 @@ import { Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
-import { IRifornimento, Rifornimento } from '../rifornimento.model';
+import { IQRCode, IRifornimento, Rifornimento } from '../rifornimento.model';
 import { RifornimentoService } from '../service/rifornimento.service';
 import { IGestore } from 'app/entities/gestore/gestore.model';
 import { GestoreService } from 'app/entities/gestore/service/gestore.service';
 import { ITessera } from 'app/entities/tessera/tessera.model';
 import { TesseraService } from 'app/entities/tessera/service/tessera.service';
+import { CittadinoService } from 'app/entities/cittadino/service/cittadino.service';
 
 @Component({
   selector: 'jhi-rifornimento-update',
   templateUrl: './rifornimento-update.component.html',
 })
 export class RifornimentoUpdateComponent implements OnInit {
+  buffer = '';
+
   isSaving = false;
   gestores: IGestore[] = [];
   tesseras: ITessera[] = [];
+
+  currentTessera: ITessera | null = null;
 
   editForm = this.fb.group({
     id: [],
@@ -38,9 +43,15 @@ export class RifornimentoUpdateComponent implements OnInit {
     protected rifornimentoService: RifornimentoService,
     protected gestoreService: GestoreService,
     protected tesseraService: TesseraService,
+    protected cittadinoService: CittadinoService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
+
+  // @HostListener('document:keypress', ['$event'])
+  // handleKeyboardEvent(event: KeyboardEvent) {
+  //   // this.key = event.key;
+  // }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ rifornimento }) => {
@@ -122,5 +133,13 @@ export class RifornimentoUpdateComponent implements OnInit {
 
   trackTesseraById(index: number, item: ITessera): number {
     return item.id!;
+  }
+
+  onChangeQRCode($event: any): void {
+    const qrcode = $event.target.value as IQRCode;
+
+    this.cittadinoService.query();
+    console.error(qrcode);
+    alert(qrcode);
   }
 }
