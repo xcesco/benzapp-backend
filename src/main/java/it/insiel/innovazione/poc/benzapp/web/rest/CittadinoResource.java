@@ -1,7 +1,9 @@
 package it.insiel.innovazione.poc.benzapp.web.rest;
 
 import it.insiel.innovazione.poc.benzapp.domain.Cittadino;
+import it.insiel.innovazione.poc.benzapp.service.CittadinoQueryService;
 import it.insiel.innovazione.poc.benzapp.service.CittadinoService;
+import it.insiel.innovazione.poc.benzapp.service.dto.CittadinoCriteria;
 import it.insiel.innovazione.poc.benzapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -37,8 +39,11 @@ public class CittadinoResource {
 
     private final CittadinoService cittadinoService;
 
-    public CittadinoResource(CittadinoService cittadinoService) {
+    private final CittadinoQueryService cittadinoQueryService;
+
+    public CittadinoResource(CittadinoService cittadinoService, CittadinoQueryService cittadinoQueryService) {
         this.cittadinoService = cittadinoService;
+        this.cittadinoQueryService = cittadinoQueryService;
     }
 
     /**
@@ -112,14 +117,27 @@ public class CittadinoResource {
      * {@code GET  /cittadinos} : get all the cittadinos.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of cittadinos in body.
      */
     @GetMapping("/cittadinos")
-    public ResponseEntity<List<Cittadino>> getAllCittadinos(Pageable pageable) {
-        log.debug("REST request to get a page of Cittadinos");
-        Page<Cittadino> page = cittadinoService.findAll(pageable);
+    public ResponseEntity<List<Cittadino>> getAllCittadinos(CittadinoCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Cittadinos by criteria: {}", criteria);
+        Page<Cittadino> page = cittadinoQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /cittadinos/count} : count all the cittadinos.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/cittadinos/count")
+    public ResponseEntity<Long> countCittadinos(CittadinoCriteria criteria) {
+        log.debug("REST request to count Cittadinos by criteria: {}", criteria);
+        return ResponseEntity.ok().body(cittadinoQueryService.countByCriteria(criteria));
     }
 
     /**

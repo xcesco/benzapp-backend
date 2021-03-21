@@ -12,12 +12,31 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <input #qrcode type="password" class="form-control" autofocus (change)="onChangeQRCode($event)" />
+        <input
+          placeholder="Seleziona questo riguadro ed avvia la scansione del qrcode"
+          #qrcode
+          type="password"
+          class="form-control"
+          (change)="onChangeQRCode($event)"
+        />
         <button type="button" class="btn btn-primary" (click)="qrcode.value = ''">Riprova</button>
 
         <div class="form-group" [hidden]="editForm.get('id')!.value == null">
           <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <button
+            style="height: 120px; width: 120px"
+            autofocus
+            type="button"
+            class="btn btn-primary"
+            (focusout)="qrinfo.textContent = 'Seleziona per scansione'"
+            (focusin)="qrinfo.textContent = 'Scansiona qrcode'"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span #qrinfo>Seleziona per scansione</span>
+          </button>
         </div>
 
         <div class="form-group">
@@ -205,7 +224,7 @@
               [ngValue]="tesseraOption.id === editForm.get('tessera')!.value?.id ? editForm.get('tessera')!.value : tesseraOption"
               *ngFor="let tesseraOption of tesseras; trackBy: trackTesseraById"
             >
-              {{ tesseraOption.id }}
+              {{ tesseraOption.targa }}
             </option>
           </select>
         </div>

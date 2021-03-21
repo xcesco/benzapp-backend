@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface CittadinoRepository extends JpaRepository<Cittadino, Long> {}
+public interface CittadinoRepository extends JpaRepository<Cittadino, Long>, JpaSpecificationExecutor<Cittadino> {}

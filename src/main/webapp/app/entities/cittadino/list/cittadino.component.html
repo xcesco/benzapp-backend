@@ -29,8 +29,8 @@
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="cittadinos && cittadinos.length > 0">
-    <table class="table table-hover" aria-describedby="page-heading">
-      <thead class="thead-dark">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
           <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="nome"><span jhiTranslate="benzappApp.cittadino.nome">Nome</span> <fa-icon icon="sort"></fa-icon></th>
@@ -52,11 +52,11 @@
           <td>{{ cittadino.cognome }}</td>
           <td>{{ cittadino.codiceFiscale }}</td>
           <td class="text-right">
-            <div>
+            <div class="btn-group">
               <button
                 type="submit"
                 [routerLink]="['/cittadino', cittadino.id, 'view']"
-                class="btn btn-outline-primary"
+                class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
@@ -66,14 +66,14 @@
               <button
                 type="submit"
                 [routerLink]="['/cittadino', cittadino.id, 'edit']"
-                class="btn btn-outline-primary"
+                class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(cittadino)" class="btn btn-outline-danger" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(cittadino)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>

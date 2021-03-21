@@ -6,9 +6,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import it.insiel.innovazione.poc.benzapp.IntegrationTest;
+import it.insiel.innovazione.poc.benzapp.domain.Fascia;
 import it.insiel.innovazione.poc.benzapp.domain.Gestore;
+import it.insiel.innovazione.poc.benzapp.domain.Marchio;
+import it.insiel.innovazione.poc.benzapp.domain.Rifornimento;
 import it.insiel.innovazione.poc.benzapp.domain.enumeration.TipoImpianto;
 import it.insiel.innovazione.poc.benzapp.repository.GestoreRepository;
+import it.insiel.innovazione.poc.benzapp.service.GestoreQueryService;
+import it.insiel.innovazione.poc.benzapp.service.dto.GestoreCriteria;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,15 +44,20 @@ class GestoreResourceIT {
 
     private static final Float DEFAULT_LONGITUDINE = 1F;
     private static final Float UPDATED_LONGITUDINE = 2F;
+    private static final Float SMALLER_LONGITUDINE = 1F - 1F;
 
     private static final Float DEFAULT_LATITUDINE = 1F;
     private static final Float UPDATED_LATITUDINE = 2F;
+    private static final Float SMALLER_LATITUDINE = 1F - 1F;
 
     private static final TipoImpianto DEFAULT_TIPO = TipoImpianto.AUTOSTRADALE;
     private static final TipoImpianto UPDATED_TIPO = TipoImpianto.STRADALE;
 
     @Autowired
     private GestoreRepository gestoreRepository;
+
+    @Autowired
+    private GestoreQueryService gestoreQueryService;
 
     @Autowired
     private EntityManager em;
@@ -173,6 +183,618 @@ class GestoreResourceIT {
             .andExpect(jsonPath("$.longitudine").value(DEFAULT_LONGITUDINE.doubleValue()))
             .andExpect(jsonPath("$.latitudine").value(DEFAULT_LATITUDINE.doubleValue()))
             .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()));
+    }
+
+    @Test
+    @Transactional
+    void getGestoresByIdFiltering() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        Long id = gestore.getId();
+
+        defaultGestoreShouldBeFound("id.equals=" + id);
+        defaultGestoreShouldNotBeFound("id.notEquals=" + id);
+
+        defaultGestoreShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultGestoreShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultGestoreShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultGestoreShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByProvinciaIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where provincia equals to DEFAULT_PROVINCIA
+        defaultGestoreShouldBeFound("provincia.equals=" + DEFAULT_PROVINCIA);
+
+        // Get all the gestoreList where provincia equals to UPDATED_PROVINCIA
+        defaultGestoreShouldNotBeFound("provincia.equals=" + UPDATED_PROVINCIA);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByProvinciaIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where provincia not equals to DEFAULT_PROVINCIA
+        defaultGestoreShouldNotBeFound("provincia.notEquals=" + DEFAULT_PROVINCIA);
+
+        // Get all the gestoreList where provincia not equals to UPDATED_PROVINCIA
+        defaultGestoreShouldBeFound("provincia.notEquals=" + UPDATED_PROVINCIA);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByProvinciaIsInShouldWork() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where provincia in DEFAULT_PROVINCIA or UPDATED_PROVINCIA
+        defaultGestoreShouldBeFound("provincia.in=" + DEFAULT_PROVINCIA + "," + UPDATED_PROVINCIA);
+
+        // Get all the gestoreList where provincia equals to UPDATED_PROVINCIA
+        defaultGestoreShouldNotBeFound("provincia.in=" + UPDATED_PROVINCIA);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByProvinciaIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where provincia is not null
+        defaultGestoreShouldBeFound("provincia.specified=true");
+
+        // Get all the gestoreList where provincia is null
+        defaultGestoreShouldNotBeFound("provincia.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByProvinciaContainsSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where provincia contains DEFAULT_PROVINCIA
+        defaultGestoreShouldBeFound("provincia.contains=" + DEFAULT_PROVINCIA);
+
+        // Get all the gestoreList where provincia contains UPDATED_PROVINCIA
+        defaultGestoreShouldNotBeFound("provincia.contains=" + UPDATED_PROVINCIA);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByProvinciaNotContainsSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where provincia does not contain DEFAULT_PROVINCIA
+        defaultGestoreShouldNotBeFound("provincia.doesNotContain=" + DEFAULT_PROVINCIA);
+
+        // Get all the gestoreList where provincia does not contain UPDATED_PROVINCIA
+        defaultGestoreShouldBeFound("provincia.doesNotContain=" + UPDATED_PROVINCIA);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByComuneIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where comune equals to DEFAULT_COMUNE
+        defaultGestoreShouldBeFound("comune.equals=" + DEFAULT_COMUNE);
+
+        // Get all the gestoreList where comune equals to UPDATED_COMUNE
+        defaultGestoreShouldNotBeFound("comune.equals=" + UPDATED_COMUNE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByComuneIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where comune not equals to DEFAULT_COMUNE
+        defaultGestoreShouldNotBeFound("comune.notEquals=" + DEFAULT_COMUNE);
+
+        // Get all the gestoreList where comune not equals to UPDATED_COMUNE
+        defaultGestoreShouldBeFound("comune.notEquals=" + UPDATED_COMUNE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByComuneIsInShouldWork() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where comune in DEFAULT_COMUNE or UPDATED_COMUNE
+        defaultGestoreShouldBeFound("comune.in=" + DEFAULT_COMUNE + "," + UPDATED_COMUNE);
+
+        // Get all the gestoreList where comune equals to UPDATED_COMUNE
+        defaultGestoreShouldNotBeFound("comune.in=" + UPDATED_COMUNE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByComuneIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where comune is not null
+        defaultGestoreShouldBeFound("comune.specified=true");
+
+        // Get all the gestoreList where comune is null
+        defaultGestoreShouldNotBeFound("comune.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByComuneContainsSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where comune contains DEFAULT_COMUNE
+        defaultGestoreShouldBeFound("comune.contains=" + DEFAULT_COMUNE);
+
+        // Get all the gestoreList where comune contains UPDATED_COMUNE
+        defaultGestoreShouldNotBeFound("comune.contains=" + UPDATED_COMUNE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByComuneNotContainsSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where comune does not contain DEFAULT_COMUNE
+        defaultGestoreShouldNotBeFound("comune.doesNotContain=" + DEFAULT_COMUNE);
+
+        // Get all the gestoreList where comune does not contain UPDATED_COMUNE
+        defaultGestoreShouldBeFound("comune.doesNotContain=" + UPDATED_COMUNE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByIndirizzoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where indirizzo equals to DEFAULT_INDIRIZZO
+        defaultGestoreShouldBeFound("indirizzo.equals=" + DEFAULT_INDIRIZZO);
+
+        // Get all the gestoreList where indirizzo equals to UPDATED_INDIRIZZO
+        defaultGestoreShouldNotBeFound("indirizzo.equals=" + UPDATED_INDIRIZZO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByIndirizzoIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where indirizzo not equals to DEFAULT_INDIRIZZO
+        defaultGestoreShouldNotBeFound("indirizzo.notEquals=" + DEFAULT_INDIRIZZO);
+
+        // Get all the gestoreList where indirizzo not equals to UPDATED_INDIRIZZO
+        defaultGestoreShouldBeFound("indirizzo.notEquals=" + UPDATED_INDIRIZZO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByIndirizzoIsInShouldWork() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where indirizzo in DEFAULT_INDIRIZZO or UPDATED_INDIRIZZO
+        defaultGestoreShouldBeFound("indirizzo.in=" + DEFAULT_INDIRIZZO + "," + UPDATED_INDIRIZZO);
+
+        // Get all the gestoreList where indirizzo equals to UPDATED_INDIRIZZO
+        defaultGestoreShouldNotBeFound("indirizzo.in=" + UPDATED_INDIRIZZO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByIndirizzoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where indirizzo is not null
+        defaultGestoreShouldBeFound("indirizzo.specified=true");
+
+        // Get all the gestoreList where indirizzo is null
+        defaultGestoreShouldNotBeFound("indirizzo.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByIndirizzoContainsSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where indirizzo contains DEFAULT_INDIRIZZO
+        defaultGestoreShouldBeFound("indirizzo.contains=" + DEFAULT_INDIRIZZO);
+
+        // Get all the gestoreList where indirizzo contains UPDATED_INDIRIZZO
+        defaultGestoreShouldNotBeFound("indirizzo.contains=" + UPDATED_INDIRIZZO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByIndirizzoNotContainsSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where indirizzo does not contain DEFAULT_INDIRIZZO
+        defaultGestoreShouldNotBeFound("indirizzo.doesNotContain=" + DEFAULT_INDIRIZZO);
+
+        // Get all the gestoreList where indirizzo does not contain UPDATED_INDIRIZZO
+        defaultGestoreShouldBeFound("indirizzo.doesNotContain=" + UPDATED_INDIRIZZO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLongitudineIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where longitudine equals to DEFAULT_LONGITUDINE
+        defaultGestoreShouldBeFound("longitudine.equals=" + DEFAULT_LONGITUDINE);
+
+        // Get all the gestoreList where longitudine equals to UPDATED_LONGITUDINE
+        defaultGestoreShouldNotBeFound("longitudine.equals=" + UPDATED_LONGITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLongitudineIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where longitudine not equals to DEFAULT_LONGITUDINE
+        defaultGestoreShouldNotBeFound("longitudine.notEquals=" + DEFAULT_LONGITUDINE);
+
+        // Get all the gestoreList where longitudine not equals to UPDATED_LONGITUDINE
+        defaultGestoreShouldBeFound("longitudine.notEquals=" + UPDATED_LONGITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLongitudineIsInShouldWork() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where longitudine in DEFAULT_LONGITUDINE or UPDATED_LONGITUDINE
+        defaultGestoreShouldBeFound("longitudine.in=" + DEFAULT_LONGITUDINE + "," + UPDATED_LONGITUDINE);
+
+        // Get all the gestoreList where longitudine equals to UPDATED_LONGITUDINE
+        defaultGestoreShouldNotBeFound("longitudine.in=" + UPDATED_LONGITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLongitudineIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where longitudine is not null
+        defaultGestoreShouldBeFound("longitudine.specified=true");
+
+        // Get all the gestoreList where longitudine is null
+        defaultGestoreShouldNotBeFound("longitudine.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLongitudineIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where longitudine is greater than or equal to DEFAULT_LONGITUDINE
+        defaultGestoreShouldBeFound("longitudine.greaterThanOrEqual=" + DEFAULT_LONGITUDINE);
+
+        // Get all the gestoreList where longitudine is greater than or equal to UPDATED_LONGITUDINE
+        defaultGestoreShouldNotBeFound("longitudine.greaterThanOrEqual=" + UPDATED_LONGITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLongitudineIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where longitudine is less than or equal to DEFAULT_LONGITUDINE
+        defaultGestoreShouldBeFound("longitudine.lessThanOrEqual=" + DEFAULT_LONGITUDINE);
+
+        // Get all the gestoreList where longitudine is less than or equal to SMALLER_LONGITUDINE
+        defaultGestoreShouldNotBeFound("longitudine.lessThanOrEqual=" + SMALLER_LONGITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLongitudineIsLessThanSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where longitudine is less than DEFAULT_LONGITUDINE
+        defaultGestoreShouldNotBeFound("longitudine.lessThan=" + DEFAULT_LONGITUDINE);
+
+        // Get all the gestoreList where longitudine is less than UPDATED_LONGITUDINE
+        defaultGestoreShouldBeFound("longitudine.lessThan=" + UPDATED_LONGITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLongitudineIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where longitudine is greater than DEFAULT_LONGITUDINE
+        defaultGestoreShouldNotBeFound("longitudine.greaterThan=" + DEFAULT_LONGITUDINE);
+
+        // Get all the gestoreList where longitudine is greater than SMALLER_LONGITUDINE
+        defaultGestoreShouldBeFound("longitudine.greaterThan=" + SMALLER_LONGITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLatitudineIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where latitudine equals to DEFAULT_LATITUDINE
+        defaultGestoreShouldBeFound("latitudine.equals=" + DEFAULT_LATITUDINE);
+
+        // Get all the gestoreList where latitudine equals to UPDATED_LATITUDINE
+        defaultGestoreShouldNotBeFound("latitudine.equals=" + UPDATED_LATITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLatitudineIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where latitudine not equals to DEFAULT_LATITUDINE
+        defaultGestoreShouldNotBeFound("latitudine.notEquals=" + DEFAULT_LATITUDINE);
+
+        // Get all the gestoreList where latitudine not equals to UPDATED_LATITUDINE
+        defaultGestoreShouldBeFound("latitudine.notEquals=" + UPDATED_LATITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLatitudineIsInShouldWork() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where latitudine in DEFAULT_LATITUDINE or UPDATED_LATITUDINE
+        defaultGestoreShouldBeFound("latitudine.in=" + DEFAULT_LATITUDINE + "," + UPDATED_LATITUDINE);
+
+        // Get all the gestoreList where latitudine equals to UPDATED_LATITUDINE
+        defaultGestoreShouldNotBeFound("latitudine.in=" + UPDATED_LATITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLatitudineIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where latitudine is not null
+        defaultGestoreShouldBeFound("latitudine.specified=true");
+
+        // Get all the gestoreList where latitudine is null
+        defaultGestoreShouldNotBeFound("latitudine.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLatitudineIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where latitudine is greater than or equal to DEFAULT_LATITUDINE
+        defaultGestoreShouldBeFound("latitudine.greaterThanOrEqual=" + DEFAULT_LATITUDINE);
+
+        // Get all the gestoreList where latitudine is greater than or equal to UPDATED_LATITUDINE
+        defaultGestoreShouldNotBeFound("latitudine.greaterThanOrEqual=" + UPDATED_LATITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLatitudineIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where latitudine is less than or equal to DEFAULT_LATITUDINE
+        defaultGestoreShouldBeFound("latitudine.lessThanOrEqual=" + DEFAULT_LATITUDINE);
+
+        // Get all the gestoreList where latitudine is less than or equal to SMALLER_LATITUDINE
+        defaultGestoreShouldNotBeFound("latitudine.lessThanOrEqual=" + SMALLER_LATITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLatitudineIsLessThanSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where latitudine is less than DEFAULT_LATITUDINE
+        defaultGestoreShouldNotBeFound("latitudine.lessThan=" + DEFAULT_LATITUDINE);
+
+        // Get all the gestoreList where latitudine is less than UPDATED_LATITUDINE
+        defaultGestoreShouldBeFound("latitudine.lessThan=" + UPDATED_LATITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByLatitudineIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where latitudine is greater than DEFAULT_LATITUDINE
+        defaultGestoreShouldNotBeFound("latitudine.greaterThan=" + DEFAULT_LATITUDINE);
+
+        // Get all the gestoreList where latitudine is greater than SMALLER_LATITUDINE
+        defaultGestoreShouldBeFound("latitudine.greaterThan=" + SMALLER_LATITUDINE);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByTipoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where tipo equals to DEFAULT_TIPO
+        defaultGestoreShouldBeFound("tipo.equals=" + DEFAULT_TIPO);
+
+        // Get all the gestoreList where tipo equals to UPDATED_TIPO
+        defaultGestoreShouldNotBeFound("tipo.equals=" + UPDATED_TIPO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByTipoIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where tipo not equals to DEFAULT_TIPO
+        defaultGestoreShouldNotBeFound("tipo.notEquals=" + DEFAULT_TIPO);
+
+        // Get all the gestoreList where tipo not equals to UPDATED_TIPO
+        defaultGestoreShouldBeFound("tipo.notEquals=" + UPDATED_TIPO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByTipoIsInShouldWork() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where tipo in DEFAULT_TIPO or UPDATED_TIPO
+        defaultGestoreShouldBeFound("tipo.in=" + DEFAULT_TIPO + "," + UPDATED_TIPO);
+
+        // Get all the gestoreList where tipo equals to UPDATED_TIPO
+        defaultGestoreShouldNotBeFound("tipo.in=" + UPDATED_TIPO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByTipoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where tipo is not null
+        defaultGestoreShouldBeFound("tipo.specified=true");
+
+        // Get all the gestoreList where tipo is null
+        defaultGestoreShouldNotBeFound("tipo.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByRifornimentoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+        Rifornimento rifornimento = RifornimentoResourceIT.createEntity(em);
+        em.persist(rifornimento);
+        em.flush();
+        gestore.addRifornimento(rifornimento);
+        gestoreRepository.saveAndFlush(gestore);
+        Long rifornimentoId = rifornimento.getId();
+
+        // Get all the gestoreList where rifornimento equals to rifornimentoId
+        defaultGestoreShouldBeFound("rifornimentoId.equals=" + rifornimentoId);
+
+        // Get all the gestoreList where rifornimento equals to rifornimentoId + 1
+        defaultGestoreShouldNotBeFound("rifornimentoId.equals=" + (rifornimentoId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByFasciaIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+        Fascia fascia = FasciaResourceIT.createEntity(em);
+        em.persist(fascia);
+        em.flush();
+        gestore.setFascia(fascia);
+        gestoreRepository.saveAndFlush(gestore);
+        Long fasciaId = fascia.getId();
+
+        // Get all the gestoreList where fascia equals to fasciaId
+        defaultGestoreShouldBeFound("fasciaId.equals=" + fasciaId);
+
+        // Get all the gestoreList where fascia equals to fasciaId + 1
+        defaultGestoreShouldNotBeFound("fasciaId.equals=" + (fasciaId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByMarchioIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+        Marchio marchio = MarchioResourceIT.createEntity(em);
+        em.persist(marchio);
+        em.flush();
+        gestore.setMarchio(marchio);
+        gestoreRepository.saveAndFlush(gestore);
+        Long marchioId = marchio.getId();
+
+        // Get all the gestoreList where marchio equals to marchioId
+        defaultGestoreShouldBeFound("marchioId.equals=" + marchioId);
+
+        // Get all the gestoreList where marchio equals to marchioId + 1
+        defaultGestoreShouldNotBeFound("marchioId.equals=" + (marchioId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultGestoreShouldBeFound(String filter) throws Exception {
+        restGestoreMockMvc
+            .perform(get("/api/gestores?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(gestore.getId().intValue())))
+            .andExpect(jsonPath("$.[*].provincia").value(hasItem(DEFAULT_PROVINCIA)))
+            .andExpect(jsonPath("$.[*].comune").value(hasItem(DEFAULT_COMUNE)))
+            .andExpect(jsonPath("$.[*].indirizzo").value(hasItem(DEFAULT_INDIRIZZO)))
+            .andExpect(jsonPath("$.[*].longitudine").value(hasItem(DEFAULT_LONGITUDINE.doubleValue())))
+            .andExpect(jsonPath("$.[*].latitudine").value(hasItem(DEFAULT_LATITUDINE.doubleValue())))
+            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())));
+
+        // Check, that the count call also returns 1
+        restGestoreMockMvc
+            .perform(get("/api/gestores/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultGestoreShouldNotBeFound(String filter) throws Exception {
+        restGestoreMockMvc
+            .perform(get("/api/gestores?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restGestoreMockMvc
+            .perform(get("/api/gestores/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

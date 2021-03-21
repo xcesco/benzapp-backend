@@ -1,7 +1,9 @@
 package it.insiel.innovazione.poc.benzapp.web.rest;
 
 import it.insiel.innovazione.poc.benzapp.domain.Rifornimento;
+import it.insiel.innovazione.poc.benzapp.service.RifornimentoQueryService;
 import it.insiel.innovazione.poc.benzapp.service.RifornimentoService;
+import it.insiel.innovazione.poc.benzapp.service.dto.RifornimentoCriteria;
 import it.insiel.innovazione.poc.benzapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -39,8 +41,11 @@ public class RifornimentoResource {
 
     private final RifornimentoService rifornimentoService;
 
-    public RifornimentoResource(RifornimentoService rifornimentoService) {
+    private final RifornimentoQueryService rifornimentoQueryService;
+
+    public RifornimentoResource(RifornimentoService rifornimentoService, RifornimentoQueryService rifornimentoQueryService) {
         this.rifornimentoService = rifornimentoService;
+        this.rifornimentoQueryService = rifornimentoQueryService;
     }
 
     /**
@@ -115,14 +120,27 @@ public class RifornimentoResource {
      * {@code GET  /rifornimentos} : get all the rifornimentos.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of rifornimentos in body.
      */
     @GetMapping("/rifornimentos")
-    public ResponseEntity<List<Rifornimento>> getAllRifornimentos(Pageable pageable) {
-        log.debug("REST request to get a page of Rifornimentos");
-        Page<Rifornimento> page = rifornimentoService.findAll(pageable);
+    public ResponseEntity<List<Rifornimento>> getAllRifornimentos(RifornimentoCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Rifornimentos by criteria: {}", criteria);
+        Page<Rifornimento> page = rifornimentoQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /rifornimentos/count} : count all the rifornimentos.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/rifornimentos/count")
+    public ResponseEntity<Long> countRifornimentos(RifornimentoCriteria criteria) {
+        log.debug("REST request to count Rifornimentos by criteria: {}", criteria);
+        return ResponseEntity.ok().body(rifornimentoQueryService.countByCriteria(criteria));
     }
 
     /**

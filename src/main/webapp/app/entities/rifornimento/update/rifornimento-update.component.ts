@@ -13,6 +13,8 @@ import { GestoreService } from 'app/entities/gestore/service/gestore.service';
 import { ITessera } from 'app/entities/tessera/tessera.model';
 import { TesseraService } from 'app/entities/tessera/service/tessera.service';
 import { CittadinoService } from 'app/entities/cittadino/service/cittadino.service';
+import { TipoCarburante } from 'app/entities/enumerations/tipo-carburante.model';
+import { Dayjs } from 'dayjs';
 
 @Component({
   selector: 'jhi-rifornimento-update',
@@ -136,10 +138,31 @@ export class RifornimentoUpdateComponent implements OnInit {
   }
 
   onChangeQRCode($event: any): void {
-    const qrcode = $event.target.value as IQRCode;
+    console.error($event.target.value);
+    const qrcode: IQRCode = JSON.parse($event.target.value);
 
-    this.cittadinoService.query();
+    this.tesseraService.query({ 'codice.equals': qrcode.tesseraNumero }).subscribe(result => {
+      if (result.body) {
+        const value: ITessera = result.body[0];
+
+        const rifornimento: IRifornimento = {
+          tipoCarburante: value.carburante,
+          tessera: value,
+          data: dayjs(new Date()),
+        };
+        alert(rifornimento.tessera);
+        this.updateForm(rifornimento);
+      }
+    });
+    // this.cittadinoService.query({'codiceFiscale.equals': qrcode.codiceFiscale}).subscribe(result => {
+    //   if (result.body) {
+    //     alert(result.body[0].cognome);
+    //
+    //     const rifornimento: IRifornimento = {tipoCarburante: TipoCarburante.BENZINA};
+    //     this.updateForm(rifornimento);
+    //   }
+    //
+    // })
     console.error(qrcode);
-    alert(qrcode);
   }
 }

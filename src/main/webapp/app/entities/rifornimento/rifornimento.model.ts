@@ -33,10 +33,9 @@ export class Rifornimento implements IRifornimento {
 }
 
 export interface IQRCode {
-  codice: string;
+  tesseraNumero: string;
   codiceFiscale: string;
   targa: string;
   veicolo: TipoVeicolo;
   carburante: TipoCarburante;
-  checksum: string;
 }

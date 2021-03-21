@@ -1,7 +1,9 @@
 package it.insiel.innovazione.poc.benzapp.web.rest;
 
 import it.insiel.innovazione.poc.benzapp.domain.Tessera;
+import it.insiel.innovazione.poc.benzapp.service.TesseraQueryService;
 import it.insiel.innovazione.poc.benzapp.service.TesseraService;
+import it.insiel.innovazione.poc.benzapp.service.dto.TesseraCriteria;
 import it.insiel.innovazione.poc.benzapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -39,8 +41,11 @@ public class TesseraResource {
 
     private final TesseraService tesseraService;
 
-    public TesseraResource(TesseraService tesseraService) {
+    private final TesseraQueryService tesseraQueryService;
+
+    public TesseraResource(TesseraService tesseraService, TesseraQueryService tesseraQueryService) {
         this.tesseraService = tesseraService;
+        this.tesseraQueryService = tesseraQueryService;
     }
 
     /**
@@ -114,14 +119,27 @@ public class TesseraResource {
      * {@code GET  /tesseras} : get all the tesseras.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tesseras in body.
      */
     @GetMapping("/tesseras")
-    public ResponseEntity<List<Tessera>> getAllTesseras(Pageable pageable) {
-        log.debug("REST request to get a page of Tesseras");
-        Page<Tessera> page = tesseraService.findAll(pageable);
+    public ResponseEntity<List<Tessera>> getAllTesseras(TesseraCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Tesseras by criteria: {}", criteria);
+        Page<Tessera> page = tesseraQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /tesseras/count} : count all the tesseras.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/tesseras/count")
+    public ResponseEntity<Long> countTesseras(TesseraCriteria criteria) {
+        log.debug("REST request to count Tesseras by criteria: {}", criteria);
+        return ResponseEntity.ok().body(tesseraQueryService.countByCriteria(criteria));
     }
 
     /**

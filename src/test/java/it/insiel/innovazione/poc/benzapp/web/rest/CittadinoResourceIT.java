@@ -7,7 +7,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import it.insiel.innovazione.poc.benzapp.IntegrationTest;
 import it.insiel.innovazione.poc.benzapp.domain.Cittadino;
+import it.insiel.innovazione.poc.benzapp.domain.Delega;
+import it.insiel.innovazione.poc.benzapp.domain.Tessera;
 import it.insiel.innovazione.poc.benzapp.repository.CittadinoRepository;
+import it.insiel.innovazione.poc.benzapp.service.CittadinoQueryService;
+import it.insiel.innovazione.poc.benzapp.service.dto.CittadinoCriteria;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +42,9 @@ class CittadinoResourceIT {
 
     @Autowired
     private CittadinoRepository cittadinoRepository;
+
+    @Autowired
+    private CittadinoQueryService cittadinoQueryService;
 
     @Autowired
     private EntityManager em;
@@ -142,6 +149,336 @@ class CittadinoResourceIT {
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME))
             .andExpect(jsonPath("$.cognome").value(DEFAULT_COGNOME))
             .andExpect(jsonPath("$.codiceFiscale").value(DEFAULT_CODICE_FISCALE));
+    }
+
+    @Test
+    @Transactional
+    void getCittadinosByIdFiltering() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        Long id = cittadino.getId();
+
+        defaultCittadinoShouldBeFound("id.equals=" + id);
+        defaultCittadinoShouldNotBeFound("id.notEquals=" + id);
+
+        defaultCittadinoShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultCittadinoShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultCittadinoShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultCittadinoShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByNomeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where nome equals to DEFAULT_NOME
+        defaultCittadinoShouldBeFound("nome.equals=" + DEFAULT_NOME);
+
+        // Get all the cittadinoList where nome equals to UPDATED_NOME
+        defaultCittadinoShouldNotBeFound("nome.equals=" + UPDATED_NOME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByNomeIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where nome not equals to DEFAULT_NOME
+        defaultCittadinoShouldNotBeFound("nome.notEquals=" + DEFAULT_NOME);
+
+        // Get all the cittadinoList where nome not equals to UPDATED_NOME
+        defaultCittadinoShouldBeFound("nome.notEquals=" + UPDATED_NOME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByNomeIsInShouldWork() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where nome in DEFAULT_NOME or UPDATED_NOME
+        defaultCittadinoShouldBeFound("nome.in=" + DEFAULT_NOME + "," + UPDATED_NOME);
+
+        // Get all the cittadinoList where nome equals to UPDATED_NOME
+        defaultCittadinoShouldNotBeFound("nome.in=" + UPDATED_NOME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByNomeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where nome is not null
+        defaultCittadinoShouldBeFound("nome.specified=true");
+
+        // Get all the cittadinoList where nome is null
+        defaultCittadinoShouldNotBeFound("nome.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByNomeContainsSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where nome contains DEFAULT_NOME
+        defaultCittadinoShouldBeFound("nome.contains=" + DEFAULT_NOME);
+
+        // Get all the cittadinoList where nome contains UPDATED_NOME
+        defaultCittadinoShouldNotBeFound("nome.contains=" + UPDATED_NOME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByNomeNotContainsSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where nome does not contain DEFAULT_NOME
+        defaultCittadinoShouldNotBeFound("nome.doesNotContain=" + DEFAULT_NOME);
+
+        // Get all the cittadinoList where nome does not contain UPDATED_NOME
+        defaultCittadinoShouldBeFound("nome.doesNotContain=" + UPDATED_NOME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCognomeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where cognome equals to DEFAULT_COGNOME
+        defaultCittadinoShouldBeFound("cognome.equals=" + DEFAULT_COGNOME);
+
+        // Get all the cittadinoList where cognome equals to UPDATED_COGNOME
+        defaultCittadinoShouldNotBeFound("cognome.equals=" + UPDATED_COGNOME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCognomeIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where cognome not equals to DEFAULT_COGNOME
+        defaultCittadinoShouldNotBeFound("cognome.notEquals=" + DEFAULT_COGNOME);
+
+        // Get all the cittadinoList where cognome not equals to UPDATED_COGNOME
+        defaultCittadinoShouldBeFound("cognome.notEquals=" + UPDATED_COGNOME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCognomeIsInShouldWork() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where cognome in DEFAULT_COGNOME or UPDATED_COGNOME
+        defaultCittadinoShouldBeFound("cognome.in=" + DEFAULT_COGNOME + "," + UPDATED_COGNOME);
+
+        // Get all the cittadinoList where cognome equals to UPDATED_COGNOME
+        defaultCittadinoShouldNotBeFound("cognome.in=" + UPDATED_COGNOME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCognomeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where cognome is not null
+        defaultCittadinoShouldBeFound("cognome.specified=true");
+
+        // Get all the cittadinoList where cognome is null
+        defaultCittadinoShouldNotBeFound("cognome.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCognomeContainsSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where cognome contains DEFAULT_COGNOME
+        defaultCittadinoShouldBeFound("cognome.contains=" + DEFAULT_COGNOME);
+
+        // Get all the cittadinoList where cognome contains UPDATED_COGNOME
+        defaultCittadinoShouldNotBeFound("cognome.contains=" + UPDATED_COGNOME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCognomeNotContainsSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where cognome does not contain DEFAULT_COGNOME
+        defaultCittadinoShouldNotBeFound("cognome.doesNotContain=" + DEFAULT_COGNOME);
+
+        // Get all the cittadinoList where cognome does not contain UPDATED_COGNOME
+        defaultCittadinoShouldBeFound("cognome.doesNotContain=" + UPDATED_COGNOME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCodiceFiscaleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where codiceFiscale equals to DEFAULT_CODICE_FISCALE
+        defaultCittadinoShouldBeFound("codiceFiscale.equals=" + DEFAULT_CODICE_FISCALE);
+
+        // Get all the cittadinoList where codiceFiscale equals to UPDATED_CODICE_FISCALE
+        defaultCittadinoShouldNotBeFound("codiceFiscale.equals=" + UPDATED_CODICE_FISCALE);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCodiceFiscaleIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where codiceFiscale not equals to DEFAULT_CODICE_FISCALE
+        defaultCittadinoShouldNotBeFound("codiceFiscale.notEquals=" + DEFAULT_CODICE_FISCALE);
+
+        // Get all the cittadinoList where codiceFiscale not equals to UPDATED_CODICE_FISCALE
+        defaultCittadinoShouldBeFound("codiceFiscale.notEquals=" + UPDATED_CODICE_FISCALE);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCodiceFiscaleIsInShouldWork() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where codiceFiscale in DEFAULT_CODICE_FISCALE or UPDATED_CODICE_FISCALE
+        defaultCittadinoShouldBeFound("codiceFiscale.in=" + DEFAULT_CODICE_FISCALE + "," + UPDATED_CODICE_FISCALE);
+
+        // Get all the cittadinoList where codiceFiscale equals to UPDATED_CODICE_FISCALE
+        defaultCittadinoShouldNotBeFound("codiceFiscale.in=" + UPDATED_CODICE_FISCALE);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCodiceFiscaleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where codiceFiscale is not null
+        defaultCittadinoShouldBeFound("codiceFiscale.specified=true");
+
+        // Get all the cittadinoList where codiceFiscale is null
+        defaultCittadinoShouldNotBeFound("codiceFiscale.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCodiceFiscaleContainsSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where codiceFiscale contains DEFAULT_CODICE_FISCALE
+        defaultCittadinoShouldBeFound("codiceFiscale.contains=" + DEFAULT_CODICE_FISCALE);
+
+        // Get all the cittadinoList where codiceFiscale contains UPDATED_CODICE_FISCALE
+        defaultCittadinoShouldNotBeFound("codiceFiscale.contains=" + UPDATED_CODICE_FISCALE);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByCodiceFiscaleNotContainsSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where codiceFiscale does not contain DEFAULT_CODICE_FISCALE
+        defaultCittadinoShouldNotBeFound("codiceFiscale.doesNotContain=" + DEFAULT_CODICE_FISCALE);
+
+        // Get all the cittadinoList where codiceFiscale does not contain UPDATED_CODICE_FISCALE
+        defaultCittadinoShouldBeFound("codiceFiscale.doesNotContain=" + UPDATED_CODICE_FISCALE);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByTesseraIsEqualToSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+        Tessera tessera = TesseraResourceIT.createEntity(em);
+        em.persist(tessera);
+        em.flush();
+        cittadino.addTessera(tessera);
+        cittadinoRepository.saveAndFlush(cittadino);
+        Long tesseraId = tessera.getId();
+
+        // Get all the cittadinoList where tessera equals to tesseraId
+        defaultCittadinoShouldBeFound("tesseraId.equals=" + tesseraId);
+
+        // Get all the cittadinoList where tessera equals to tesseraId + 1
+        defaultCittadinoShouldNotBeFound("tesseraId.equals=" + (tesseraId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByDelegaIsEqualToSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+        Delega delega = DelegaResourceIT.createEntity(em);
+        em.persist(delega);
+        em.flush();
+        cittadino.addDelega(delega);
+        cittadinoRepository.saveAndFlush(cittadino);
+        Long delegaId = delega.getId();
+
+        // Get all the cittadinoList where delega equals to delegaId
+        defaultCittadinoShouldBeFound("delegaId.equals=" + delegaId);
+
+        // Get all the cittadinoList where delega equals to delegaId + 1
+        defaultCittadinoShouldNotBeFound("delegaId.equals=" + (delegaId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultCittadinoShouldBeFound(String filter) throws Exception {
+        restCittadinoMockMvc
+            .perform(get("/api/cittadinos?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(cittadino.getId().intValue())))
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
+            .andExpect(jsonPath("$.[*].cognome").value(hasItem(DEFAULT_COGNOME)))
+            .andExpect(jsonPath("$.[*].codiceFiscale").value(hasItem(DEFAULT_CODICE_FISCALE)));
+
+        // Check, that the count call also returns 1
+        restCittadinoMockMvc
+            .perform(get("/api/cittadinos/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultCittadinoShouldNotBeFound(String filter) throws Exception {
+        restCittadinoMockMvc
+            .perform(get("/api/cittadinos?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restCittadinoMockMvc
+            .perform(get("/api/cittadinos/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

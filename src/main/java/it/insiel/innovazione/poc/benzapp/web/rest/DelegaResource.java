@@ -1,7 +1,9 @@
 package it.insiel.innovazione.poc.benzapp.web.rest;
 
 import it.insiel.innovazione.poc.benzapp.domain.Delega;
+import it.insiel.innovazione.poc.benzapp.service.DelegaQueryService;
 import it.insiel.innovazione.poc.benzapp.service.DelegaService;
+import it.insiel.innovazione.poc.benzapp.service.dto.DelegaCriteria;
 import it.insiel.innovazione.poc.benzapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -37,8 +39,11 @@ public class DelegaResource {
 
     private final DelegaService delegaService;
 
-    public DelegaResource(DelegaService delegaService) {
+    private final DelegaQueryService delegaQueryService;
+
+    public DelegaResource(DelegaService delegaService, DelegaQueryService delegaQueryService) {
         this.delegaService = delegaService;
+        this.delegaQueryService = delegaQueryService;
     }
 
     /**
@@ -112,14 +117,27 @@ public class DelegaResource {
      * {@code GET  /delegas} : get all the delegas.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of delegas in body.
      */
     @GetMapping("/delegas")
-    public ResponseEntity<List<Delega>> getAllDelegas(Pageable pageable) {
-        log.debug("REST request to get a page of Delegas");
-        Page<Delega> page = delegaService.findAll(pageable);
+    public ResponseEntity<List<Delega>> getAllDelegas(DelegaCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Delegas by criteria: {}", criteria);
+        Page<Delega> page = delegaQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /delegas/count} : count all the delegas.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/delegas/count")
+    public ResponseEntity<Long> countDelegas(DelegaCriteria criteria) {
+        log.debug("REST request to count Delegas by criteria: {}", criteria);
+        return ResponseEntity.ok().body(delegaQueryService.countByCriteria(criteria));
     }
 
     /**
