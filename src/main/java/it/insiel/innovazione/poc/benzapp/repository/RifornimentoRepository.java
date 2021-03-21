@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface RifornimentoRepository extends JpaRepository<Rifornimento, Long> {}
+public interface RifornimentoRepository extends JpaRepository<Rifornimento, Long>, JpaSpecificationExecutor<Rifornimento> {}

@@ -6,8 +6,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import it.insiel.innovazione.poc.benzapp.IntegrationTest;
+import it.insiel.innovazione.poc.benzapp.domain.Cittadino;
 import it.insiel.innovazione.poc.benzapp.domain.Delega;
+import it.insiel.innovazione.poc.benzapp.domain.Tessera;
 import it.insiel.innovazione.poc.benzapp.repository.DelegaRepository;
+import it.insiel.innovazione.poc.benzapp.service.DelegaQueryService;
+import it.insiel.innovazione.poc.benzapp.service.dto.DelegaCriteria;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +33,9 @@ class DelegaResourceIT {
 
     @Autowired
     private DelegaRepository delegaRepository;
+
+    @Autowired
+    private DelegaQueryService delegaQueryService;
 
     @Autowired
     private EntityManager em;
@@ -124,6 +131,99 @@ class DelegaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(delega.getId().intValue()));
+    }
+
+    @Test
+    @Transactional
+    void getDelegasByIdFiltering() throws Exception {
+        // Initialize the database
+        delegaRepository.saveAndFlush(delega);
+
+        Long id = delega.getId();
+
+        defaultDelegaShouldBeFound("id.equals=" + id);
+        defaultDelegaShouldNotBeFound("id.notEquals=" + id);
+
+        defaultDelegaShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultDelegaShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultDelegaShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultDelegaShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllDelegasByCittadinoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        delegaRepository.saveAndFlush(delega);
+        Cittadino cittadino = CittadinoResourceIT.createEntity(em);
+        em.persist(cittadino);
+        em.flush();
+        delega.setCittadino(cittadino);
+        delegaRepository.saveAndFlush(delega);
+        Long cittadinoId = cittadino.getId();
+
+        // Get all the delegaList where cittadino equals to cittadinoId
+        defaultDelegaShouldBeFound("cittadinoId.equals=" + cittadinoId);
+
+        // Get all the delegaList where cittadino equals to cittadinoId + 1
+        defaultDelegaShouldNotBeFound("cittadinoId.equals=" + (cittadinoId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllDelegasByTesseraIsEqualToSomething() throws Exception {
+        // Initialize the database
+        delegaRepository.saveAndFlush(delega);
+        Tessera tessera = TesseraResourceIT.createEntity(em);
+        em.persist(tessera);
+        em.flush();
+        delega.setTessera(tessera);
+        delegaRepository.saveAndFlush(delega);
+        Long tesseraId = tessera.getId();
+
+        // Get all the delegaList where tessera equals to tesseraId
+        defaultDelegaShouldBeFound("tesseraId.equals=" + tesseraId);
+
+        // Get all the delegaList where tessera equals to tesseraId + 1
+        defaultDelegaShouldNotBeFound("tesseraId.equals=" + (tesseraId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultDelegaShouldBeFound(String filter) throws Exception {
+        restDelegaMockMvc
+            .perform(get("/api/delegas?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(delega.getId().intValue())));
+
+        // Check, that the count call also returns 1
+        restDelegaMockMvc
+            .perform(get("/api/delegas/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultDelegaShouldNotBeFound(String filter) throws Exception {
+        restDelegaMockMvc
+            .perform(get("/api/delegas?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restDelegaMockMvc
+            .perform(get("/api/delegas/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

@@ -78,7 +78,7 @@
           </td>
           <td>
             <div *ngIf="rifornimento.tessera">
-              <a [routerLink]="['/tessera', rifornimento.tessera?.id, 'view']">{{ rifornimento.tessera?.id }}</a>
+              <a [routerLink]="['/tessera', rifornimento.tessera?.id, 'view']">{{ rifornimento.tessera?.targa }}</a>
             </div>
           </td>
           <td class="text-right">

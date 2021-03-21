@@ -1,7 +1,9 @@
 package it.insiel.innovazione.poc.benzapp.web.rest;
 
 import it.insiel.innovazione.poc.benzapp.domain.Gestore;
+import it.insiel.innovazione.poc.benzapp.service.GestoreQueryService;
 import it.insiel.innovazione.poc.benzapp.service.GestoreService;
+import it.insiel.innovazione.poc.benzapp.service.dto.GestoreCriteria;
 import it.insiel.innovazione.poc.benzapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -37,8 +39,11 @@ public class GestoreResource {
 
     private final GestoreService gestoreService;
 
-    public GestoreResource(GestoreService gestoreService) {
+    private final GestoreQueryService gestoreQueryService;
+
+    public GestoreResource(GestoreService gestoreService, GestoreQueryService gestoreQueryService) {
         this.gestoreService = gestoreService;
+        this.gestoreQueryService = gestoreQueryService;
     }
 
     /**
@@ -112,14 +117,27 @@ public class GestoreResource {
      * {@code GET  /gestores} : get all the gestores.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of gestores in body.
      */
     @GetMapping("/gestores")
-    public ResponseEntity<List<Gestore>> getAllGestores(Pageable pageable) {
-        log.debug("REST request to get a page of Gestores");
-        Page<Gestore> page = gestoreService.findAll(pageable);
+    public ResponseEntity<List<Gestore>> getAllGestores(GestoreCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Gestores by criteria: {}", criteria);
+        Page<Gestore> page = gestoreQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /gestores/count} : count all the gestores.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/gestores/count")
+    public ResponseEntity<Long> countGestores(GestoreCriteria criteria) {
+        log.debug("REST request to count Gestores by criteria: {}", criteria);
+        return ResponseEntity.ok().body(gestoreQueryService.countByCriteria(criteria));
     }
 
     /**

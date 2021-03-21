@@ -110,7 +110,7 @@ relationship OneToMany {
   Tessera{delega} to Delega{tessera}
 }
 
-
+filter Cittadino, Gestore, Rifornimento, Tessera, Delega
 paginate Cittadino, Gestore, Marchio, Rifornimento, Tessera, Delega with pagination
 service Cittadino, Fascia, Gestore, Marchio, Rifornimento, Tessera, Delega with serviceImpl
 

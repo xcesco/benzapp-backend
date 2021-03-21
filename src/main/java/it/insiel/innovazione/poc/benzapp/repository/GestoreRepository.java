@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface GestoreRepository extends JpaRepository<Gestore, Long> {}
+public interface GestoreRepository extends JpaRepository<Gestore, Long>, JpaSpecificationExecutor<Gestore> {}

@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface DelegaRepository extends JpaRepository<Delega, Long> {}
+public interface DelegaRepository extends JpaRepository<Delega, Long>, JpaSpecificationExecutor<Delega> {}

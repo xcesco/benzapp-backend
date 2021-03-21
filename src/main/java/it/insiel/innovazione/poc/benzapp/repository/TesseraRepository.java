@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface TesseraRepository extends JpaRepository<Tessera, Long> {}
+public interface TesseraRepository extends JpaRepository<Tessera, Long>, JpaSpecificationExecutor<Tessera> {}
