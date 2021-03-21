@@ -6,15 +6,13 @@ import { Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
-import { IQRCode, IRifornimento, Rifornimento } from '../rifornimento.model';
+import { IQRCode, IRifornimento, QRReaderStatus, Rifornimento } from '../rifornimento.model';
 import { RifornimentoService } from '../service/rifornimento.service';
 import { IGestore } from 'app/entities/gestore/gestore.model';
 import { GestoreService } from 'app/entities/gestore/service/gestore.service';
 import { ITessera } from 'app/entities/tessera/tessera.model';
 import { TesseraService } from 'app/entities/tessera/service/tessera.service';
 import { CittadinoService } from 'app/entities/cittadino/service/cittadino.service';
-import { TipoCarburante } from 'app/entities/enumerations/tipo-carburante.model';
-import { Dayjs } from 'dayjs';
 
 @Component({
   selector: 'jhi-rifornimento-update',
@@ -22,11 +20,11 @@ import { Dayjs } from 'dayjs';
 })
 export class RifornimentoUpdateComponent implements OnInit {
   buffer = '';
-
+  bufferStatus = QRReaderStatus.INACTIVE;
   isSaving = false;
   gestores: IGestore[] = [];
   tesseras: ITessera[] = [];
-
+  currentGestore: IGestore | null = null;
   currentTessera: ITessera | null = null;
 
   editForm = this.fb.group({
@@ -50,22 +48,20 @@ export class RifornimentoUpdateComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  // @HostListener('document:keypress', ['$event'])
-  // handleKeyboardEvent(event: KeyboardEvent) {
-  //   // this.key = event.key;
-  // }
-
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ rifornimento }) => {
       if (rifornimento.id === undefined) {
-        const today = dayjs().startOf('day');
+        const today = dayjs(new Date());
         rifornimento.data = today;
       }
 
       this.updateForm(rifornimento);
 
-      this.gestoreService.query().subscribe((res: HttpResponse<IGestore[]>) => (this.gestores = res.body ?? []));
-
+      this.gestoreService.query().subscribe((res: HttpResponse<IGestore[]>) => {
+        this.gestores = res.body ?? [];
+        this.currentGestore = this.gestores[0];
+        this.editForm.get('gestore')?.setValue(this.currentGestore);
+      });
       this.tesseraService.query().subscribe((res: HttpResponse<ITessera[]>) => (this.tesseras = res.body ?? []));
     });
   }
@@ -137,9 +133,9 @@ export class RifornimentoUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  onChangeQRCode($event: any): void {
-    console.error($event.target.value);
-    const qrcode: IQRCode = JSON.parse($event.target.value);
+  onQRCodeCompleted(qrcodeContent: string): void {
+    console.error(qrcodeContent);
+    const qrcode: IQRCode = JSON.parse(qrcodeContent);
 
     this.tesseraService.query({ 'codice.equals': qrcode.tesseraNumero }).subscribe(result => {
       if (result.body) {
@@ -149,20 +145,64 @@ export class RifornimentoUpdateComponent implements OnInit {
           tipoCarburante: value.carburante,
           tessera: value,
           data: dayjs(new Date()),
+          gestore: this.currentGestore,
         };
-        alert(rifornimento.tessera);
         this.updateForm(rifornimento);
       }
     });
-    // this.cittadinoService.query({'codiceFiscale.equals': qrcode.codiceFiscale}).subscribe(result => {
-    //   if (result.body) {
-    //     alert(result.body[0].cognome);
-    //
-    //     const rifornimento: IRifornimento = {tipoCarburante: TipoCarburante.BENZINA};
-    //     this.updateForm(rifornimento);
-    //   }
-    //
-    // })
     console.error(qrcode);
+  }
+
+  onReadQRCode($event: KeyboardEvent, qrinfo_stop: HTMLDivElement, qrinfo_run: HTMLDivElement, qrinfo_spinner: HTMLDivElement): void {
+    if ($event.key === '{') {
+      // avvio
+      qrinfo_stop.hidden = true;
+      qrinfo_run.hidden = true;
+      qrinfo_spinner.hidden = false;
+
+      this.buffer = '';
+      this.bufferStatus = QRReaderStatus.RUNNING;
+    }
+
+    if (this.bufferStatus === QRReaderStatus.RUNNING) {
+      this.buffer += $event.key;
+
+      if ($event.key === '}') {
+        qrinfo_stop.hidden = false;
+        qrinfo_run.hidden = true;
+        qrinfo_spinner.hidden = true;
+
+        console.error(this.buffer);
+
+        this.onQRCodeCompleted(this.buffer);
+        this.bufferStatus = QRReaderStatus.FINISHED;
+      }
+    }
+  }
+
+  onFocusIn(): void {
+    this.bufferStatus = QRReaderStatus.READY;
+  }
+
+  onFocusOut(): void {
+    this.bufferStatus = QRReaderStatus.INACTIVE;
+  }
+
+  getInfoQRCodeButton(): string {
+    switch (this.bufferStatus) {
+      case QRReaderStatus.FINISHED:
+        return 'Lettura QRCode terminata';
+        break;
+      case QRReaderStatus.INACTIVE:
+        return 'Seleziona questo riquadro per avviare lettura QRCode';
+        break;
+      case QRReaderStatus.RUNNING:
+        return 'Attendere prego. Non deselezionare il riquadro.';
+        break;
+      case QRReaderStatus.READY:
+        return 'In attesa di QRCode';
+        break;
+    }
+    return '';
   }
 }

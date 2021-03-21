@@ -39,3 +39,10 @@ export interface IQRCode {
   veicolo: TipoVeicolo;
   carburante: TipoCarburante;
 }
+
+export enum QRReaderStatus {
+  INACTIVE,
+  READY,
+  RUNNING,
+  FINISHED,
+}
