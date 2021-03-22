@@ -7,11 +7,6 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "progressivo",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "litriErogati",
       "fieldType": "Float",
       "fieldValidateRules": ["required"]

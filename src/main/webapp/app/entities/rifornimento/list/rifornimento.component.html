@@ -36,9 +36,6 @@
           <th scope="col" jhiSortBy="data">
             <span jhiTranslate="benzappApp.rifornimento.data">Data</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="progressivo">
-            <span jhiTranslate="benzappApp.rifornimento.progressivo">Progressivo</span> <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col" jhiSortBy="litriErogati">
             <span jhiTranslate="benzappApp.rifornimento.litriErogati">Litri Erogati</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -66,7 +63,6 @@
             <a [routerLink]="['/rifornimento', rifornimento.id, 'view']">{{ rifornimento.id }}</a>
           </td>
           <td>{{ rifornimento.data | formatMediumDatetime }}</td>
-          <td>{{ rifornimento.progressivo }}</td>
           <td>{{ rifornimento.litriErogati }}</td>
           <td>{{ rifornimento.sconto }}</td>
           <td>{{ rifornimento.prezzoAlLitro }}</td>

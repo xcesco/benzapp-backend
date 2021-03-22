@@ -2,7 +2,7 @@
   "benzappApp": {
     "rifornimento": {
       "home": {
-        "title": "Elenco rifornimenti",
+        "title": "Rifornimentos",
         "refreshListLabel": "Refresh list",
         "createLabel": "Genera un nuovo Rifornimento",
         "createOrEditLabel": "Genera o modifica un Rifornimento",
@@ -21,9 +21,8 @@
       "gasolioPrezzoAlLitro": "Gasolio",
       "id": "ID",
       "data": "Data",
-      "progressivo": "Progressivo",
       "litriErogati": "Litri Erogati",
-      "sconto": "Sconto",
+      "sconto": "Sconto applicato",
       "prezzoAlLitro": "Prezzo Al Litro",
       "tipoCarburante": "Tipo Carburante",
       "gestore": "Gestore",

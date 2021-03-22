@@ -31,7 +31,6 @@ export class RifornimentoUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     data: [null, [Validators.required]],
-    progressivo: [null, [Validators.required]],
     litriErogati: [null, [Validators.required]],
     sconto: [null, [Validators.required]],
     prezzoAlLitro: [null, [Validators.required]],
@@ -71,7 +70,6 @@ export class RifornimentoUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: rifornimento.id,
       data: rifornimento.data ? rifornimento.data.format(DATE_TIME_FORMAT) : null,
-      progressivo: rifornimento.progressivo,
       litriErogati: rifornimento.litriErogati,
       sconto: rifornimento.sconto,
       prezzoAlLitro: rifornimento.prezzoAlLitro,
@@ -100,7 +98,6 @@ export class RifornimentoUpdateComponent implements OnInit {
       ...new Rifornimento(),
       id: this.editForm.get(['id'])!.value,
       data: this.editForm.get(['data'])!.value ? dayjs(this.editForm.get(['data'])!.value, DATE_TIME_FORMAT) : undefined,
-      progressivo: this.editForm.get(['progressivo'])!.value,
       litriErogati: this.editForm.get(['litriErogati'])!.value,
       sconto: this.editForm.get(['sconto'])!.value,
       prezzoAlLitro: this.editForm.get(['prezzoAlLitro'])!.value,
@@ -146,12 +143,18 @@ export class RifornimentoUpdateComponent implements OnInit {
             ? this.currentGestore?.fascia?.scontoBenzina
             : this.currentGestore?.fascia?.scontoGasolio) ?? 0;
 
+        const currentPrezzoAlLitro: number =
+          (value.carburante === TipoCarburante.BENZINA
+            ? this.currentGestore?.benzinaPrezzoAlLitro
+            : this.currentGestore?.gasolioPrezzoAlLitro) ?? 0;
+
         const rifornimento: IRifornimento = {
           tipoCarburante: value.carburante,
           tessera: value,
           data: dayjs(new Date()),
           gestore: this.currentGestore,
           sconto: currentSconto,
+          prezzoAlLitro: currentPrezzoAlLitro,
         };
         this.updateForm(rifornimento);
       }
@@ -159,7 +162,13 @@ export class RifornimentoUpdateComponent implements OnInit {
     console.error(qrcode);
   }
 
-  onReadQRCode($event: KeyboardEvent, qrinfo_stop: HTMLDivElement, qrinfo_run: HTMLDivElement, qrinfo_spinner: HTMLDivElement): void {
+  onReadQRCode(
+    $event: KeyboardEvent,
+    qrinfo_stop: HTMLDivElement,
+    qrinfo_run: HTMLDivElement,
+    qrinfo_spinner: HTMLDivElement,
+    litriErogati: HTMLInputElement
+  ): void {
     if ($event.key === '{') {
       // avvio
       qrinfo_stop.hidden = true;
@@ -182,6 +191,7 @@ export class RifornimentoUpdateComponent implements OnInit {
 
         this.onQRCodeCompleted(this.buffer);
         this.bufferStatus = QRReaderStatus.FINISHED;
+        litriErogati.focus();
       }
     }
   }

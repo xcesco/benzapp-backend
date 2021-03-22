@@ -41,10 +41,6 @@ class RifornimentoResourceIT {
     private static final ZonedDateTime UPDATED_DATA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final ZonedDateTime SMALLER_DATA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
 
-    private static final Integer DEFAULT_PROGRESSIVO = 1;
-    private static final Integer UPDATED_PROGRESSIVO = 2;
-    private static final Integer SMALLER_PROGRESSIVO = 1 - 1;
-
     private static final Float DEFAULT_LITRI_EROGATI = 1F;
     private static final Float UPDATED_LITRI_EROGATI = 2F;
     private static final Float SMALLER_LITRI_EROGATI = 1F - 1F;
@@ -83,7 +79,6 @@ class RifornimentoResourceIT {
     public static Rifornimento createEntity(EntityManager em) {
         Rifornimento rifornimento = new Rifornimento()
             .data(DEFAULT_DATA)
-            .progressivo(DEFAULT_PROGRESSIVO)
             .litriErogati(DEFAULT_LITRI_EROGATI)
             .sconto(DEFAULT_SCONTO)
             .prezzoAlLitro(DEFAULT_PREZZO_AL_LITRO)
@@ -100,7 +95,6 @@ class RifornimentoResourceIT {
     public static Rifornimento createUpdatedEntity(EntityManager em) {
         Rifornimento rifornimento = new Rifornimento()
             .data(UPDATED_DATA)
-            .progressivo(UPDATED_PROGRESSIVO)
             .litriErogati(UPDATED_LITRI_EROGATI)
             .sconto(UPDATED_SCONTO)
             .prezzoAlLitro(UPDATED_PREZZO_AL_LITRO)
@@ -129,7 +123,6 @@ class RifornimentoResourceIT {
         assertThat(rifornimentoList).hasSize(databaseSizeBeforeCreate + 1);
         Rifornimento testRifornimento = rifornimentoList.get(rifornimentoList.size() - 1);
         assertThat(testRifornimento.getData()).isEqualTo(DEFAULT_DATA);
-        assertThat(testRifornimento.getProgressivo()).isEqualTo(DEFAULT_PROGRESSIVO);
         assertThat(testRifornimento.getLitriErogati()).isEqualTo(DEFAULT_LITRI_EROGATI);
         assertThat(testRifornimento.getSconto()).isEqualTo(DEFAULT_SCONTO);
         assertThat(testRifornimento.getPrezzoAlLitro()).isEqualTo(DEFAULT_PREZZO_AL_LITRO);
@@ -162,25 +155,6 @@ class RifornimentoResourceIT {
         int databaseSizeBeforeTest = rifornimentoRepository.findAll().size();
         // set the field null
         rifornimento.setData(null);
-
-        // Create the Rifornimento, which fails.
-
-        restRifornimentoMockMvc
-            .perform(
-                post("/api/rifornimentos").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(rifornimento))
-            )
-            .andExpect(status().isBadRequest());
-
-        List<Rifornimento> rifornimentoList = rifornimentoRepository.findAll();
-        assertThat(rifornimentoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkProgressivoIsRequired() throws Exception {
-        int databaseSizeBeforeTest = rifornimentoRepository.findAll().size();
-        // set the field null
-        rifornimento.setProgressivo(null);
 
         // Create the Rifornimento, which fails.
 
@@ -283,7 +257,6 @@ class RifornimentoResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(rifornimento.getId().intValue())))
             .andExpect(jsonPath("$.[*].data").value(hasItem(sameInstant(DEFAULT_DATA))))
-            .andExpect(jsonPath("$.[*].progressivo").value(hasItem(DEFAULT_PROGRESSIVO)))
             .andExpect(jsonPath("$.[*].litriErogati").value(hasItem(DEFAULT_LITRI_EROGATI.doubleValue())))
             .andExpect(jsonPath("$.[*].sconto").value(hasItem(DEFAULT_SCONTO.doubleValue())))
             .andExpect(jsonPath("$.[*].prezzoAlLitro").value(hasItem(DEFAULT_PREZZO_AL_LITRO.doubleValue())))
@@ -303,7 +276,6 @@ class RifornimentoResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(rifornimento.getId().intValue()))
             .andExpect(jsonPath("$.data").value(sameInstant(DEFAULT_DATA)))
-            .andExpect(jsonPath("$.progressivo").value(DEFAULT_PROGRESSIVO))
             .andExpect(jsonPath("$.litriErogati").value(DEFAULT_LITRI_EROGATI.doubleValue()))
             .andExpect(jsonPath("$.sconto").value(DEFAULT_SCONTO.doubleValue()))
             .andExpect(jsonPath("$.prezzoAlLitro").value(DEFAULT_PREZZO_AL_LITRO.doubleValue()))
@@ -430,110 +402,6 @@ class RifornimentoResourceIT {
 
         // Get all the rifornimentoList where data is greater than SMALLER_DATA
         defaultRifornimentoShouldBeFound("data.greaterThan=" + SMALLER_DATA);
-    }
-
-    @Test
-    @Transactional
-    void getAllRifornimentosByProgressivoIsEqualToSomething() throws Exception {
-        // Initialize the database
-        rifornimentoRepository.saveAndFlush(rifornimento);
-
-        // Get all the rifornimentoList where progressivo equals to DEFAULT_PROGRESSIVO
-        defaultRifornimentoShouldBeFound("progressivo.equals=" + DEFAULT_PROGRESSIVO);
-
-        // Get all the rifornimentoList where progressivo equals to UPDATED_PROGRESSIVO
-        defaultRifornimentoShouldNotBeFound("progressivo.equals=" + UPDATED_PROGRESSIVO);
-    }
-
-    @Test
-    @Transactional
-    void getAllRifornimentosByProgressivoIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        rifornimentoRepository.saveAndFlush(rifornimento);
-
-        // Get all the rifornimentoList where progressivo not equals to DEFAULT_PROGRESSIVO
-        defaultRifornimentoShouldNotBeFound("progressivo.notEquals=" + DEFAULT_PROGRESSIVO);
-
-        // Get all the rifornimentoList where progressivo not equals to UPDATED_PROGRESSIVO
-        defaultRifornimentoShouldBeFound("progressivo.notEquals=" + UPDATED_PROGRESSIVO);
-    }
-
-    @Test
-    @Transactional
-    void getAllRifornimentosByProgressivoIsInShouldWork() throws Exception {
-        // Initialize the database
-        rifornimentoRepository.saveAndFlush(rifornimento);
-
-        // Get all the rifornimentoList where progressivo in DEFAULT_PROGRESSIVO or UPDATED_PROGRESSIVO
-        defaultRifornimentoShouldBeFound("progressivo.in=" + DEFAULT_PROGRESSIVO + "," + UPDATED_PROGRESSIVO);
-
-        // Get all the rifornimentoList where progressivo equals to UPDATED_PROGRESSIVO
-        defaultRifornimentoShouldNotBeFound("progressivo.in=" + UPDATED_PROGRESSIVO);
-    }
-
-    @Test
-    @Transactional
-    void getAllRifornimentosByProgressivoIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        rifornimentoRepository.saveAndFlush(rifornimento);
-
-        // Get all the rifornimentoList where progressivo is not null
-        defaultRifornimentoShouldBeFound("progressivo.specified=true");
-
-        // Get all the rifornimentoList where progressivo is null
-        defaultRifornimentoShouldNotBeFound("progressivo.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllRifornimentosByProgressivoIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        rifornimentoRepository.saveAndFlush(rifornimento);
-
-        // Get all the rifornimentoList where progressivo is greater than or equal to DEFAULT_PROGRESSIVO
-        defaultRifornimentoShouldBeFound("progressivo.greaterThanOrEqual=" + DEFAULT_PROGRESSIVO);
-
-        // Get all the rifornimentoList where progressivo is greater than or equal to UPDATED_PROGRESSIVO
-        defaultRifornimentoShouldNotBeFound("progressivo.greaterThanOrEqual=" + UPDATED_PROGRESSIVO);
-    }
-
-    @Test
-    @Transactional
-    void getAllRifornimentosByProgressivoIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        rifornimentoRepository.saveAndFlush(rifornimento);
-
-        // Get all the rifornimentoList where progressivo is less than or equal to DEFAULT_PROGRESSIVO
-        defaultRifornimentoShouldBeFound("progressivo.lessThanOrEqual=" + DEFAULT_PROGRESSIVO);
-
-        // Get all the rifornimentoList where progressivo is less than or equal to SMALLER_PROGRESSIVO
-        defaultRifornimentoShouldNotBeFound("progressivo.lessThanOrEqual=" + SMALLER_PROGRESSIVO);
-    }
-
-    @Test
-    @Transactional
-    void getAllRifornimentosByProgressivoIsLessThanSomething() throws Exception {
-        // Initialize the database
-        rifornimentoRepository.saveAndFlush(rifornimento);
-
-        // Get all the rifornimentoList where progressivo is less than DEFAULT_PROGRESSIVO
-        defaultRifornimentoShouldNotBeFound("progressivo.lessThan=" + DEFAULT_PROGRESSIVO);
-
-        // Get all the rifornimentoList where progressivo is less than UPDATED_PROGRESSIVO
-        defaultRifornimentoShouldBeFound("progressivo.lessThan=" + UPDATED_PROGRESSIVO);
-    }
-
-    @Test
-    @Transactional
-    void getAllRifornimentosByProgressivoIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        rifornimentoRepository.saveAndFlush(rifornimento);
-
-        // Get all the rifornimentoList where progressivo is greater than DEFAULT_PROGRESSIVO
-        defaultRifornimentoShouldNotBeFound("progressivo.greaterThan=" + DEFAULT_PROGRESSIVO);
-
-        // Get all the rifornimentoList where progressivo is greater than SMALLER_PROGRESSIVO
-        defaultRifornimentoShouldBeFound("progressivo.greaterThan=" + SMALLER_PROGRESSIVO);
     }
 
     @Test
@@ -948,7 +816,6 @@ class RifornimentoResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(rifornimento.getId().intValue())))
             .andExpect(jsonPath("$.[*].data").value(hasItem(sameInstant(DEFAULT_DATA))))
-            .andExpect(jsonPath("$.[*].progressivo").value(hasItem(DEFAULT_PROGRESSIVO)))
             .andExpect(jsonPath("$.[*].litriErogati").value(hasItem(DEFAULT_LITRI_EROGATI.doubleValue())))
             .andExpect(jsonPath("$.[*].sconto").value(hasItem(DEFAULT_SCONTO.doubleValue())))
             .andExpect(jsonPath("$.[*].prezzoAlLitro").value(hasItem(DEFAULT_PREZZO_AL_LITRO.doubleValue())))
@@ -1002,7 +869,6 @@ class RifornimentoResourceIT {
         em.detach(updatedRifornimento);
         updatedRifornimento
             .data(UPDATED_DATA)
-            .progressivo(UPDATED_PROGRESSIVO)
             .litriErogati(UPDATED_LITRI_EROGATI)
             .sconto(UPDATED_SCONTO)
             .prezzoAlLitro(UPDATED_PREZZO_AL_LITRO)
@@ -1021,7 +887,6 @@ class RifornimentoResourceIT {
         assertThat(rifornimentoList).hasSize(databaseSizeBeforeUpdate);
         Rifornimento testRifornimento = rifornimentoList.get(rifornimentoList.size() - 1);
         assertThat(testRifornimento.getData()).isEqualTo(UPDATED_DATA);
-        assertThat(testRifornimento.getProgressivo()).isEqualTo(UPDATED_PROGRESSIVO);
         assertThat(testRifornimento.getLitriErogati()).isEqualTo(UPDATED_LITRI_EROGATI);
         assertThat(testRifornimento.getSconto()).isEqualTo(UPDATED_SCONTO);
         assertThat(testRifornimento.getPrezzoAlLitro()).isEqualTo(UPDATED_PREZZO_AL_LITRO);
@@ -1057,7 +922,7 @@ class RifornimentoResourceIT {
         Rifornimento partialUpdatedRifornimento = new Rifornimento();
         partialUpdatedRifornimento.setId(rifornimento.getId());
 
-        partialUpdatedRifornimento.data(UPDATED_DATA).progressivo(UPDATED_PROGRESSIVO).prezzoAlLitro(UPDATED_PREZZO_AL_LITRO);
+        partialUpdatedRifornimento.data(UPDATED_DATA).litriErogati(UPDATED_LITRI_EROGATI).tipoCarburante(UPDATED_TIPO_CARBURANTE);
 
         restRifornimentoMockMvc
             .perform(
@@ -1072,11 +937,10 @@ class RifornimentoResourceIT {
         assertThat(rifornimentoList).hasSize(databaseSizeBeforeUpdate);
         Rifornimento testRifornimento = rifornimentoList.get(rifornimentoList.size() - 1);
         assertThat(testRifornimento.getData()).isEqualTo(UPDATED_DATA);
-        assertThat(testRifornimento.getProgressivo()).isEqualTo(UPDATED_PROGRESSIVO);
-        assertThat(testRifornimento.getLitriErogati()).isEqualTo(DEFAULT_LITRI_EROGATI);
+        assertThat(testRifornimento.getLitriErogati()).isEqualTo(UPDATED_LITRI_EROGATI);
         assertThat(testRifornimento.getSconto()).isEqualTo(DEFAULT_SCONTO);
-        assertThat(testRifornimento.getPrezzoAlLitro()).isEqualTo(UPDATED_PREZZO_AL_LITRO);
-        assertThat(testRifornimento.getTipoCarburante()).isEqualTo(DEFAULT_TIPO_CARBURANTE);
+        assertThat(testRifornimento.getPrezzoAlLitro()).isEqualTo(DEFAULT_PREZZO_AL_LITRO);
+        assertThat(testRifornimento.getTipoCarburante()).isEqualTo(UPDATED_TIPO_CARBURANTE);
     }
 
     @Test
@@ -1093,7 +957,6 @@ class RifornimentoResourceIT {
 
         partialUpdatedRifornimento
             .data(UPDATED_DATA)
-            .progressivo(UPDATED_PROGRESSIVO)
             .litriErogati(UPDATED_LITRI_EROGATI)
             .sconto(UPDATED_SCONTO)
             .prezzoAlLitro(UPDATED_PREZZO_AL_LITRO)
@@ -1112,7 +975,6 @@ class RifornimentoResourceIT {
         assertThat(rifornimentoList).hasSize(databaseSizeBeforeUpdate);
         Rifornimento testRifornimento = rifornimentoList.get(rifornimentoList.size() - 1);
         assertThat(testRifornimento.getData()).isEqualTo(UPDATED_DATA);
-        assertThat(testRifornimento.getProgressivo()).isEqualTo(UPDATED_PROGRESSIVO);
         assertThat(testRifornimento.getLitriErogati()).isEqualTo(UPDATED_LITRI_EROGATI);
         assertThat(testRifornimento.getSconto()).isEqualTo(UPDATED_SCONTO);
         assertThat(testRifornimento.getPrezzoAlLitro()).isEqualTo(UPDATED_PREZZO_AL_LITRO);

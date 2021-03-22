@@ -47,8 +47,6 @@ public class RifornimentoCriteria implements Serializable, Criteria {
 
     private ZonedDateTimeFilter data;
 
-    private IntegerFilter progressivo;
-
     private FloatFilter litriErogati;
 
     private FloatFilter sconto;
@@ -66,7 +64,6 @@ public class RifornimentoCriteria implements Serializable, Criteria {
     public RifornimentoCriteria(RifornimentoCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.data = other.data == null ? null : other.data.copy();
-        this.progressivo = other.progressivo == null ? null : other.progressivo.copy();
         this.litriErogati = other.litriErogati == null ? null : other.litriErogati.copy();
         this.sconto = other.sconto == null ? null : other.sconto.copy();
         this.prezzoAlLitro = other.prezzoAlLitro == null ? null : other.prezzoAlLitro.copy();
@@ -94,14 +91,6 @@ public class RifornimentoCriteria implements Serializable, Criteria {
 
     public void setData(ZonedDateTimeFilter data) {
         this.data = data;
-    }
-
-    public IntegerFilter getProgressivo() {
-        return progressivo;
-    }
-
-    public void setProgressivo(IntegerFilter progressivo) {
-        this.progressivo = progressivo;
     }
 
     public FloatFilter getLitriErogati() {
@@ -164,7 +153,6 @@ public class RifornimentoCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(data, that.data) &&
-            Objects.equals(progressivo, that.progressivo) &&
             Objects.equals(litriErogati, that.litriErogati) &&
             Objects.equals(sconto, that.sconto) &&
             Objects.equals(prezzoAlLitro, that.prezzoAlLitro) &&
@@ -176,7 +164,7 @@ public class RifornimentoCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, data, progressivo, litriErogati, sconto, prezzoAlLitro, tipoCarburante, gestoreId, tesseraId);
+        return Objects.hash(id, data, litriErogati, sconto, prezzoAlLitro, tipoCarburante, gestoreId, tesseraId);
     }
 
     // prettier-ignore
@@ -185,7 +173,6 @@ public class RifornimentoCriteria implements Serializable, Criteria {
         return "RifornimentoCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (data != null ? "data=" + data + ", " : "") +
-                (progressivo != null ? "progressivo=" + progressivo + ", " : "") +
                 (litriErogati != null ? "litriErogati=" + litriErogati + ", " : "") +
                 (sconto != null ? "sconto=" + sconto + ", " : "") +
                 (prezzoAlLitro != null ? "prezzoAlLitro=" + prezzoAlLitro + ", " : "") +
