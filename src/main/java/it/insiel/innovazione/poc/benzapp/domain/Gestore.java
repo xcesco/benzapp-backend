@@ -43,6 +43,12 @@ public class Gestore implements Serializable {
     @Column(name = "tipo")
     private TipoImpianto tipo;
 
+    @Column(name = "benzina_prezzo_al_litro")
+    private Float benzinaPrezzoAlLitro;
+
+    @Column(name = "gasolio_prezzo_al_litro")
+    private Float gasolioPrezzoAlLitro;
+
     @OneToMany(mappedBy = "gestore")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "gestore", "tessera" }, allowSetters = true)
@@ -148,6 +154,32 @@ public class Gestore implements Serializable {
         this.tipo = tipo;
     }
 
+    public Float getBenzinaPrezzoAlLitro() {
+        return this.benzinaPrezzoAlLitro;
+    }
+
+    public Gestore benzinaPrezzoAlLitro(Float benzinaPrezzoAlLitro) {
+        this.benzinaPrezzoAlLitro = benzinaPrezzoAlLitro;
+        return this;
+    }
+
+    public void setBenzinaPrezzoAlLitro(Float benzinaPrezzoAlLitro) {
+        this.benzinaPrezzoAlLitro = benzinaPrezzoAlLitro;
+    }
+
+    public Float getGasolioPrezzoAlLitro() {
+        return this.gasolioPrezzoAlLitro;
+    }
+
+    public Gestore gasolioPrezzoAlLitro(Float gasolioPrezzoAlLitro) {
+        this.gasolioPrezzoAlLitro = gasolioPrezzoAlLitro;
+        return this;
+    }
+
+    public void setGasolioPrezzoAlLitro(Float gasolioPrezzoAlLitro) {
+        this.gasolioPrezzoAlLitro = gasolioPrezzoAlLitro;
+    }
+
     public Set<Rifornimento> getRifornimentos() {
         return this.rifornimentos;
     }
@@ -235,6 +267,8 @@ public class Gestore implements Serializable {
             ", longitudine=" + getLongitudine() +
             ", latitudine=" + getLatitudine() +
             ", tipo='" + getTipo() + "'" +
+            ", benzinaPrezzoAlLitro=" + getBenzinaPrezzoAlLitro() +
+            ", gasolioPrezzoAlLitro=" + getGasolioPrezzoAlLitro() +
             "}";
     }
 }

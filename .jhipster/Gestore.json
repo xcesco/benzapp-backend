@@ -25,6 +25,16 @@
       "fieldName": "tipo",
       "fieldType": "TipoImpianto",
       "fieldValues": "AUTOSTRADALE,STRADALE,NAVALE"
+    },
+    {
+      "fieldName": "benzinaPrezzoAlLitro",
+      "fieldType": "Float",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "gasolioPrezzoAlLitro",
+      "fieldType": "Float",
+      "fieldValidateRules": []
     }
   ],
   "relationships": [

@@ -59,6 +59,8 @@ entity Gestore (gestori) {
   longitudine Float
   latitudine Float
   tipo TipoImpianto
+  benzinaPrezzoAlLitro Float
+  gasolioPrezzoAlLitro Float
 }
 entity Marchio (marchi) {
   immagine ImageBlob

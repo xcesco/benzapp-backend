@@ -49,6 +49,12 @@
             <span jhiTranslate="benzappApp.gestore.latitudine">Latitudine</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="tipo"><span jhiTranslate="benzappApp.gestore.tipo">Tipo</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="benzinaPrezzoAlLitro">
+            <span jhiTranslate="benzappApp.gestore.benzinaPrezzoAlLitro">Benzina Prezzo Al Litro</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="gasolioPrezzoAlLitro">
+            <span jhiTranslate="benzappApp.gestore.gasolioPrezzoAlLitro">Gasolio Prezzo Al Litro</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="fascia.id">
             <span jhiTranslate="benzappApp.gestore.fascia">Fascia</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -69,6 +75,8 @@
           <td>{{ gestore.longitudine }}</td>
           <td>{{ gestore.latitudine }}</td>
           <td jhiTranslate="{{ 'benzappApp.TipoImpianto.' + gestore.tipo }}">{{ gestore.tipo }}</td>
+          <td>{{ gestore.benzinaPrezzoAlLitro }}</td>
+          <td>{{ gestore.gasolioPrezzoAlLitro }}</td>
           <td>
             <div *ngIf="gestore.fascia">
               <a [routerLink]="['/fascia', gestore.fascia?.id, 'view']">{{ gestore.fascia?.id }}</a>

@@ -28,6 +28,8 @@ export class GestoreUpdateComponent implements OnInit {
     longitudine: [],
     latitudine: [],
     tipo: [],
+    benzinaPrezzoAlLitro: [],
+    gasolioPrezzoAlLitro: [],
     fascia: [],
     marchio: [],
   });
@@ -59,6 +61,8 @@ export class GestoreUpdateComponent implements OnInit {
       longitudine: gestore.longitudine,
       latitudine: gestore.latitudine,
       tipo: gestore.tipo,
+      benzinaPrezzoAlLitro: gestore.benzinaPrezzoAlLitro,
+      gasolioPrezzoAlLitro: gestore.gasolioPrezzoAlLitro,
       fascia: gestore.fascia,
       marchio: gestore.marchio,
     });
@@ -88,6 +92,8 @@ export class GestoreUpdateComponent implements OnInit {
       longitudine: this.editForm.get(['longitudine'])!.value,
       latitudine: this.editForm.get(['latitudine'])!.value,
       tipo: this.editForm.get(['tipo'])!.value,
+      benzinaPrezzoAlLitro: this.editForm.get(['benzinaPrezzoAlLitro'])!.value,
+      gasolioPrezzoAlLitro: this.editForm.get(['gasolioPrezzoAlLitro'])!.value,
       fascia: this.editForm.get(['fascia'])!.value,
       marchio: this.editForm.get(['marchio'])!.value,
     };

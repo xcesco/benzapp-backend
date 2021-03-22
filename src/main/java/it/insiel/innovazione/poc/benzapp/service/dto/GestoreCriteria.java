@@ -56,6 +56,10 @@ public class GestoreCriteria implements Serializable, Criteria {
 
     private TipoImpiantoFilter tipo;
 
+    private FloatFilter benzinaPrezzoAlLitro;
+
+    private FloatFilter gasolioPrezzoAlLitro;
+
     private LongFilter rifornimentoId;
 
     private LongFilter fasciaId;
@@ -72,6 +76,8 @@ public class GestoreCriteria implements Serializable, Criteria {
         this.longitudine = other.longitudine == null ? null : other.longitudine.copy();
         this.latitudine = other.latitudine == null ? null : other.latitudine.copy();
         this.tipo = other.tipo == null ? null : other.tipo.copy();
+        this.benzinaPrezzoAlLitro = other.benzinaPrezzoAlLitro == null ? null : other.benzinaPrezzoAlLitro.copy();
+        this.gasolioPrezzoAlLitro = other.gasolioPrezzoAlLitro == null ? null : other.gasolioPrezzoAlLitro.copy();
         this.rifornimentoId = other.rifornimentoId == null ? null : other.rifornimentoId.copy();
         this.fasciaId = other.fasciaId == null ? null : other.fasciaId.copy();
         this.marchioId = other.marchioId == null ? null : other.marchioId.copy();
@@ -138,6 +144,22 @@ public class GestoreCriteria implements Serializable, Criteria {
         this.tipo = tipo;
     }
 
+    public FloatFilter getBenzinaPrezzoAlLitro() {
+        return benzinaPrezzoAlLitro;
+    }
+
+    public void setBenzinaPrezzoAlLitro(FloatFilter benzinaPrezzoAlLitro) {
+        this.benzinaPrezzoAlLitro = benzinaPrezzoAlLitro;
+    }
+
+    public FloatFilter getGasolioPrezzoAlLitro() {
+        return gasolioPrezzoAlLitro;
+    }
+
+    public void setGasolioPrezzoAlLitro(FloatFilter gasolioPrezzoAlLitro) {
+        this.gasolioPrezzoAlLitro = gasolioPrezzoAlLitro;
+    }
+
     public LongFilter getRifornimentoId() {
         return rifornimentoId;
     }
@@ -179,6 +201,8 @@ public class GestoreCriteria implements Serializable, Criteria {
             Objects.equals(longitudine, that.longitudine) &&
             Objects.equals(latitudine, that.latitudine) &&
             Objects.equals(tipo, that.tipo) &&
+            Objects.equals(benzinaPrezzoAlLitro, that.benzinaPrezzoAlLitro) &&
+            Objects.equals(gasolioPrezzoAlLitro, that.gasolioPrezzoAlLitro) &&
             Objects.equals(rifornimentoId, that.rifornimentoId) &&
             Objects.equals(fasciaId, that.fasciaId) &&
             Objects.equals(marchioId, that.marchioId)
@@ -187,7 +211,20 @@ public class GestoreCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, provincia, comune, indirizzo, longitudine, latitudine, tipo, rifornimentoId, fasciaId, marchioId);
+        return Objects.hash(
+            id,
+            provincia,
+            comune,
+            indirizzo,
+            longitudine,
+            latitudine,
+            tipo,
+            benzinaPrezzoAlLitro,
+            gasolioPrezzoAlLitro,
+            rifornimentoId,
+            fasciaId,
+            marchioId
+        );
     }
 
     // prettier-ignore
@@ -201,6 +238,8 @@ public class GestoreCriteria implements Serializable, Criteria {
                 (longitudine != null ? "longitudine=" + longitudine + ", " : "") +
                 (latitudine != null ? "latitudine=" + latitudine + ", " : "") +
                 (tipo != null ? "tipo=" + tipo + ", " : "") +
+                (benzinaPrezzoAlLitro != null ? "benzinaPrezzoAlLitro=" + benzinaPrezzoAlLitro + ", " : "") +
+                (gasolioPrezzoAlLitro != null ? "gasolioPrezzoAlLitro=" + gasolioPrezzoAlLitro + ", " : "") +
                 (rifornimentoId != null ? "rifornimentoId=" + rifornimentoId + ", " : "") +
                 (fasciaId != null ? "fasciaId=" + fasciaId + ", " : "") +
                 (marchioId != null ? "marchioId=" + marchioId + ", " : "") +

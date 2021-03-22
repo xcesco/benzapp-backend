@@ -24,6 +24,8 @@
       "longitudine": "Longitudine",
       "latitudine": "Latitudine",
       "tipo": "Tipo",
+      "benzinaPrezzoAlLitro": "Benzina Prezzo Al Litro",
+      "gasolioPrezzoAlLitro": "Gasolio Prezzo Al Litro",
       "rifornimento": "Rifornimento",
       "fascia": "Fascia",
       "marchio": "Marchio"

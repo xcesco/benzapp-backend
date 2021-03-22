@@ -53,6 +53,14 @@ class GestoreResourceIT {
     private static final TipoImpianto DEFAULT_TIPO = TipoImpianto.AUTOSTRADALE;
     private static final TipoImpianto UPDATED_TIPO = TipoImpianto.STRADALE;
 
+    private static final Float DEFAULT_BENZINA_PREZZO_AL_LITRO = 1F;
+    private static final Float UPDATED_BENZINA_PREZZO_AL_LITRO = 2F;
+    private static final Float SMALLER_BENZINA_PREZZO_AL_LITRO = 1F - 1F;
+
+    private static final Float DEFAULT_GASOLIO_PREZZO_AL_LITRO = 1F;
+    private static final Float UPDATED_GASOLIO_PREZZO_AL_LITRO = 2F;
+    private static final Float SMALLER_GASOLIO_PREZZO_AL_LITRO = 1F - 1F;
+
     @Autowired
     private GestoreRepository gestoreRepository;
 
@@ -80,7 +88,9 @@ class GestoreResourceIT {
             .indirizzo(DEFAULT_INDIRIZZO)
             .longitudine(DEFAULT_LONGITUDINE)
             .latitudine(DEFAULT_LATITUDINE)
-            .tipo(DEFAULT_TIPO);
+            .tipo(DEFAULT_TIPO)
+            .benzinaPrezzoAlLitro(DEFAULT_BENZINA_PREZZO_AL_LITRO)
+            .gasolioPrezzoAlLitro(DEFAULT_GASOLIO_PREZZO_AL_LITRO);
         return gestore;
     }
 
@@ -97,7 +107,9 @@ class GestoreResourceIT {
             .indirizzo(UPDATED_INDIRIZZO)
             .longitudine(UPDATED_LONGITUDINE)
             .latitudine(UPDATED_LATITUDINE)
-            .tipo(UPDATED_TIPO);
+            .tipo(UPDATED_TIPO)
+            .benzinaPrezzoAlLitro(UPDATED_BENZINA_PREZZO_AL_LITRO)
+            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO);
         return gestore;
     }
 
@@ -125,6 +137,8 @@ class GestoreResourceIT {
         assertThat(testGestore.getLongitudine()).isEqualTo(DEFAULT_LONGITUDINE);
         assertThat(testGestore.getLatitudine()).isEqualTo(DEFAULT_LATITUDINE);
         assertThat(testGestore.getTipo()).isEqualTo(DEFAULT_TIPO);
+        assertThat(testGestore.getBenzinaPrezzoAlLitro()).isEqualTo(DEFAULT_BENZINA_PREZZO_AL_LITRO);
+        assertThat(testGestore.getGasolioPrezzoAlLitro()).isEqualTo(DEFAULT_GASOLIO_PREZZO_AL_LITRO);
     }
 
     @Test
@@ -162,7 +176,9 @@ class GestoreResourceIT {
             .andExpect(jsonPath("$.[*].indirizzo").value(hasItem(DEFAULT_INDIRIZZO)))
             .andExpect(jsonPath("$.[*].longitudine").value(hasItem(DEFAULT_LONGITUDINE.doubleValue())))
             .andExpect(jsonPath("$.[*].latitudine").value(hasItem(DEFAULT_LATITUDINE.doubleValue())))
-            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())));
+            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())))
+            .andExpect(jsonPath("$.[*].benzinaPrezzoAlLitro").value(hasItem(DEFAULT_BENZINA_PREZZO_AL_LITRO.doubleValue())))
+            .andExpect(jsonPath("$.[*].gasolioPrezzoAlLitro").value(hasItem(DEFAULT_GASOLIO_PREZZO_AL_LITRO.doubleValue())));
     }
 
     @Test
@@ -182,7 +198,9 @@ class GestoreResourceIT {
             .andExpect(jsonPath("$.indirizzo").value(DEFAULT_INDIRIZZO))
             .andExpect(jsonPath("$.longitudine").value(DEFAULT_LONGITUDINE.doubleValue()))
             .andExpect(jsonPath("$.latitudine").value(DEFAULT_LATITUDINE.doubleValue()))
-            .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()));
+            .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()))
+            .andExpect(jsonPath("$.benzinaPrezzoAlLitro").value(DEFAULT_BENZINA_PREZZO_AL_LITRO.doubleValue()))
+            .andExpect(jsonPath("$.gasolioPrezzoAlLitro").value(DEFAULT_GASOLIO_PREZZO_AL_LITRO.doubleValue()));
     }
 
     @Test
@@ -699,6 +717,214 @@ class GestoreResourceIT {
 
     @Test
     @Transactional
+    void getAllGestoresByBenzinaPrezzoAlLitroIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro equals to DEFAULT_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("benzinaPrezzoAlLitro.equals=" + DEFAULT_BENZINA_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro equals to UPDATED_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("benzinaPrezzoAlLitro.equals=" + UPDATED_BENZINA_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByBenzinaPrezzoAlLitroIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro not equals to DEFAULT_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("benzinaPrezzoAlLitro.notEquals=" + DEFAULT_BENZINA_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro not equals to UPDATED_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("benzinaPrezzoAlLitro.notEquals=" + UPDATED_BENZINA_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByBenzinaPrezzoAlLitroIsInShouldWork() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro in DEFAULT_BENZINA_PREZZO_AL_LITRO or UPDATED_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("benzinaPrezzoAlLitro.in=" + DEFAULT_BENZINA_PREZZO_AL_LITRO + "," + UPDATED_BENZINA_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro equals to UPDATED_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("benzinaPrezzoAlLitro.in=" + UPDATED_BENZINA_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByBenzinaPrezzoAlLitroIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro is not null
+        defaultGestoreShouldBeFound("benzinaPrezzoAlLitro.specified=true");
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro is null
+        defaultGestoreShouldNotBeFound("benzinaPrezzoAlLitro.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByBenzinaPrezzoAlLitroIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro is greater than or equal to DEFAULT_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("benzinaPrezzoAlLitro.greaterThanOrEqual=" + DEFAULT_BENZINA_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro is greater than or equal to UPDATED_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("benzinaPrezzoAlLitro.greaterThanOrEqual=" + UPDATED_BENZINA_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByBenzinaPrezzoAlLitroIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro is less than or equal to DEFAULT_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("benzinaPrezzoAlLitro.lessThanOrEqual=" + DEFAULT_BENZINA_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro is less than or equal to SMALLER_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("benzinaPrezzoAlLitro.lessThanOrEqual=" + SMALLER_BENZINA_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByBenzinaPrezzoAlLitroIsLessThanSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro is less than DEFAULT_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("benzinaPrezzoAlLitro.lessThan=" + DEFAULT_BENZINA_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro is less than UPDATED_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("benzinaPrezzoAlLitro.lessThan=" + UPDATED_BENZINA_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByBenzinaPrezzoAlLitroIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro is greater than DEFAULT_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("benzinaPrezzoAlLitro.greaterThan=" + DEFAULT_BENZINA_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where benzinaPrezzoAlLitro is greater than SMALLER_BENZINA_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("benzinaPrezzoAlLitro.greaterThan=" + SMALLER_BENZINA_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByGasolioPrezzoAlLitroIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro equals to DEFAULT_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("gasolioPrezzoAlLitro.equals=" + DEFAULT_GASOLIO_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro equals to UPDATED_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("gasolioPrezzoAlLitro.equals=" + UPDATED_GASOLIO_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByGasolioPrezzoAlLitroIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro not equals to DEFAULT_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("gasolioPrezzoAlLitro.notEquals=" + DEFAULT_GASOLIO_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro not equals to UPDATED_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("gasolioPrezzoAlLitro.notEquals=" + UPDATED_GASOLIO_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByGasolioPrezzoAlLitroIsInShouldWork() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro in DEFAULT_GASOLIO_PREZZO_AL_LITRO or UPDATED_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("gasolioPrezzoAlLitro.in=" + DEFAULT_GASOLIO_PREZZO_AL_LITRO + "," + UPDATED_GASOLIO_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro equals to UPDATED_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("gasolioPrezzoAlLitro.in=" + UPDATED_GASOLIO_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByGasolioPrezzoAlLitroIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro is not null
+        defaultGestoreShouldBeFound("gasolioPrezzoAlLitro.specified=true");
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro is null
+        defaultGestoreShouldNotBeFound("gasolioPrezzoAlLitro.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByGasolioPrezzoAlLitroIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro is greater than or equal to DEFAULT_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("gasolioPrezzoAlLitro.greaterThanOrEqual=" + DEFAULT_GASOLIO_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro is greater than or equal to UPDATED_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("gasolioPrezzoAlLitro.greaterThanOrEqual=" + UPDATED_GASOLIO_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByGasolioPrezzoAlLitroIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro is less than or equal to DEFAULT_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("gasolioPrezzoAlLitro.lessThanOrEqual=" + DEFAULT_GASOLIO_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro is less than or equal to SMALLER_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("gasolioPrezzoAlLitro.lessThanOrEqual=" + SMALLER_GASOLIO_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByGasolioPrezzoAlLitroIsLessThanSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro is less than DEFAULT_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("gasolioPrezzoAlLitro.lessThan=" + DEFAULT_GASOLIO_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro is less than UPDATED_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("gasolioPrezzoAlLitro.lessThan=" + UPDATED_GASOLIO_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByGasolioPrezzoAlLitroIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro is greater than DEFAULT_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldNotBeFound("gasolioPrezzoAlLitro.greaterThan=" + DEFAULT_GASOLIO_PREZZO_AL_LITRO);
+
+        // Get all the gestoreList where gasolioPrezzoAlLitro is greater than SMALLER_GASOLIO_PREZZO_AL_LITRO
+        defaultGestoreShouldBeFound("gasolioPrezzoAlLitro.greaterThan=" + SMALLER_GASOLIO_PREZZO_AL_LITRO);
+    }
+
+    @Test
+    @Transactional
     void getAllGestoresByRifornimentoIsEqualToSomething() throws Exception {
         // Initialize the database
         gestoreRepository.saveAndFlush(gestore);
@@ -768,7 +994,9 @@ class GestoreResourceIT {
             .andExpect(jsonPath("$.[*].indirizzo").value(hasItem(DEFAULT_INDIRIZZO)))
             .andExpect(jsonPath("$.[*].longitudine").value(hasItem(DEFAULT_LONGITUDINE.doubleValue())))
             .andExpect(jsonPath("$.[*].latitudine").value(hasItem(DEFAULT_LATITUDINE.doubleValue())))
-            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())));
+            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())))
+            .andExpect(jsonPath("$.[*].benzinaPrezzoAlLitro").value(hasItem(DEFAULT_BENZINA_PREZZO_AL_LITRO.doubleValue())))
+            .andExpect(jsonPath("$.[*].gasolioPrezzoAlLitro").value(hasItem(DEFAULT_GASOLIO_PREZZO_AL_LITRO.doubleValue())));
 
         // Check, that the count call also returns 1
         restGestoreMockMvc
@@ -822,7 +1050,9 @@ class GestoreResourceIT {
             .indirizzo(UPDATED_INDIRIZZO)
             .longitudine(UPDATED_LONGITUDINE)
             .latitudine(UPDATED_LATITUDINE)
-            .tipo(UPDATED_TIPO);
+            .tipo(UPDATED_TIPO)
+            .benzinaPrezzoAlLitro(UPDATED_BENZINA_PREZZO_AL_LITRO)
+            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO);
 
         restGestoreMockMvc
             .perform(
@@ -840,6 +1070,8 @@ class GestoreResourceIT {
         assertThat(testGestore.getLongitudine()).isEqualTo(UPDATED_LONGITUDINE);
         assertThat(testGestore.getLatitudine()).isEqualTo(UPDATED_LATITUDINE);
         assertThat(testGestore.getTipo()).isEqualTo(UPDATED_TIPO);
+        assertThat(testGestore.getBenzinaPrezzoAlLitro()).isEqualTo(UPDATED_BENZINA_PREZZO_AL_LITRO);
+        assertThat(testGestore.getGasolioPrezzoAlLitro()).isEqualTo(UPDATED_GASOLIO_PREZZO_AL_LITRO);
     }
 
     @Test
@@ -869,7 +1101,10 @@ class GestoreResourceIT {
         Gestore partialUpdatedGestore = new Gestore();
         partialUpdatedGestore.setId(gestore.getId());
 
-        partialUpdatedGestore.indirizzo(UPDATED_INDIRIZZO);
+        partialUpdatedGestore
+            .indirizzo(UPDATED_INDIRIZZO)
+            .benzinaPrezzoAlLitro(UPDATED_BENZINA_PREZZO_AL_LITRO)
+            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO);
 
         restGestoreMockMvc
             .perform(
@@ -889,6 +1124,8 @@ class GestoreResourceIT {
         assertThat(testGestore.getLongitudine()).isEqualTo(DEFAULT_LONGITUDINE);
         assertThat(testGestore.getLatitudine()).isEqualTo(DEFAULT_LATITUDINE);
         assertThat(testGestore.getTipo()).isEqualTo(DEFAULT_TIPO);
+        assertThat(testGestore.getBenzinaPrezzoAlLitro()).isEqualTo(UPDATED_BENZINA_PREZZO_AL_LITRO);
+        assertThat(testGestore.getGasolioPrezzoAlLitro()).isEqualTo(UPDATED_GASOLIO_PREZZO_AL_LITRO);
     }
 
     @Test
@@ -909,7 +1146,9 @@ class GestoreResourceIT {
             .indirizzo(UPDATED_INDIRIZZO)
             .longitudine(UPDATED_LONGITUDINE)
             .latitudine(UPDATED_LATITUDINE)
-            .tipo(UPDATED_TIPO);
+            .tipo(UPDATED_TIPO)
+            .benzinaPrezzoAlLitro(UPDATED_BENZINA_PREZZO_AL_LITRO)
+            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO);
 
         restGestoreMockMvc
             .perform(
@@ -929,6 +1168,8 @@ class GestoreResourceIT {
         assertThat(testGestore.getLongitudine()).isEqualTo(UPDATED_LONGITUDINE);
         assertThat(testGestore.getLatitudine()).isEqualTo(UPDATED_LATITUDINE);
         assertThat(testGestore.getTipo()).isEqualTo(UPDATED_TIPO);
+        assertThat(testGestore.getBenzinaPrezzoAlLitro()).isEqualTo(UPDATED_BENZINA_PREZZO_AL_LITRO);
+        assertThat(testGestore.getGasolioPrezzoAlLitro()).isEqualTo(UPDATED_GASOLIO_PREZZO_AL_LITRO);
     }
 
     @Test
