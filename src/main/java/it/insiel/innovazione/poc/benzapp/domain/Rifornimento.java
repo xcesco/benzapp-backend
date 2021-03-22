@@ -29,10 +29,6 @@ public class Rifornimento implements Serializable {
     private ZonedDateTime data;
 
     @NotNull
-    @Column(name = "progressivo", nullable = false)
-    private Integer progressivo;
-
-    @NotNull
     @Column(name = "litri_erogati", nullable = false)
     private Float litriErogati;
 
@@ -82,19 +78,6 @@ public class Rifornimento implements Serializable {
 
     public void setData(ZonedDateTime data) {
         this.data = data;
-    }
-
-    public Integer getProgressivo() {
-        return this.progressivo;
-    }
-
-    public Rifornimento progressivo(Integer progressivo) {
-        this.progressivo = progressivo;
-        return this;
-    }
-
-    public void setProgressivo(Integer progressivo) {
-        this.progressivo = progressivo;
     }
 
     public Float getLitriErogati() {
@@ -200,7 +183,6 @@ public class Rifornimento implements Serializable {
         return "Rifornimento{" +
             "id=" + getId() +
             ", data='" + getData() + "'" +
-            ", progressivo=" + getProgressivo() +
             ", litriErogati=" + getLitriErogati() +
             ", sconto=" + getSconto() +
             ", prezzoAlLitro=" + getPrezzoAlLitro() +

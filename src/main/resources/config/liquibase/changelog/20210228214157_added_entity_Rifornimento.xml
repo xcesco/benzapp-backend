@@ -17,9 +17,6 @@
             <column name="data" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="progressivo" type="integer">
-                <constraints nullable="false" />
-            </column>
             <column name="litri_erogati" type="${floatType}">
                 <constraints nullable="false" />
             </column>
@@ -60,7 +57,6 @@
                   tableName="rifornimenti">
             <column name="id" type="numeric"/>
             <column name="data" type="${datetimeType}"/>
-            <column name="progressivo" type="numeric"/>
             <column name="litri_erogati" type="numeric"/>
             <column name="sconto" type="numeric"/>
             <column name="prezzo_al_litro" type="numeric"/>

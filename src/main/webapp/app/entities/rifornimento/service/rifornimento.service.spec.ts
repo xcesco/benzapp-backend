@@ -25,7 +25,7 @@ describe('Service Tests', () => {
       httpMock = TestBed.inject(HttpTestingController);
       currentDate = dayjs();
 
-      elemDefault = new Rifornimento(0, currentDate, 0, 0, 0, 0, TipoCarburante.BENZINA);
+      elemDefault = new Rifornimento(0, currentDate, 0, 0, 0, TipoCarburante.BENZINA);
     });
 
     describe('Service methods', () => {
@@ -72,7 +72,6 @@ describe('Service Tests', () => {
           {
             id: 1,
             data: currentDate.format(DATE_TIME_FORMAT),
-            progressivo: 1,
             litriErogati: 1,
             sconto: 1,
             prezzoAlLitro: 1,
@@ -100,7 +99,6 @@ describe('Service Tests', () => {
           {
             id: 1,
             data: currentDate.format(DATE_TIME_FORMAT),
-            progressivo: 1,
             litriErogati: 1,
             sconto: 1,
             prezzoAlLitro: 1,

@@ -44,10 +44,6 @@ public class RifornimentoServiceImpl implements RifornimentoService {
                         existingRifornimento.setData(rifornimento.getData());
                     }
 
-                    if (rifornimento.getProgressivo() != null) {
-                        existingRifornimento.setProgressivo(rifornimento.getProgressivo());
-                    }
-
                     if (rifornimento.getLitriErogati() != null) {
                         existingRifornimento.setLitriErogati(rifornimento.getLitriErogati());
                     }

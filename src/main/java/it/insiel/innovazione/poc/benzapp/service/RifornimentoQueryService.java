@@ -84,9 +84,6 @@ public class RifornimentoQueryService extends QueryService<Rifornimento> {
             if (criteria.getData() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getData(), Rifornimento_.data));
             }
-            if (criteria.getProgressivo() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getProgressivo(), Rifornimento_.progressivo));
-            }
             if (criteria.getLitriErogati() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLitriErogati(), Rifornimento_.litriErogati));
             }

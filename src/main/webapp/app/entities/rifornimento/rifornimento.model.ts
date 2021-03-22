@@ -9,7 +9,6 @@ import { ICittadino } from 'app/entities/cittadino/cittadino.model';
 export interface IRifornimento {
   id?: number;
   data?: dayjs.Dayjs;
-  progressivo?: number;
   litriErogati?: number;
   sconto?: number;
   prezzoAlLitro?: number;
@@ -22,7 +21,6 @@ export class Rifornimento implements IRifornimento {
   constructor(
     public id?: number,
     public data?: dayjs.Dayjs,
-    public progressivo?: number,
     public litriErogati?: number,
     public sconto?: number,
     public prezzoAlLitro?: number,
