@@ -38,7 +38,7 @@ application {
     withAdminUi true
   }
 
-  entities Cittadino, Fascia, Gestore, Marchio, Rifornimento, Tessera, Delega
+  entities Cittadino, Delega, Fascia, Gestore, Marchio, Rifornimento, Tessera
 }
 
 entity Cittadino (cittadini) {
@@ -46,6 +46,7 @@ entity Cittadino (cittadini) {
   cognome String
   codiceFiscale String
 }
+entity Delega (deleghe)
 entity Fascia {
   descrizione String
   scontoBenzina Float
@@ -79,11 +80,6 @@ entity Tessera (tessere) {
   veicolo TipoVeicolo required
   carburante TipoCarburante required
 }
-
-entity Delega(deleghe) {
-
-}
-
 enum TipoImpianto {
   AUTOSTRADALE,
   STRADALE,
@@ -100,17 +96,15 @@ enum TipoVeicolo {
 }
 
 relationship OneToMany {
+  Cittadino{delega} to Delega{cittadino}
+  Tessera{delega} to Delega{tessera}
   Fascia{gestore} to Gestore{fascia}
   Marchio{gestore} to Gestore{marchio}
   Gestore{rifornimento} to Rifornimento{gestore}
   Tessera{rifornimento} to Rifornimento{tessera}
   Cittadino{tessera} to Tessera{cittadino}
-
-  Cittadino{delega} to Delega{cittadino}
-  Tessera{delega} to Delega{tessera}
 }
 
-filter Cittadino, Gestore, Rifornimento, Tessera, Delega
-paginate Cittadino, Gestore, Marchio, Rifornimento, Tessera, Delega with pagination
-service Cittadino, Fascia, Gestore, Marchio, Rifornimento, Tessera, Delega with serviceImpl
-
+paginate Cittadino, Delega, Gestore, Marchio, Rifornimento, Tessera with pagination
+service Cittadino, Delega, Fascia, Gestore, Marchio, Rifornimento, Tessera with serviceImpl
+filter Cittadino, Delega, Gestore, Rifornimento, Tessera

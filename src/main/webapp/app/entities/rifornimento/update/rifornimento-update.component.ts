@@ -13,6 +13,7 @@ import { GestoreService } from 'app/entities/gestore/service/gestore.service';
 import { ITessera } from 'app/entities/tessera/tessera.model';
 import { TesseraService } from 'app/entities/tessera/service/tessera.service';
 import { CittadinoService } from 'app/entities/cittadino/service/cittadino.service';
+import { TipoCarburante } from 'app/entities/enumerations/tipo-carburante.model';
 
 @Component({
   selector: 'jhi-rifornimento-update',
@@ -140,12 +141,17 @@ export class RifornimentoUpdateComponent implements OnInit {
     this.tesseraService.query({ 'codice.equals': qrcode.tesseraNumero }).subscribe(result => {
       if (result.body) {
         const value: ITessera = result.body[0];
+        const currentSconto: number =
+          (value.carburante === TipoCarburante.BENZINA
+            ? this.currentGestore?.fascia?.scontoBenzina
+            : this.currentGestore?.fascia?.scontoGasolio) ?? 0;
 
         const rifornimento: IRifornimento = {
           tipoCarburante: value.carburante,
           tessera: value,
           data: dayjs(new Date()),
           gestore: this.currentGestore,
+          sconto: currentSconto,
         };
         this.updateForm(rifornimento);
       }
