@@ -73,9 +73,9 @@ public class TesseraCriteria implements Serializable, Criteria {
 
     private TipoCarburanteFilter carburante;
 
-    private LongFilter rifornimentoId;
-
     private LongFilter delegaId;
+
+    private LongFilter rifornimentoId;
 
     private LongFilter cittadinoId;
 
@@ -88,8 +88,8 @@ public class TesseraCriteria implements Serializable, Criteria {
         this.targa = other.targa == null ? null : other.targa.copy();
         this.veicolo = other.veicolo == null ? null : other.veicolo.copy();
         this.carburante = other.carburante == null ? null : other.carburante.copy();
-        this.rifornimentoId = other.rifornimentoId == null ? null : other.rifornimentoId.copy();
         this.delegaId = other.delegaId == null ? null : other.delegaId.copy();
+        this.rifornimentoId = other.rifornimentoId == null ? null : other.rifornimentoId.copy();
         this.cittadinoId = other.cittadinoId == null ? null : other.cittadinoId.copy();
     }
 
@@ -146,20 +146,20 @@ public class TesseraCriteria implements Serializable, Criteria {
         this.carburante = carburante;
     }
 
-    public LongFilter getRifornimentoId() {
-        return rifornimentoId;
-    }
-
-    public void setRifornimentoId(LongFilter rifornimentoId) {
-        this.rifornimentoId = rifornimentoId;
-    }
-
     public LongFilter getDelegaId() {
         return delegaId;
     }
 
     public void setDelegaId(LongFilter delegaId) {
         this.delegaId = delegaId;
+    }
+
+    public LongFilter getRifornimentoId() {
+        return rifornimentoId;
+    }
+
+    public void setRifornimentoId(LongFilter rifornimentoId) {
+        this.rifornimentoId = rifornimentoId;
     }
 
     public LongFilter getCittadinoId() {
@@ -186,15 +186,15 @@ public class TesseraCriteria implements Serializable, Criteria {
             Objects.equals(targa, that.targa) &&
             Objects.equals(veicolo, that.veicolo) &&
             Objects.equals(carburante, that.carburante) &&
-            Objects.equals(rifornimentoId, that.rifornimentoId) &&
             Objects.equals(delegaId, that.delegaId) &&
+            Objects.equals(rifornimentoId, that.rifornimentoId) &&
             Objects.equals(cittadinoId, that.cittadinoId)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, codice, dataEmissione, targa, veicolo, carburante, rifornimentoId, delegaId, cittadinoId);
+        return Objects.hash(id, codice, dataEmissione, targa, veicolo, carburante, delegaId, rifornimentoId, cittadinoId);
     }
 
     // prettier-ignore
@@ -207,8 +207,8 @@ public class TesseraCriteria implements Serializable, Criteria {
                 (targa != null ? "targa=" + targa + ", " : "") +
                 (veicolo != null ? "veicolo=" + veicolo + ", " : "") +
                 (carburante != null ? "carburante=" + carburante + ", " : "") +
-                (rifornimentoId != null ? "rifornimentoId=" + rifornimentoId + ", " : "") +
                 (delegaId != null ? "delegaId=" + delegaId + ", " : "") +
+                (rifornimentoId != null ? "rifornimentoId=" + rifornimentoId + ", " : "") +
                 (cittadinoId != null ? "cittadinoId=" + cittadinoId + ", " : "") +
             "}";
     }

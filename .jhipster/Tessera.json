@@ -37,15 +37,15 @@
   "relationships": [
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "rifornimento",
-      "otherEntityRelationshipName": "tessera",
-      "relationshipName": "rifornimento"
-    },
-    {
-      "relationshipType": "one-to-many",
       "otherEntityName": "delega",
       "otherEntityRelationshipName": "tessera",
       "relationshipName": "delega"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "rifornimento",
+      "otherEntityRelationshipName": "tessera",
+      "relationshipName": "rifornimento"
     },
     {
       "relationshipType": "many-to-one",

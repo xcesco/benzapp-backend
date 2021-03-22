@@ -17,15 +17,21 @@
   "relationships": [
     {
       "relationshipType": "one-to-many",
+      "otherEntityName": "delega",
+      "otherEntityRelationshipName": "cittadino",
+      "relationshipName": "delega"
+    },
+    {
+      "relationshipType": "one-to-many",
       "otherEntityName": "tessera",
       "otherEntityRelationshipName": "cittadino",
       "relationshipName": "tessera"
     },
     {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "delega",
+      "relationshipType": "many-to-one",
+      "otherEntityName": "fascia",
       "otherEntityRelationshipName": "cittadino",
-      "relationshipName": "delega"
+      "relationshipName": "fascia"
     }
   ],
   "entityTableName": "cittadini",

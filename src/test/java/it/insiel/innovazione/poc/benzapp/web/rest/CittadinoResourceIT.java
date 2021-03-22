@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import it.insiel.innovazione.poc.benzapp.IntegrationTest;
 import it.insiel.innovazione.poc.benzapp.domain.Cittadino;
 import it.insiel.innovazione.poc.benzapp.domain.Delega;
+import it.insiel.innovazione.poc.benzapp.domain.Fascia;
 import it.insiel.innovazione.poc.benzapp.domain.Tessera;
 import it.insiel.innovazione.poc.benzapp.repository.CittadinoRepository;
 import it.insiel.innovazione.poc.benzapp.service.CittadinoQueryService;
@@ -405,6 +406,25 @@ class CittadinoResourceIT {
 
     @Test
     @Transactional
+    void getAllCittadinosByDelegaIsEqualToSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+        Delega delega = DelegaResourceIT.createEntity(em);
+        em.persist(delega);
+        em.flush();
+        cittadino.addDelega(delega);
+        cittadinoRepository.saveAndFlush(cittadino);
+        Long delegaId = delega.getId();
+
+        // Get all the cittadinoList where delega equals to delegaId
+        defaultCittadinoShouldBeFound("delegaId.equals=" + delegaId);
+
+        // Get all the cittadinoList where delega equals to delegaId + 1
+        defaultCittadinoShouldNotBeFound("delegaId.equals=" + (delegaId + 1));
+    }
+
+    @Test
+    @Transactional
     void getAllCittadinosByTesseraIsEqualToSomething() throws Exception {
         // Initialize the database
         cittadinoRepository.saveAndFlush(cittadino);
@@ -424,21 +444,21 @@ class CittadinoResourceIT {
 
     @Test
     @Transactional
-    void getAllCittadinosByDelegaIsEqualToSomething() throws Exception {
+    void getAllCittadinosByFasciaIsEqualToSomething() throws Exception {
         // Initialize the database
         cittadinoRepository.saveAndFlush(cittadino);
-        Delega delega = DelegaResourceIT.createEntity(em);
-        em.persist(delega);
+        Fascia fascia = FasciaResourceIT.createEntity(em);
+        em.persist(fascia);
         em.flush();
-        cittadino.addDelega(delega);
+        cittadino.setFascia(fascia);
         cittadinoRepository.saveAndFlush(cittadino);
-        Long delegaId = delega.getId();
+        Long fasciaId = fascia.getId();
 
-        // Get all the cittadinoList where delega equals to delegaId
-        defaultCittadinoShouldBeFound("delegaId.equals=" + delegaId);
+        // Get all the cittadinoList where fascia equals to fasciaId
+        defaultCittadinoShouldBeFound("fasciaId.equals=" + fasciaId);
 
-        // Get all the cittadinoList where delega equals to delegaId + 1
-        defaultCittadinoShouldNotBeFound("delegaId.equals=" + (delegaId + 1));
+        // Get all the cittadinoList where fascia equals to fasciaId + 1
+        defaultCittadinoShouldNotBeFound("fasciaId.equals=" + (fasciaId + 1));
     }
 
     /**

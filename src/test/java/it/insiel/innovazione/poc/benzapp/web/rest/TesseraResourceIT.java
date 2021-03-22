@@ -667,25 +667,6 @@ class TesseraResourceIT {
 
     @Test
     @Transactional
-    void getAllTesserasByRifornimentoIsEqualToSomething() throws Exception {
-        // Initialize the database
-        tesseraRepository.saveAndFlush(tessera);
-        Rifornimento rifornimento = RifornimentoResourceIT.createEntity(em);
-        em.persist(rifornimento);
-        em.flush();
-        tessera.addRifornimento(rifornimento);
-        tesseraRepository.saveAndFlush(tessera);
-        Long rifornimentoId = rifornimento.getId();
-
-        // Get all the tesseraList where rifornimento equals to rifornimentoId
-        defaultTesseraShouldBeFound("rifornimentoId.equals=" + rifornimentoId);
-
-        // Get all the tesseraList where rifornimento equals to rifornimentoId + 1
-        defaultTesseraShouldNotBeFound("rifornimentoId.equals=" + (rifornimentoId + 1));
-    }
-
-    @Test
-    @Transactional
     void getAllTesserasByDelegaIsEqualToSomething() throws Exception {
         // Initialize the database
         tesseraRepository.saveAndFlush(tessera);
@@ -701,6 +682,25 @@ class TesseraResourceIT {
 
         // Get all the tesseraList where delega equals to delegaId + 1
         defaultTesseraShouldNotBeFound("delegaId.equals=" + (delegaId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllTesserasByRifornimentoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        tesseraRepository.saveAndFlush(tessera);
+        Rifornimento rifornimento = RifornimentoResourceIT.createEntity(em);
+        em.persist(rifornimento);
+        em.flush();
+        tessera.addRifornimento(rifornimento);
+        tesseraRepository.saveAndFlush(tessera);
+        Long rifornimentoId = rifornimento.getId();
+
+        // Get all the tesseraList where rifornimento equals to rifornimentoId
+        defaultTesseraShouldBeFound("rifornimentoId.equals=" + rifornimentoId);
+
+        // Get all the tesseraList where rifornimento equals to rifornimentoId + 1
+        defaultTesseraShouldNotBeFound("rifornimentoId.equals=" + (rifornimentoId + 1));
     }
 
     @Test

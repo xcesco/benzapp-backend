@@ -29,8 +29,8 @@
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="gestores && gestores.length > 0">
-    <table class="table table-hover" aria-describedby="page-heading">
-      <thead class="thead-dark">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
           <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="provincia">
@@ -55,9 +55,6 @@
           <th scope="col" jhiSortBy="gasolioPrezzoAlLitro">
             <span jhiTranslate="benzappApp.gestore.gasolioPrezzoAlLitro">Gasolio Prezzo Al Litro</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="fascia.id">
-            <span jhiTranslate="benzappApp.gestore.fascia">Fascia</span> <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col" jhiSortBy="marchio.id">
             <span jhiTranslate="benzappApp.gestore.marchio">Marchio</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -77,11 +74,6 @@
           <td jhiTranslate="{{ 'benzappApp.TipoImpianto.' + gestore.tipo }}">{{ gestore.tipo }}</td>
           <td>{{ gestore.benzinaPrezzoAlLitro }}</td>
           <td>{{ gestore.gasolioPrezzoAlLitro }}</td>
-          <td>
-            <div *ngIf="gestore.fascia">
-              <a [routerLink]="['/fascia', gestore.fascia?.id, 'view']">{{ gestore.fascia?.id }}</a>
-            </div>
-          </td>
           <td>
             <div *ngIf="gestore.marchio">
               <a [routerLink]="['/marchio', gestore.marchio?.id, 'view']">{{ gestore.marchio?.id }}</a>

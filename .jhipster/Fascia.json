@@ -17,9 +17,9 @@
   "relationships": [
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "gestore",
+      "otherEntityName": "cittadino",
       "otherEntityRelationshipName": "fascia",
-      "relationshipName": "gestore"
+      "relationshipName": "cittadino"
     }
   ],
   "entityTableName": "fascia",

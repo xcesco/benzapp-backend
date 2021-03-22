@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 
 import { CittadinoService } from '../service/cittadino.service';
 import { Cittadino } from '../cittadino.model';
+import { Fascia } from 'app/entities/fascia/fascia.model';
 
 import { CittadinoUpdateComponent } from './cittadino-update.component';
 
@@ -60,6 +61,16 @@ describe('Component Tests', () => {
         expect(service.create).toHaveBeenCalledWith(entity);
         expect(comp.isSaving).toEqual(false);
       }));
+    });
+
+    describe('Tracking relationships identifiers', () => {
+      describe('trackFasciaById', () => {
+        it('Should return tracked Fascia primary key', () => {
+          const entity = new Fascia(123);
+          const trackResult = comp.trackFasciaById(0, entity);
+          expect(trackResult).toEqual(entity.id);
+        });
+      });
     });
   });
 });

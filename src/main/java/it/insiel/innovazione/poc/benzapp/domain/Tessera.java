@@ -58,16 +58,16 @@ public class Tessera implements Serializable {
 
     @OneToMany(mappedBy = "tessera")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "gestore", "tessera" }, allowSetters = true)
-    private Set<Rifornimento> rifornimentos = new HashSet<>();
-
-    @OneToMany(mappedBy = "tessera")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "cittadino", "tessera" }, allowSetters = true)
     private Set<Delega> delegas = new HashSet<>();
 
+    @OneToMany(mappedBy = "tessera")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "gestore", "tessera" }, allowSetters = true)
+    private Set<Rifornimento> rifornimentos = new HashSet<>();
+
     @ManyToOne
-    @JsonIgnoreProperties(value = { "tesseras", "delegas" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "delegas", "tesseras" }, allowSetters = true)
     private Cittadino cittadino;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -175,37 +175,6 @@ public class Tessera implements Serializable {
         this.carburante = carburante;
     }
 
-    public Set<Rifornimento> getRifornimentos() {
-        return this.rifornimentos;
-    }
-
-    public Tessera rifornimentos(Set<Rifornimento> rifornimentos) {
-        this.setRifornimentos(rifornimentos);
-        return this;
-    }
-
-    public Tessera addRifornimento(Rifornimento rifornimento) {
-        this.rifornimentos.add(rifornimento);
-        rifornimento.setTessera(this);
-        return this;
-    }
-
-    public Tessera removeRifornimento(Rifornimento rifornimento) {
-        this.rifornimentos.remove(rifornimento);
-        rifornimento.setTessera(null);
-        return this;
-    }
-
-    public void setRifornimentos(Set<Rifornimento> rifornimentos) {
-        if (this.rifornimentos != null) {
-            this.rifornimentos.forEach(i -> i.setTessera(null));
-        }
-        if (rifornimentos != null) {
-            rifornimentos.forEach(i -> i.setTessera(this));
-        }
-        this.rifornimentos = rifornimentos;
-    }
-
     public Set<Delega> getDelegas() {
         return this.delegas;
     }
@@ -235,6 +204,37 @@ public class Tessera implements Serializable {
             delegas.forEach(i -> i.setTessera(this));
         }
         this.delegas = delegas;
+    }
+
+    public Set<Rifornimento> getRifornimentos() {
+        return this.rifornimentos;
+    }
+
+    public Tessera rifornimentos(Set<Rifornimento> rifornimentos) {
+        this.setRifornimentos(rifornimentos);
+        return this;
+    }
+
+    public Tessera addRifornimento(Rifornimento rifornimento) {
+        this.rifornimentos.add(rifornimento);
+        rifornimento.setTessera(this);
+        return this;
+    }
+
+    public Tessera removeRifornimento(Rifornimento rifornimento) {
+        this.rifornimentos.remove(rifornimento);
+        rifornimento.setTessera(null);
+        return this;
+    }
+
+    public void setRifornimentos(Set<Rifornimento> rifornimentos) {
+        if (this.rifornimentos != null) {
+            this.rifornimentos.forEach(i -> i.setTessera(null));
+        }
+        if (rifornimentos != null) {
+            rifornimentos.forEach(i -> i.setTessera(this));
+        }
+        this.rifornimentos = rifornimentos;
     }
 
     public Cittadino getCittadino() {

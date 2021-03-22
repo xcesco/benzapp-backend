@@ -34,8 +34,8 @@ public class Fascia implements Serializable {
 
     @OneToMany(mappedBy = "fascia")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "rifornimentos", "fascia", "marchio" }, allowSetters = true)
-    private Set<Gestore> gestores = new HashSet<>();
+    @JsonIgnoreProperties(value = { "delegas", "tesseras", "fascia" }, allowSetters = true)
+    private Set<Cittadino> cittadinos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -90,35 +90,35 @@ public class Fascia implements Serializable {
         this.scontoGasolio = scontoGasolio;
     }
 
-    public Set<Gestore> getGestores() {
-        return this.gestores;
+    public Set<Cittadino> getCittadinos() {
+        return this.cittadinos;
     }
 
-    public Fascia gestores(Set<Gestore> gestores) {
-        this.setGestores(gestores);
+    public Fascia cittadinos(Set<Cittadino> cittadinos) {
+        this.setCittadinos(cittadinos);
         return this;
     }
 
-    public Fascia addGestore(Gestore gestore) {
-        this.gestores.add(gestore);
-        gestore.setFascia(this);
+    public Fascia addCittadino(Cittadino cittadino) {
+        this.cittadinos.add(cittadino);
+        cittadino.setFascia(this);
         return this;
     }
 
-    public Fascia removeGestore(Gestore gestore) {
-        this.gestores.remove(gestore);
-        gestore.setFascia(null);
+    public Fascia removeCittadino(Cittadino cittadino) {
+        this.cittadinos.remove(cittadino);
+        cittadino.setFascia(null);
         return this;
     }
 
-    public void setGestores(Set<Gestore> gestores) {
-        if (this.gestores != null) {
-            this.gestores.forEach(i -> i.setFascia(null));
+    public void setCittadinos(Set<Cittadino> cittadinos) {
+        if (this.cittadinos != null) {
+            this.cittadinos.forEach(i -> i.setFascia(null));
         }
-        if (gestores != null) {
-            gestores.forEach(i -> i.setFascia(this));
+        if (cittadinos != null) {
+            cittadinos.forEach(i -> i.setFascia(this));
         }
-        this.gestores = gestores;
+        this.cittadinos = cittadinos;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

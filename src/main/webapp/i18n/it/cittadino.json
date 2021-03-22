@@ -2,10 +2,10 @@
   "benzappApp": {
     "cittadino": {
       "home": {
-        "title": "Elenco cittadini",
+        "title": "Cittadinos",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Registra un nuovo Cittadino",
-        "createOrEditLabel": "Inserisci o modifica un cittadino",
+        "createLabel": "Genera un nuovo Cittadino",
+        "createOrEditLabel": "Genera o modifica un Cittadino",
         "notFound": "No Cittadinos found"
       },
       "created": "&Egrave; stato generato un nuovo Cittadino con identificatore {{ param }}",
@@ -21,8 +21,9 @@
       "nome": "Nome",
       "cognome": "Cognome",
       "codiceFiscale": "Codice Fiscale",
+      "delega": "Delega",
       "tessera": "Tessera",
-      "delega": "Delega"
+      "fascia": "Fascia"
     }
   }
 }

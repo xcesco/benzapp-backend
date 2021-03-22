@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 
 import { ICittadino, Cittadino } from '../cittadino.model';
 import { CittadinoService } from '../service/cittadino.service';
+import { IFascia } from 'app/entities/fascia/fascia.model';
+import { FasciaService } from 'app/entities/fascia/service/fascia.service';
 
 @Component({
   selector: 'jhi-cittadino-update',
@@ -13,19 +15,28 @@ import { CittadinoService } from '../service/cittadino.service';
 })
 export class CittadinoUpdateComponent implements OnInit {
   isSaving = false;
+  fascias: IFascia[] = [];
 
   editForm = this.fb.group({
     id: [],
     nome: [],
     cognome: [],
     codiceFiscale: [],
+    fascia: [],
   });
 
-  constructor(protected cittadinoService: CittadinoService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected cittadinoService: CittadinoService,
+    protected fasciaService: FasciaService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ cittadino }) => {
       this.updateForm(cittadino);
+
+      this.fasciaService.query().subscribe((res: HttpResponse<IFascia[]>) => (this.fascias = res.body ?? []));
     });
   }
 
@@ -35,6 +46,7 @@ export class CittadinoUpdateComponent implements OnInit {
       nome: cittadino.nome,
       cognome: cittadino.cognome,
       codiceFiscale: cittadino.codiceFiscale,
+      fascia: cittadino.fascia,
     });
   }
 
@@ -59,6 +71,7 @@ export class CittadinoUpdateComponent implements OnInit {
       nome: this.editForm.get(['nome'])!.value,
       cognome: this.editForm.get(['cognome'])!.value,
       codiceFiscale: this.editForm.get(['codiceFiscale'])!.value,
+      fascia: this.editForm.get(['fascia'])!.value,
     };
   }
 
@@ -76,5 +89,9 @@ export class CittadinoUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackFasciaById(index: number, item: IFascia): number {
+    return item.id!;
   }
 }

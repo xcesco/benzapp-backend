@@ -90,16 +90,22 @@ public class CittadinoQueryService extends QueryService<Cittadino> {
             if (criteria.getCodiceFiscale() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCodiceFiscale(), Cittadino_.codiceFiscale));
             }
+            if (criteria.getDelegaId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getDelegaId(), root -> root.join(Cittadino_.delegas, JoinType.LEFT).get(Delega_.id))
+                    );
+            }
             if (criteria.getTesseraId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(criteria.getTesseraId(), root -> root.join(Cittadino_.tesseras, JoinType.LEFT).get(Tessera_.id))
                     );
             }
-            if (criteria.getDelegaId() != null) {
+            if (criteria.getFasciaId() != null) {
                 specification =
                     specification.and(
-                        buildSpecification(criteria.getDelegaId(), root -> root.join(Cittadino_.delegas, JoinType.LEFT).get(Delega_.id))
+                        buildSpecification(criteria.getFasciaId(), root -> root.join(Cittadino_.fascia, JoinType.LEFT).get(Fascia_.id))
                     );
             }
         }

@@ -22,11 +22,11 @@ public class Delega implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "tesseras", "delegas" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "delegas", "tesseras", "fascia" }, allowSetters = true)
     private Cittadino cittadino;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "rifornimentos", "delegas", "cittadino" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "delegas", "rifornimentos", "cittadino" }, allowSetters = true)
     private Tessera tessera;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -32,9 +32,11 @@ public class CittadinoCriteria implements Serializable, Criteria {
 
     private StringFilter codiceFiscale;
 
+    private LongFilter delegaId;
+
     private LongFilter tesseraId;
 
-    private LongFilter delegaId;
+    private LongFilter fasciaId;
 
     public CittadinoCriteria() {}
 
@@ -43,8 +45,9 @@ public class CittadinoCriteria implements Serializable, Criteria {
         this.nome = other.nome == null ? null : other.nome.copy();
         this.cognome = other.cognome == null ? null : other.cognome.copy();
         this.codiceFiscale = other.codiceFiscale == null ? null : other.codiceFiscale.copy();
-        this.tesseraId = other.tesseraId == null ? null : other.tesseraId.copy();
         this.delegaId = other.delegaId == null ? null : other.delegaId.copy();
+        this.tesseraId = other.tesseraId == null ? null : other.tesseraId.copy();
+        this.fasciaId = other.fasciaId == null ? null : other.fasciaId.copy();
     }
 
     @Override
@@ -84,6 +87,14 @@ public class CittadinoCriteria implements Serializable, Criteria {
         this.codiceFiscale = codiceFiscale;
     }
 
+    public LongFilter getDelegaId() {
+        return delegaId;
+    }
+
+    public void setDelegaId(LongFilter delegaId) {
+        this.delegaId = delegaId;
+    }
+
     public LongFilter getTesseraId() {
         return tesseraId;
     }
@@ -92,12 +103,12 @@ public class CittadinoCriteria implements Serializable, Criteria {
         this.tesseraId = tesseraId;
     }
 
-    public LongFilter getDelegaId() {
-        return delegaId;
+    public LongFilter getFasciaId() {
+        return fasciaId;
     }
 
-    public void setDelegaId(LongFilter delegaId) {
-        this.delegaId = delegaId;
+    public void setFasciaId(LongFilter fasciaId) {
+        this.fasciaId = fasciaId;
     }
 
     @Override
@@ -114,14 +125,15 @@ public class CittadinoCriteria implements Serializable, Criteria {
             Objects.equals(nome, that.nome) &&
             Objects.equals(cognome, that.cognome) &&
             Objects.equals(codiceFiscale, that.codiceFiscale) &&
+            Objects.equals(delegaId, that.delegaId) &&
             Objects.equals(tesseraId, that.tesseraId) &&
-            Objects.equals(delegaId, that.delegaId)
+            Objects.equals(fasciaId, that.fasciaId)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, cognome, codiceFiscale, tesseraId, delegaId);
+        return Objects.hash(id, nome, cognome, codiceFiscale, delegaId, tesseraId, fasciaId);
     }
 
     // prettier-ignore
@@ -132,8 +144,9 @@ public class CittadinoCriteria implements Serializable, Criteria {
                 (nome != null ? "nome=" + nome + ", " : "") +
                 (cognome != null ? "cognome=" + cognome + ", " : "") +
                 (codiceFiscale != null ? "codiceFiscale=" + codiceFiscale + ", " : "") +
-                (tesseraId != null ? "tesseraId=" + tesseraId + ", " : "") +
                 (delegaId != null ? "delegaId=" + delegaId + ", " : "") +
+                (tesseraId != null ? "tesseraId=" + tesseraId + ", " : "") +
+                (fasciaId != null ? "fasciaId=" + fasciaId + ", " : "") +
             "}";
     }
 }

@@ -40,6 +40,9 @@
           <th scope="col" jhiSortBy="codiceFiscale">
             <span jhiTranslate="benzappApp.cittadino.codiceFiscale">Codice Fiscale</span> <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="fascia.id">
+            <span jhiTranslate="benzappApp.cittadino.fascia">Fascia</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -51,6 +54,11 @@
           <td>{{ cittadino.nome }}</td>
           <td>{{ cittadino.cognome }}</td>
           <td>{{ cittadino.codiceFiscale }}</td>
+          <td>
+            <div *ngIf="cittadino.fascia">
+              <a [routerLink]="['/fascia', cittadino.fascia?.id, 'view']">{{ cittadino.fascia?.id }}</a>
+            </div>
+          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

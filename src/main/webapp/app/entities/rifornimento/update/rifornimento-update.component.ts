@@ -22,6 +22,7 @@ import { TipoCarburante } from 'app/entities/enumerations/tipo-carburante.model'
 export class RifornimentoUpdateComponent implements OnInit {
   buffer = '';
   bufferStatus = QRReaderStatus.INACTIVE;
+  importoDovuto: number | null = null;
   isSaving = false;
   gestores: IGestore[] = [];
   tesseras: ITessera[] = [];
@@ -70,7 +71,7 @@ export class RifornimentoUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: rifornimento.id,
       data: rifornimento.data ? rifornimento.data.format(DATE_TIME_FORMAT) : null,
-      litriErogati: rifornimento.litriErogati,
+      litriErogati: rifornimento.litriErogati ?? undefined,
       sconto: rifornimento.sconto,
       prezzoAlLitro: rifornimento.prezzoAlLitro,
       tipoCarburante: rifornimento.tipoCarburante,
@@ -139,9 +140,8 @@ export class RifornimentoUpdateComponent implements OnInit {
       if (result.body) {
         const value: ITessera = result.body[0];
         const currentSconto: number =
-          (value.carburante === TipoCarburante.BENZINA
-            ? this.currentGestore?.fascia?.scontoBenzina
-            : this.currentGestore?.fascia?.scontoGasolio) ?? 0;
+          (value.carburante === TipoCarburante.BENZINA ? value.cittadino?.fascia?.scontoBenzina : value.cittadino?.fascia?.scontoGasolio) ??
+          0;
 
         const currentPrezzoAlLitro: number =
           (value.carburante === TipoCarburante.BENZINA
@@ -154,9 +154,12 @@ export class RifornimentoUpdateComponent implements OnInit {
           data: dayjs(new Date()),
           gestore: this.currentGestore,
           sconto: currentSconto,
+          litriErogati: this.editForm.get('litriErogati')?.value,
           prezzoAlLitro: currentPrezzoAlLitro,
         };
+
         this.updateForm(rifornimento);
+        this.onChangeLitriErogati();
       }
     });
     console.error(qrcode);
@@ -191,7 +194,7 @@ export class RifornimentoUpdateComponent implements OnInit {
 
         this.onQRCodeCompleted(this.buffer);
         this.bufferStatus = QRReaderStatus.FINISHED;
-        litriErogati.focus();
+        // litriErogati.focus();
       }
     }
   }
@@ -220,5 +223,10 @@ export class RifornimentoUpdateComponent implements OnInit {
         break;
     }
     return '';
+  }
+
+  onChangeLitriErogati(): void {
+    this.importoDovuto =
+      (this.editForm.get('prezzoAlLitro')?.value - this.editForm.get('sconto')?.value) * this.editForm.get('litriErogati')?.value;
   }
 }
