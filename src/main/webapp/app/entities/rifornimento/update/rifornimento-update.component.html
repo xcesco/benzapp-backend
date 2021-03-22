@@ -43,38 +43,17 @@
           </div>
 
           <div class="col-6">
-            <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.displayPrezzoBenzina" for="compute_prezzoBenzina"
+            <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.benzinaPrezzoAlLitro" for="compute_prezzoBenzina"
               ><img style="width: 64px" src="content/images/qrcode-scan-stop.gif" /> Gestore</label
             >
-            <input id="compute_prezzoBenzina" class="form-control" value="{{ currentGestore?.fascia?.scontoGasolio }} &euro;/L" readonly />
+            <input id="compute_prezzoBenzina" class="form-control" value="{{ currentGestore?.benzinaPrezzoAlLitro }} &euro;/L" readonly />
           </div>
 
           <div class="col-6">
-            <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.displayPrezzoGasolio" for="compute_prezzoGasolio"
+            <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.gasolioPrezzoAlLitro" for="compute_prezzoGasolio"
               >Gestore</label
             >
-            <input id="compute_prezzoGasolio" class="form-control" value="{{ currentGestore?.fascia?.scontoGasolio }} &euro;/L" readonly />
-          </div>
-
-          <div class="col-12">&nbsp;</div>
-
-          <div class="col-6">
-            <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.displayPrezzoBenzina" for="compute_prezzoAlLitro"
-              ><img style="width: 64px" src="content/images/qrcode-scan-stop.gif" /> Gestore</label
-            >
-            <input id="compute_prezzoAlLitro" class="form-control" value="{{ currentGestore?.fascia?.scontoBenzina }} &euro;/L" readonly />
-          </div>
-
-          <div class="col-6">
-            <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.displayPrezzoGasolio" for="compute_prezzoAlLitro"
-              >Gestore</label
-            >
-            <input
-              id="compute_prezzoAlGasolio"
-              class="form-control"
-              value="{{ currentGestore?.fascia?.scontoGasolio }} &euro;/L"
-              readonly
-            />
+            <input id="compute_prezzoGasolio" class="form-control" value="{{ currentGestore?.gasolioPrezzoAlLitro }} &euro;/L" readonly />
           </div>
         </div>
       </div>

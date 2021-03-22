@@ -32,6 +32,12 @@
             <column name="tipo" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="benzina_prezzo_al_litro" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="gasolio_prezzo_al_litro" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
             <column name="fascia_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -64,6 +70,8 @@
             <column name="longitudine" type="numeric"/>
             <column name="latitudine" type="numeric"/>
             <column name="tipo" type="string"/>
+            <column name="benzina_prezzo_al_litro" type="numeric"/>
+            <column name="gasolio_prezzo_al_litro" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

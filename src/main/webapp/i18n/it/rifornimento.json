@@ -17,8 +17,8 @@
       "detail": {
         "title": "Rifornimento"
       },
-      "displayPrezzoBenzina": "Sconto benzina",
-      "displayPrezzoGasolio": "Sconto gasolio",
+      "benzinaPrezzoAlLitro": "Benzina",
+      "gasolioPrezzoAlLitro": "Gasolio",
       "id": "ID",
       "data": "Data",
       "progressivo": "Progressivo",

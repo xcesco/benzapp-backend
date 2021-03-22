@@ -38,6 +38,14 @@
         <dd>
           <span jhiTranslate="{{ 'benzappApp.TipoImpianto.' + gestore.tipo }}">{{ gestore.tipo }}</span>
         </dd>
+        <dt><span jhiTranslate="benzappApp.gestore.benzinaPrezzoAlLitro">Benzina Prezzo Al Litro</span></dt>
+        <dd>
+          <span>{{ gestore.benzinaPrezzoAlLitro }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.gestore.gasolioPrezzoAlLitro">Gasolio Prezzo Al Litro</span></dt>
+        <dd>
+          <span>{{ gestore.gasolioPrezzoAlLitro }}</span>
+        </dd>
         <dt><span jhiTranslate="benzappApp.gestore.fascia">Fascia</span></dt>
         <dd>
           <div *ngIf="gestore.fascia">

@@ -21,7 +21,7 @@ describe('Service Tests', () => {
       service = TestBed.inject(GestoreService);
       httpMock = TestBed.inject(HttpTestingController);
 
-      elemDefault = new Gestore(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 0, 0, TipoImpianto.AUTOSTRADALE);
+      elemDefault = new Gestore(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 0, 0, TipoImpianto.AUTOSTRADALE, 0, 0);
     });
 
     describe('Service methods', () => {
@@ -62,6 +62,8 @@ describe('Service Tests', () => {
             longitudine: 1,
             latitudine: 1,
             tipo: 'BBBBBB',
+            benzinaPrezzoAlLitro: 1,
+            gasolioPrezzoAlLitro: 1,
           },
           elemDefault
         );
@@ -85,6 +87,8 @@ describe('Service Tests', () => {
             longitudine: 1,
             latitudine: 1,
             tipo: 'BBBBBB',
+            benzinaPrezzoAlLitro: 1,
+            gasolioPrezzoAlLitro: 1,
           },
           elemDefault
         );
