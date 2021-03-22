@@ -116,12 +116,6 @@ public class GestoreQueryService extends QueryService<Gestore> {
                         )
                     );
             }
-            if (criteria.getFasciaId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getFasciaId(), root -> root.join(Gestore_.fascia, JoinType.LEFT).get(Fascia_.id))
-                    );
-            }
             if (criteria.getMarchioId() != null) {
                 specification =
                     specification.and(

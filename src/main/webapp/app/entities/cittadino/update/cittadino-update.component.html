@@ -36,6 +36,19 @@
             formControlName="codiceFiscale"
           />
         </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.cittadino.fascia" for="field_fascia">Fascia</label>
+          <select class="form-control" id="field_fascia" data-cy="fascia" name="fascia" formControlName="fascia">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="fasciaOption.id === editForm.get('fascia')!.value?.id ? editForm.get('fascia')!.value : fasciaOption"
+              *ngFor="let fasciaOption of fascias; trackBy: trackFasciaById"
+            >
+              {{ fasciaOption.id }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div>

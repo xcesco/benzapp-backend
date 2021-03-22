@@ -38,9 +38,6 @@
             <column name="gasolio_prezzo_al_litro" type="${floatType}">
                 <constraints nullable="true" />
             </column>
-            <column name="fascia_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="marchio_id" type="bigint">
                 <constraints nullable="true" />
             </column>

@@ -2,11 +2,11 @@
   "benzappApp": {
     "rifornimento": {
       "home": {
-        "title": "Rifornimentos",
+        "title": "Rifornimenti",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Genera un nuovo Rifornimento",
-        "createOrEditLabel": "Genera o modifica un Rifornimento",
-        "notFound": "No Rifornimentos found"
+        "createLabel": "Registra un rifornimento",
+        "createOrEditLabel": "Registra nuovo rifornimento",
+        "notFound": "Nessun rifornimento trovato"
       },
       "created": "&Egrave; stato generato un nuovo Rifornimento con identificatore {{ param }}",
       "updated": "&Egrave; stato aggiornato Rifornimento identificato da {{ param }}",
@@ -22,6 +22,7 @@
       "id": "ID",
       "data": "Data",
       "litriErogati": "Litri Erogati",
+      "importoDovuto": "Importo dovuto",
       "sconto": "Sconto applicato",
       "prezzoAlLitro": "Prezzo Al Litro",
       "tipoCarburante": "Tipo Carburante",

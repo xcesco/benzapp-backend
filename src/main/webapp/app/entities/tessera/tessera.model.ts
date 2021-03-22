@@ -1,6 +1,6 @@
 import * as dayjs from 'dayjs';
-import { IRifornimento } from 'app/entities/rifornimento/rifornimento.model';
 import { IDelega } from 'app/entities/delega/delega.model';
+import { IRifornimento } from 'app/entities/rifornimento/rifornimento.model';
 import { ICittadino } from 'app/entities/cittadino/cittadino.model';
 import { TipoVeicolo } from 'app/entities/enumerations/tipo-veicolo.model';
 import { TipoCarburante } from 'app/entities/enumerations/tipo-carburante.model';
@@ -14,8 +14,8 @@ export interface ITessera {
   targa?: string;
   veicolo?: TipoVeicolo;
   carburante?: TipoCarburante;
-  rifornimentos?: IRifornimento[] | null;
   delegas?: IDelega[] | null;
+  rifornimentos?: IRifornimento[] | null;
   cittadino?: ICittadino | null;
 }
 
@@ -29,8 +29,8 @@ export class Tessera implements ITessera {
     public targa?: string,
     public veicolo?: TipoVeicolo,
     public carburante?: TipoCarburante,
-    public rifornimentos?: IRifornimento[] | null,
     public delegas?: IDelega[] | null,
+    public rifornimentos?: IRifornimento[] | null,
     public cittadino?: ICittadino | null
   ) {}
 }

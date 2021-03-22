@@ -34,13 +34,17 @@ public class Cittadino implements Serializable {
 
     @OneToMany(mappedBy = "cittadino")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "rifornimentos", "delegas", "cittadino" }, allowSetters = true)
-    private Set<Tessera> tesseras = new HashSet<>();
+    @JsonIgnoreProperties(value = { "cittadino", "tessera" }, allowSetters = true)
+    private Set<Delega> delegas = new HashSet<>();
 
     @OneToMany(mappedBy = "cittadino")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "cittadino", "tessera" }, allowSetters = true)
-    private Set<Delega> delegas = new HashSet<>();
+    @JsonIgnoreProperties(value = { "delegas", "rifornimentos", "cittadino" }, allowSetters = true)
+    private Set<Tessera> tesseras = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "cittadinos" }, allowSetters = true)
+    private Fascia fascia;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -95,6 +99,37 @@ public class Cittadino implements Serializable {
         this.codiceFiscale = codiceFiscale;
     }
 
+    public Set<Delega> getDelegas() {
+        return this.delegas;
+    }
+
+    public Cittadino delegas(Set<Delega> delegas) {
+        this.setDelegas(delegas);
+        return this;
+    }
+
+    public Cittadino addDelega(Delega delega) {
+        this.delegas.add(delega);
+        delega.setCittadino(this);
+        return this;
+    }
+
+    public Cittadino removeDelega(Delega delega) {
+        this.delegas.remove(delega);
+        delega.setCittadino(null);
+        return this;
+    }
+
+    public void setDelegas(Set<Delega> delegas) {
+        if (this.delegas != null) {
+            this.delegas.forEach(i -> i.setCittadino(null));
+        }
+        if (delegas != null) {
+            delegas.forEach(i -> i.setCittadino(this));
+        }
+        this.delegas = delegas;
+    }
+
     public Set<Tessera> getTesseras() {
         return this.tesseras;
     }
@@ -126,35 +161,17 @@ public class Cittadino implements Serializable {
         this.tesseras = tesseras;
     }
 
-    public Set<Delega> getDelegas() {
-        return this.delegas;
+    public Fascia getFascia() {
+        return this.fascia;
     }
 
-    public Cittadino delegas(Set<Delega> delegas) {
-        this.setDelegas(delegas);
+    public Cittadino fascia(Fascia fascia) {
+        this.setFascia(fascia);
         return this;
     }
 
-    public Cittadino addDelega(Delega delega) {
-        this.delegas.add(delega);
-        delega.setCittadino(this);
-        return this;
-    }
-
-    public Cittadino removeDelega(Delega delega) {
-        this.delegas.remove(delega);
-        delega.setCittadino(null);
-        return this;
-    }
-
-    public void setDelegas(Set<Delega> delegas) {
-        if (this.delegas != null) {
-            this.delegas.forEach(i -> i.setCittadino(null));
-        }
-        if (delegas != null) {
-            delegas.forEach(i -> i.setCittadino(this));
-        }
-        this.delegas = delegas;
+    public void setFascia(Fascia fascia) {
+        this.fascia = fascia;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

@@ -62,8 +62,6 @@ public class GestoreCriteria implements Serializable, Criteria {
 
     private LongFilter rifornimentoId;
 
-    private LongFilter fasciaId;
-
     private LongFilter marchioId;
 
     public GestoreCriteria() {}
@@ -79,7 +77,6 @@ public class GestoreCriteria implements Serializable, Criteria {
         this.benzinaPrezzoAlLitro = other.benzinaPrezzoAlLitro == null ? null : other.benzinaPrezzoAlLitro.copy();
         this.gasolioPrezzoAlLitro = other.gasolioPrezzoAlLitro == null ? null : other.gasolioPrezzoAlLitro.copy();
         this.rifornimentoId = other.rifornimentoId == null ? null : other.rifornimentoId.copy();
-        this.fasciaId = other.fasciaId == null ? null : other.fasciaId.copy();
         this.marchioId = other.marchioId == null ? null : other.marchioId.copy();
     }
 
@@ -168,14 +165,6 @@ public class GestoreCriteria implements Serializable, Criteria {
         this.rifornimentoId = rifornimentoId;
     }
 
-    public LongFilter getFasciaId() {
-        return fasciaId;
-    }
-
-    public void setFasciaId(LongFilter fasciaId) {
-        this.fasciaId = fasciaId;
-    }
-
     public LongFilter getMarchioId() {
         return marchioId;
     }
@@ -204,7 +193,6 @@ public class GestoreCriteria implements Serializable, Criteria {
             Objects.equals(benzinaPrezzoAlLitro, that.benzinaPrezzoAlLitro) &&
             Objects.equals(gasolioPrezzoAlLitro, that.gasolioPrezzoAlLitro) &&
             Objects.equals(rifornimentoId, that.rifornimentoId) &&
-            Objects.equals(fasciaId, that.fasciaId) &&
             Objects.equals(marchioId, that.marchioId)
         );
     }
@@ -222,7 +210,6 @@ public class GestoreCriteria implements Serializable, Criteria {
             benzinaPrezzoAlLitro,
             gasolioPrezzoAlLitro,
             rifornimentoId,
-            fasciaId,
             marchioId
         );
     }
@@ -241,7 +228,6 @@ public class GestoreCriteria implements Serializable, Criteria {
                 (benzinaPrezzoAlLitro != null ? "benzinaPrezzoAlLitro=" + benzinaPrezzoAlLitro + ", " : "") +
                 (gasolioPrezzoAlLitro != null ? "gasolioPrezzoAlLitro=" + gasolioPrezzoAlLitro + ", " : "") +
                 (rifornimentoId != null ? "rifornimentoId=" + rifornimentoId + ", " : "") +
-                (fasciaId != null ? "fasciaId=" + fasciaId + ", " : "") +
                 (marchioId != null ? "marchioId=" + marchioId + ", " : "") +
             "}";
     }

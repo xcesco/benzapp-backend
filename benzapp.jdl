@@ -68,7 +68,6 @@ entity Marchio (marchi) {
 }
 entity Rifornimento (rifornimenti) {
   data ZonedDateTime required
-  progressivo Integer required
   litriErogati Float required
   sconto Float required
   prezzoAlLitro Float required
@@ -98,9 +97,9 @@ enum TipoVeicolo {
 }
 
 relationship OneToMany {
+  Fascia{cittadino} to Cittadino{fascia}
   Cittadino{delega} to Delega{cittadino}
   Tessera{delega} to Delega{tessera}
-  Fascia{gestore} to Gestore{fascia}
   Marchio{gestore} to Gestore{marchio}
   Gestore{rifornimento} to Rifornimento{gestore}
   Tessera{rifornimento} to Rifornimento{tessera}

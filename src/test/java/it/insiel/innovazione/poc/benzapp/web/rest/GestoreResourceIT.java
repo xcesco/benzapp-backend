@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import it.insiel.innovazione.poc.benzapp.IntegrationTest;
-import it.insiel.innovazione.poc.benzapp.domain.Fascia;
 import it.insiel.innovazione.poc.benzapp.domain.Gestore;
 import it.insiel.innovazione.poc.benzapp.domain.Marchio;
 import it.insiel.innovazione.poc.benzapp.domain.Rifornimento;
@@ -940,25 +939,6 @@ class GestoreResourceIT {
 
         // Get all the gestoreList where rifornimento equals to rifornimentoId + 1
         defaultGestoreShouldNotBeFound("rifornimentoId.equals=" + (rifornimentoId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllGestoresByFasciaIsEqualToSomething() throws Exception {
-        // Initialize the database
-        gestoreRepository.saveAndFlush(gestore);
-        Fascia fascia = FasciaResourceIT.createEntity(em);
-        em.persist(fascia);
-        em.flush();
-        gestore.setFascia(fascia);
-        gestoreRepository.saveAndFlush(gestore);
-        Long fasciaId = fascia.getId();
-
-        // Get all the gestoreList where fascia equals to fasciaId
-        defaultGestoreShouldBeFound("fasciaId.equals=" + fasciaId);
-
-        // Get all the gestoreList where fascia equals to fasciaId + 1
-        defaultGestoreShouldNotBeFound("fasciaId.equals=" + (fasciaId + 1));
     }
 
     @Test

@@ -96,6 +96,12 @@ public class TesseraQueryService extends QueryService<Tessera> {
             if (criteria.getCarburante() != null) {
                 specification = specification.and(buildSpecification(criteria.getCarburante(), Tessera_.carburante));
             }
+            if (criteria.getDelegaId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getDelegaId(), root -> root.join(Tessera_.delegas, JoinType.LEFT).get(Delega_.id))
+                    );
+            }
             if (criteria.getRifornimentoId() != null) {
                 specification =
                     specification.and(
@@ -103,12 +109,6 @@ public class TesseraQueryService extends QueryService<Tessera> {
                             criteria.getRifornimentoId(),
                             root -> root.join(Tessera_.rifornimentos, JoinType.LEFT).get(Rifornimento_.id)
                         )
-                    );
-            }
-            if (criteria.getDelegaId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getDelegaId(), root -> root.join(Tessera_.delegas, JoinType.LEFT).get(Delega_.id))
                     );
             }
             if (criteria.getCittadinoId() != null) {

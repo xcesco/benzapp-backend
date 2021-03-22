@@ -1,5 +1,4 @@
 import { IRifornimento } from 'app/entities/rifornimento/rifornimento.model';
-import { IFascia } from 'app/entities/fascia/fascia.model';
 import { IMarchio } from 'app/entities/marchio/marchio.model';
 import { TipoImpianto } from 'app/entities/enumerations/tipo-impianto.model';
 
@@ -14,7 +13,6 @@ export interface IGestore {
   benzinaPrezzoAlLitro?: number | null;
   gasolioPrezzoAlLitro?: number | null;
   rifornimentos?: IRifornimento[] | null;
-  fascia?: IFascia | null;
   marchio?: IMarchio | null;
 }
 
@@ -30,7 +28,6 @@ export class Gestore implements IGestore {
     public benzinaPrezzoAlLitro?: number | null,
     public gasolioPrezzoAlLitro?: number | null,
     public rifornimentos?: IRifornimento[] | null,
-    public fascia?: IFascia | null,
     public marchio?: IMarchio | null
   ) {}
 }

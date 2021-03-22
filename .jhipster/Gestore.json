@@ -28,13 +28,11 @@
     },
     {
       "fieldName": "benzinaPrezzoAlLitro",
-      "fieldType": "Float",
-      "fieldValidateRules": []
+      "fieldType": "Float"
     },
     {
       "fieldName": "gasolioPrezzoAlLitro",
-      "fieldType": "Float",
-      "fieldValidateRules": []
+      "fieldType": "Float"
     }
   ],
   "relationships": [
@@ -43,12 +41,6 @@
       "otherEntityName": "rifornimento",
       "otherEntityRelationshipName": "gestore",
       "relationshipName": "rifornimento"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "fascia",
-      "otherEntityRelationshipName": "gestore",
-      "relationshipName": "fascia"
     },
     {
       "relationshipType": "many-to-one",
