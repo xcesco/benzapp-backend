@@ -28,6 +28,7 @@ export class RifornimentoUpdateComponent implements OnInit {
   tesseras: ITessera[] = [];
   currentGestore: IGestore | null = null;
   currentTessera: ITessera | null = null;
+  isCollapsed = true;
 
   editForm = this.fb.group({
     id: [],
@@ -160,6 +161,7 @@ export class RifornimentoUpdateComponent implements OnInit {
 
         this.updateForm(rifornimento);
         this.onChangeLitriErogati();
+        this.isCollapsed = false;
       }
     });
     console.error(qrcode);
@@ -213,7 +215,7 @@ export class RifornimentoUpdateComponent implements OnInit {
         return 'Lettura QRCode terminata';
         break;
       case QRReaderStatus.INACTIVE:
-        return 'Seleziona questo riquadro per avviare lettura QRCode';
+        return 'Avvia lettura QRCode';
         break;
       case QRReaderStatus.RUNNING:
         return 'Attendere prego. Non deselezionare il riquadro.';
@@ -228,5 +230,12 @@ export class RifornimentoUpdateComponent implements OnInit {
   onChangeLitriErogati(): void {
     this.importoDovuto =
       (this.editForm.get('prezzoAlLitro')?.value - this.editForm.get('sconto')?.value) * this.editForm.get('litriErogati')?.value;
+  }
+
+  azzera(): void {
+    const litriErogati: any | null = this.editForm.get('litriErogati')?.value;
+    this.editForm.reset();
+    this.editForm.get('litriErogati')?.setValue(litriErogati);
+    this.isCollapsed = true;
   }
 }

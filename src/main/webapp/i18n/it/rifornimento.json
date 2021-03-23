@@ -27,7 +27,11 @@
       "prezzoAlLitro": "Prezzo Al Litro",
       "tipoCarburante": "Tipo Carburante",
       "gestore": "Gestore",
-      "tessera": "Targa"
+      "tessera": "Targa",
+      "qrcode": "QRCode",
+      "tipoLettura": "Tipo acquisizione",
+      "lettore": "Lettore",
+      "camera": "Camera"
     }
   }
 }
