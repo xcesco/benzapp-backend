@@ -1,0 +1,94 @@
+.it-footer-main {
+    background-color: #346fd6; // #003366;
+    color: white;
+    font-size: 16px; }
+    .it-footer-main h4 a {
+      color: white;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 16px; }
+    .it-footer-main .link-list-wrapper ul li a {
+      padding: 0;
+      font-size: 1em;
+      line-height: 2em;
+      color: white; }
+      .it-footer-main .link-list-wrapper ul li a:hover:not(.disabled) {
+        text-decoration: underline; }
+    .it-footer-main .it-brand-wrapper {
+      padding: 32px 0; }
+      .it-footer-main .it-brand-wrapper .it-brand-text {
+        padding-right: 24px; }
+      .it-footer-main .it-brand-wrapper a {
+        display: flex;
+        color: white;
+        align-items: center;
+        text-decoration: none; }
+        .it-footer-main .it-brand-wrapper a h2 {
+          font-size: 1.25em;
+          margin-bottom: 0;
+          font-weight: 600;
+          letter-spacing: unset;
+          line-height: 1.1; }
+        .it-footer-main .it-brand-wrapper a h3 {
+          font-size: 0.889em;
+          font-weight: normal;
+          margin-bottom: 0; }
+        .it-footer-main .it-brand-wrapper a:hover {
+          text-decoration: none; }
+        .it-footer-main .it-brand-wrapper a .icon {
+          fill: white;
+          width: 48px;
+          height: 48px;
+          margin-right: 8px;
+          flex-shrink: 0; }
+    .it-footer-main section {
+      padding: 0 16px; }
+    .it-footer-main label {
+      font-weight: 600; }
+  
+  .it-footer-small-prints {
+    background-color: #0954d6; } // #001a33; }
+    .it-footer-small-prints ul.it-footer-small-prints-list {
+      padding: 1.5rem 1rem; }
+      .it-footer-small-prints ul.it-footer-small-prints-list li {
+        padding: 0.5rem 0; }
+        .it-footer-small-prints ul.it-footer-small-prints-list li:first-child {
+          padding-top: 0; }
+        .it-footer-small-prints ul.it-footer-small-prints-list li:last-child {
+          padding-bottom: 0; }
+    .it-footer-small-prints a,
+    .it-footer-small-prints a:hover:not(.disabled) {
+      color: white;
+      font-size: 15px;
+      text-decoration: none; }
+  
+  .form-newsletter input[type='email'] {
+    font-size: 1em; }
+    .form-newsletter input[type='email'] ~ * {
+      margin-top: 1em; }
+  
+  .form-newsletter button {
+    display: block;
+    width: 100%; }
+  
+  @media (min-width: 992px) {
+    .form-newsletter button {
+      display: inline-block;
+      width: auto; } }
+  
+  @media (min-width: 768px) {
+    .it-footer-small-prints ul.it-footer-small-prints-list li {
+      padding: 0 1rem; }
+      .it-footer-small-prints ul.it-footer-small-prints-list li:first-child {
+        padding-left: 0; }
+      .it-footer-small-prints ul.it-footer-small-prints-list li:last-child {
+        padding-right: 0; } }
+  
+
+.it-footer-main p, .it-footer-small-prints p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+footer {
+  margin: auto -15px;
+}
