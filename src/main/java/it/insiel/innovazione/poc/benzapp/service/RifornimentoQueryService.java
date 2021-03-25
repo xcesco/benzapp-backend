@@ -3,7 +3,9 @@ package it.insiel.innovazione.poc.benzapp.service;
 import it.insiel.innovazione.poc.benzapp.domain.*; // for static metamodels
 import it.insiel.innovazione.poc.benzapp.domain.Rifornimento;
 import it.insiel.innovazione.poc.benzapp.repository.RifornimentoRepository;
+import it.insiel.innovazione.poc.benzapp.security.SecurityUtils;
 import it.insiel.innovazione.poc.benzapp.service.dto.RifornimentoCriteria;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
@@ -11,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.jhipster.service.QueryService;
@@ -55,7 +60,16 @@ public class RifornimentoQueryService extends QueryService<Rifornimento> {
     public Page<Rifornimento> findByCriteria(RifornimentoCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Rifornimento> specification = createSpecification(criteria);
-        return rifornimentoRepository.findAll(specification, page);
+
+        if (SecurityUtils.hasCurrentUserRole(SecurityUtils.Roles.ROLE_USER)) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            return rifornimentoRepository.findByCittadinoOwner(authentication.getName(), page);
+        } else if (SecurityUtils.hasCurrentUserRole(SecurityUtils.Roles.ROLE_PATROL_STATION)) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            return rifornimentoRepository.findByGestoreOwner(authentication.getName(), page);
+        } else {
+            return rifornimentoRepository.findAll(specification, page);
+        }
     }
 
     /**
