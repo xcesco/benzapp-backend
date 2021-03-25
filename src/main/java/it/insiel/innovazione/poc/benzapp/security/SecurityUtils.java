@@ -13,7 +13,24 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public final class SecurityUtils {
 
+    public enum Roles {
+        ROLE_ADMIN,
+        ROLE_PATROL_STATION,
+        ROLE_USER,
+    }
+
     private SecurityUtils() {}
+
+    public static boolean hasCurrentUserRole(Roles role) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        for (GrantedAuthority item : authentication.getAuthorities()) {
+            if (item.getAuthority().equals(role.toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Get the login of the current user.
