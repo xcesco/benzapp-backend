@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,14 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public Device save(Device device) {
         log.debug("Request to save Device : {}", device);
+
+        Optional<Device> stored = deviceRepository.findDeviceByDeviceId(device.getDeviceId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (stored.isPresent()) {
+            device = stored.get();
+        }
+        device.setOwner(authentication.getName());
         return deviceRepository.save(device);
     }
 
