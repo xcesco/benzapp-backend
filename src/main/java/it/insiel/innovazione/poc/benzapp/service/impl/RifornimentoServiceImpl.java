@@ -1,9 +1,15 @@
 package it.insiel.innovazione.poc.benzapp.service.impl;
 
+import it.insiel.innovazione.poc.benzapp.domain.Device;
 import it.insiel.innovazione.poc.benzapp.domain.Rifornimento;
+import it.insiel.innovazione.poc.benzapp.fcm.FCMService;
+import it.insiel.innovazione.poc.benzapp.fcm.PushNotificationRequest;
+import it.insiel.innovazione.poc.benzapp.repository.DeviceRepository;
 import it.insiel.innovazione.poc.benzapp.repository.RifornimentoRepository;
 import it.insiel.innovazione.poc.benzapp.service.RifornimentoService;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -22,14 +28,50 @@ public class RifornimentoServiceImpl implements RifornimentoService {
 
     private final RifornimentoRepository rifornimentoRepository;
 
-    public RifornimentoServiceImpl(RifornimentoRepository rifornimentoRepository) {
+    private final DeviceRepository deviceRepository;
+
+    private final FCMService fcmService;
+
+    public RifornimentoServiceImpl(
+        RifornimentoRepository rifornimentoRepository,
+        DeviceRepository deviceRepository,
+        FCMService fcmService
+    ) {
         this.rifornimentoRepository = rifornimentoRepository;
+        this.fcmService = fcmService;
+        this.deviceRepository = deviceRepository;
     }
 
     @Override
     public Rifornimento save(Rifornimento rifornimento) {
         log.debug("Request to save Rifornimento : {}", rifornimento);
-        return rifornimentoRepository.save(rifornimento);
+        Rifornimento result = rifornimentoRepository.save(rifornimento);
+
+        List<Device> deviceList = this.deviceRepository.findAllByOwner(rifornimento.getTessera().getCittadino().getOwner());
+        if (deviceList != null) {
+            for (Device device : deviceList) {
+                PushNotificationRequest request = new PushNotificationRequest();
+                request.setMessage(
+                    String.format(
+                        "Il distributore %s %s ha effettuato un rifornimento di litri %.2f per il veicolo a targa %s",
+                        result.getGestore().getMarchio().getNome(),
+                        result.getGestore().getIndirizzo(),
+                        result.getLitriErogati(),
+                        result.getTessera().getTarga()
+                    )
+                );
+                request.setToken(device.getDeviceId());
+                try {
+                    fcmService.sendMessageToToken(request);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return result;
     }
 
     @Override

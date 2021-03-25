@@ -171,3 +171,5 @@ jhipster:
 # ===================================================================
 
 # application:
+app:
+  firebase-configuration-file: fcm/benzapp-poc-firebase-adminsdk-p4yyw-292ee0c4e8.json
