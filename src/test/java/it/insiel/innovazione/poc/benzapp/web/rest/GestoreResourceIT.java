@@ -60,6 +60,9 @@ class GestoreResourceIT {
     private static final Float UPDATED_GASOLIO_PREZZO_AL_LITRO = 2F;
     private static final Float SMALLER_GASOLIO_PREZZO_AL_LITRO = 1F - 1F;
 
+    private static final String DEFAULT_OWNER = "AAAAAAAAAA";
+    private static final String UPDATED_OWNER = "BBBBBBBBBB";
+
     @Autowired
     private GestoreRepository gestoreRepository;
 
@@ -89,7 +92,8 @@ class GestoreResourceIT {
             .latitudine(DEFAULT_LATITUDINE)
             .tipo(DEFAULT_TIPO)
             .benzinaPrezzoAlLitro(DEFAULT_BENZINA_PREZZO_AL_LITRO)
-            .gasolioPrezzoAlLitro(DEFAULT_GASOLIO_PREZZO_AL_LITRO);
+            .gasolioPrezzoAlLitro(DEFAULT_GASOLIO_PREZZO_AL_LITRO)
+            .owner(DEFAULT_OWNER);
         return gestore;
     }
 
@@ -108,7 +112,8 @@ class GestoreResourceIT {
             .latitudine(UPDATED_LATITUDINE)
             .tipo(UPDATED_TIPO)
             .benzinaPrezzoAlLitro(UPDATED_BENZINA_PREZZO_AL_LITRO)
-            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO);
+            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO)
+            .owner(UPDATED_OWNER);
         return gestore;
     }
 
@@ -138,6 +143,7 @@ class GestoreResourceIT {
         assertThat(testGestore.getTipo()).isEqualTo(DEFAULT_TIPO);
         assertThat(testGestore.getBenzinaPrezzoAlLitro()).isEqualTo(DEFAULT_BENZINA_PREZZO_AL_LITRO);
         assertThat(testGestore.getGasolioPrezzoAlLitro()).isEqualTo(DEFAULT_GASOLIO_PREZZO_AL_LITRO);
+        assertThat(testGestore.getOwner()).isEqualTo(DEFAULT_OWNER);
     }
 
     @Test
@@ -177,7 +183,8 @@ class GestoreResourceIT {
             .andExpect(jsonPath("$.[*].latitudine").value(hasItem(DEFAULT_LATITUDINE.doubleValue())))
             .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())))
             .andExpect(jsonPath("$.[*].benzinaPrezzoAlLitro").value(hasItem(DEFAULT_BENZINA_PREZZO_AL_LITRO.doubleValue())))
-            .andExpect(jsonPath("$.[*].gasolioPrezzoAlLitro").value(hasItem(DEFAULT_GASOLIO_PREZZO_AL_LITRO.doubleValue())));
+            .andExpect(jsonPath("$.[*].gasolioPrezzoAlLitro").value(hasItem(DEFAULT_GASOLIO_PREZZO_AL_LITRO.doubleValue())))
+            .andExpect(jsonPath("$.[*].owner").value(hasItem(DEFAULT_OWNER)));
     }
 
     @Test
@@ -199,7 +206,8 @@ class GestoreResourceIT {
             .andExpect(jsonPath("$.latitudine").value(DEFAULT_LATITUDINE.doubleValue()))
             .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()))
             .andExpect(jsonPath("$.benzinaPrezzoAlLitro").value(DEFAULT_BENZINA_PREZZO_AL_LITRO.doubleValue()))
-            .andExpect(jsonPath("$.gasolioPrezzoAlLitro").value(DEFAULT_GASOLIO_PREZZO_AL_LITRO.doubleValue()));
+            .andExpect(jsonPath("$.gasolioPrezzoAlLitro").value(DEFAULT_GASOLIO_PREZZO_AL_LITRO.doubleValue()))
+            .andExpect(jsonPath("$.owner").value(DEFAULT_OWNER));
     }
 
     @Test
@@ -924,6 +932,84 @@ class GestoreResourceIT {
 
     @Test
     @Transactional
+    void getAllGestoresByOwnerIsEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where owner equals to DEFAULT_OWNER
+        defaultGestoreShouldBeFound("owner.equals=" + DEFAULT_OWNER);
+
+        // Get all the gestoreList where owner equals to UPDATED_OWNER
+        defaultGestoreShouldNotBeFound("owner.equals=" + UPDATED_OWNER);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByOwnerIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where owner not equals to DEFAULT_OWNER
+        defaultGestoreShouldNotBeFound("owner.notEquals=" + DEFAULT_OWNER);
+
+        // Get all the gestoreList where owner not equals to UPDATED_OWNER
+        defaultGestoreShouldBeFound("owner.notEquals=" + UPDATED_OWNER);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByOwnerIsInShouldWork() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where owner in DEFAULT_OWNER or UPDATED_OWNER
+        defaultGestoreShouldBeFound("owner.in=" + DEFAULT_OWNER + "," + UPDATED_OWNER);
+
+        // Get all the gestoreList where owner equals to UPDATED_OWNER
+        defaultGestoreShouldNotBeFound("owner.in=" + UPDATED_OWNER);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByOwnerIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where owner is not null
+        defaultGestoreShouldBeFound("owner.specified=true");
+
+        // Get all the gestoreList where owner is null
+        defaultGestoreShouldNotBeFound("owner.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByOwnerContainsSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where owner contains DEFAULT_OWNER
+        defaultGestoreShouldBeFound("owner.contains=" + DEFAULT_OWNER);
+
+        // Get all the gestoreList where owner contains UPDATED_OWNER
+        defaultGestoreShouldNotBeFound("owner.contains=" + UPDATED_OWNER);
+    }
+
+    @Test
+    @Transactional
+    void getAllGestoresByOwnerNotContainsSomething() throws Exception {
+        // Initialize the database
+        gestoreRepository.saveAndFlush(gestore);
+
+        // Get all the gestoreList where owner does not contain DEFAULT_OWNER
+        defaultGestoreShouldNotBeFound("owner.doesNotContain=" + DEFAULT_OWNER);
+
+        // Get all the gestoreList where owner does not contain UPDATED_OWNER
+        defaultGestoreShouldBeFound("owner.doesNotContain=" + UPDATED_OWNER);
+    }
+
+    @Test
+    @Transactional
     void getAllGestoresByRifornimentoIsEqualToSomething() throws Exception {
         // Initialize the database
         gestoreRepository.saveAndFlush(gestore);
@@ -976,7 +1062,8 @@ class GestoreResourceIT {
             .andExpect(jsonPath("$.[*].latitudine").value(hasItem(DEFAULT_LATITUDINE.doubleValue())))
             .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())))
             .andExpect(jsonPath("$.[*].benzinaPrezzoAlLitro").value(hasItem(DEFAULT_BENZINA_PREZZO_AL_LITRO.doubleValue())))
-            .andExpect(jsonPath("$.[*].gasolioPrezzoAlLitro").value(hasItem(DEFAULT_GASOLIO_PREZZO_AL_LITRO.doubleValue())));
+            .andExpect(jsonPath("$.[*].gasolioPrezzoAlLitro").value(hasItem(DEFAULT_GASOLIO_PREZZO_AL_LITRO.doubleValue())))
+            .andExpect(jsonPath("$.[*].owner").value(hasItem(DEFAULT_OWNER)));
 
         // Check, that the count call also returns 1
         restGestoreMockMvc
@@ -1032,7 +1119,8 @@ class GestoreResourceIT {
             .latitudine(UPDATED_LATITUDINE)
             .tipo(UPDATED_TIPO)
             .benzinaPrezzoAlLitro(UPDATED_BENZINA_PREZZO_AL_LITRO)
-            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO);
+            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO)
+            .owner(UPDATED_OWNER);
 
         restGestoreMockMvc
             .perform(
@@ -1052,6 +1140,7 @@ class GestoreResourceIT {
         assertThat(testGestore.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testGestore.getBenzinaPrezzoAlLitro()).isEqualTo(UPDATED_BENZINA_PREZZO_AL_LITRO);
         assertThat(testGestore.getGasolioPrezzoAlLitro()).isEqualTo(UPDATED_GASOLIO_PREZZO_AL_LITRO);
+        assertThat(testGestore.getOwner()).isEqualTo(UPDATED_OWNER);
     }
 
     @Test
@@ -1084,7 +1173,8 @@ class GestoreResourceIT {
         partialUpdatedGestore
             .indirizzo(UPDATED_INDIRIZZO)
             .benzinaPrezzoAlLitro(UPDATED_BENZINA_PREZZO_AL_LITRO)
-            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO);
+            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO)
+            .owner(UPDATED_OWNER);
 
         restGestoreMockMvc
             .perform(
@@ -1106,6 +1196,7 @@ class GestoreResourceIT {
         assertThat(testGestore.getTipo()).isEqualTo(DEFAULT_TIPO);
         assertThat(testGestore.getBenzinaPrezzoAlLitro()).isEqualTo(UPDATED_BENZINA_PREZZO_AL_LITRO);
         assertThat(testGestore.getGasolioPrezzoAlLitro()).isEqualTo(UPDATED_GASOLIO_PREZZO_AL_LITRO);
+        assertThat(testGestore.getOwner()).isEqualTo(UPDATED_OWNER);
     }
 
     @Test
@@ -1128,7 +1219,8 @@ class GestoreResourceIT {
             .latitudine(UPDATED_LATITUDINE)
             .tipo(UPDATED_TIPO)
             .benzinaPrezzoAlLitro(UPDATED_BENZINA_PREZZO_AL_LITRO)
-            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO);
+            .gasolioPrezzoAlLitro(UPDATED_GASOLIO_PREZZO_AL_LITRO)
+            .owner(UPDATED_OWNER);
 
         restGestoreMockMvc
             .perform(
@@ -1150,6 +1242,7 @@ class GestoreResourceIT {
         assertThat(testGestore.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testGestore.getBenzinaPrezzoAlLitro()).isEqualTo(UPDATED_BENZINA_PREZZO_AL_LITRO);
         assertThat(testGestore.getGasolioPrezzoAlLitro()).isEqualTo(UPDATED_GASOLIO_PREZZO_AL_LITRO);
+        assertThat(testGestore.getOwner()).isEqualTo(UPDATED_OWNER);
     }
 
     @Test

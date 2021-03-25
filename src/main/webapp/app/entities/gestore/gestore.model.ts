@@ -12,6 +12,7 @@ export interface IGestore {
   tipo?: TipoImpianto | null;
   benzinaPrezzoAlLitro?: number | null;
   gasolioPrezzoAlLitro?: number | null;
+  owner?: string | null;
   rifornimentos?: IRifornimento[] | null;
   marchio?: IMarchio | null;
 }
@@ -27,6 +28,7 @@ export class Gestore implements IGestore {
     public tipo?: TipoImpianto | null,
     public benzinaPrezzoAlLitro?: number | null,
     public gasolioPrezzoAlLitro?: number | null,
+    public owner?: string | null,
     public rifornimentos?: IRifornimento[] | null,
     public marchio?: IMarchio | null
   ) {}

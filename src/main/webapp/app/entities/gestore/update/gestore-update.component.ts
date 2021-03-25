@@ -27,6 +27,7 @@ export class GestoreUpdateComponent implements OnInit {
     tipo: [],
     benzinaPrezzoAlLitro: [],
     gasolioPrezzoAlLitro: [],
+    owner: [],
     marchio: [],
   });
 
@@ -56,6 +57,7 @@ export class GestoreUpdateComponent implements OnInit {
       tipo: gestore.tipo,
       benzinaPrezzoAlLitro: gestore.benzinaPrezzoAlLitro,
       gasolioPrezzoAlLitro: gestore.gasolioPrezzoAlLitro,
+      owner: gestore.owner,
       marchio: gestore.marchio,
     });
   }
@@ -86,6 +88,7 @@ export class GestoreUpdateComponent implements OnInit {
       tipo: this.editForm.get(['tipo'])!.value,
       benzinaPrezzoAlLitro: this.editForm.get(['benzinaPrezzoAlLitro'])!.value,
       gasolioPrezzoAlLitro: this.editForm.get(['gasolioPrezzoAlLitro'])!.value,
+      owner: this.editForm.get(['owner'])!.value,
       marchio: this.editForm.get(['marchio'])!.value,
     };
   }

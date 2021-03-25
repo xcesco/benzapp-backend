@@ -38,6 +38,9 @@
             <column name="gasolio_prezzo_al_litro" type="${floatType}">
                 <constraints nullable="true" />
             </column>
+            <column name="owner" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="marchio_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -69,6 +72,7 @@
             <column name="tipo" type="string"/>
             <column name="benzina_prezzo_al_litro" type="numeric"/>
             <column name="gasolio_prezzo_al_litro" type="numeric"/>
+            <column name="owner" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

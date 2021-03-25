@@ -12,6 +12,10 @@
     {
       "fieldName": "codiceFiscale",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "owner",
+      "fieldType": "String"
     }
   ],
   "relationships": [

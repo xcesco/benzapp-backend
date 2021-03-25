@@ -39,6 +39,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'benzappApp.delega.home.title' },
         loadChildren: () => import('./delega/delega.module').then(m => m.DelegaModule),
       },
+      {
+        path: 'device',
+        data: { pageTitle: 'benzappApp.device.home.title' },
+        loadChildren: () => import('./device/device.module').then(m => m.DeviceModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

@@ -32,6 +32,9 @@ public class Cittadino implements Serializable {
     @Column(name = "codice_fiscale")
     private String codiceFiscale;
 
+    @Column(name = "owner")
+    private String owner;
+
     @OneToMany(mappedBy = "cittadino")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "cittadino", "tessera" }, allowSetters = true)
@@ -97,6 +100,19 @@ public class Cittadino implements Serializable {
 
     public void setCodiceFiscale(String codiceFiscale) {
         this.codiceFiscale = codiceFiscale;
+    }
+
+    public String getOwner() {
+        return this.owner;
+    }
+
+    public Cittadino owner(String owner) {
+        this.owner = owner;
+        return this;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public Set<Delega> getDelegas() {
@@ -201,6 +217,7 @@ public class Cittadino implements Serializable {
             ", nome='" + getNome() + "'" +
             ", cognome='" + getCognome() + "'" +
             ", codiceFiscale='" + getCodiceFiscale() + "'" +
+            ", owner='" + getOwner() + "'" +
             "}";
     }
 }
