@@ -61,15 +61,3 @@ Logo styles
   background: url('../../../content/images/logo-fvg.png') no-repeat center center;
   background-size: contain;
 }
-
-/*
-Gradient
- */
-.bg-gradient {
-  position: relative;
-  height: 60px;
-  background-image: linear-gradient(#4582ec, #799dea);
-
-  border-bottom-left-radius: 50% 20%;
-  border-bottom-right-radius: 50% 20%;
-}

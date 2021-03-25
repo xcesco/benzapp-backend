@@ -185,35 +185,23 @@
                 </select>
               </div>
 
-              <div class="col-sm-12 col-lg-4 form-group">
-                <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.tipoCarburante" for="field_tipoCarburante"
-                  >Tipo Carburante</label
+              <div class="col-sm-12 col-lg-4 form-group align">
+                <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.importoDovuto" for="field_importoDovuto"
+                  >Importo dovuto</label
                 >
-                <select
-                  readonly
-                  class="form-control"
-                  name="tipoCarburante"
-                  formControlName="tipoCarburante"
-                  id="field_tipoCarburante"
-                  data-cy="tipoCarburante"
-                >
-                  <option [ngValue]="null">{{ 'benzappApp.TipoCarburante.null' | translate }}</option>
-                  <option value="BENZINA">{{ 'benzappApp.TipoCarburante.BENZINA' | translate }}</option>
-                  <option value="DIESEL">{{ 'benzappApp.TipoCarburante.DIESEL' | translate }}</option>
-                </select>
-                <div
-                  *ngIf="
-                    editForm.get('tipoCarburante')!.invalid &&
-                    (editForm.get('tipoCarburante')!.dirty || editForm.get('tipoCarburante')!.touched)
-                  "
-                >
-                  <small
-                    class="form-text text-danger"
-                    *ngIf="editForm.get('tipoCarburante')?.errors?.required"
-                    jhiTranslate="entity.validation.required"
-                  >
-                    This field is required.
-                  </small>
+                <div class="input-group">
+                  <input
+                    readonly
+                    type="number"
+                    class="form-control"
+                    name="importoDovuto"
+                    id="field_importoDovuto"
+                    data-cy="importoDovuto"
+                    [value]="importoDovuto"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text">&euro;</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -294,23 +282,35 @@
                 </div>
               </div>
 
-              <div class="col-sm-12 col-lg-4 form-group align">
-                <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.importoDovuto" for="field_importoDovuto"
-                  >Importo dovuto</label
+              <div class="col-sm-12 col-lg-4 form-group">
+                <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.tipoCarburante" for="field_tipoCarburante"
+                  >Tipo Carburante</label
                 >
-                <div class="input-group">
-                  <input
-                    readonly
-                    type="number"
-                    class="form-control"
-                    name="importoDovuto"
-                    id="field_importoDovuto"
-                    data-cy="importoDovuto"
-                    [value]="importoDovuto"
-                  />
-                  <div class="input-group-append">
-                    <span class="input-group-text">&euro;</span>
-                  </div>
+                <select
+                  readonly
+                  class="form-control"
+                  name="tipoCarburante"
+                  formControlName="tipoCarburante"
+                  id="field_tipoCarburante"
+                  data-cy="tipoCarburante"
+                >
+                  <option [ngValue]="null">{{ 'benzappApp.TipoCarburante.null' | translate }}</option>
+                  <option value="BENZINA">{{ 'benzappApp.TipoCarburante.BENZINA' | translate }}</option>
+                  <option value="DIESEL">{{ 'benzappApp.TipoCarburante.DIESEL' | translate }}</option>
+                </select>
+                <div
+                  *ngIf="
+                    editForm.get('tipoCarburante')!.invalid &&
+                    (editForm.get('tipoCarburante')!.dirty || editForm.get('tipoCarburante')!.touched)
+                  "
+                >
+                  <small
+                    class="form-text text-danger"
+                    *ngIf="editForm.get('tipoCarburante')?.errors?.required"
+                    jhiTranslate="entity.validation.required"
+                  >
+                    This field is required.
+                  </small>
                 </div>
               </div>
             </div>
