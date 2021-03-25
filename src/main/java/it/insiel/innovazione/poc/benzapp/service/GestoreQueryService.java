@@ -3,6 +3,7 @@ package it.insiel.innovazione.poc.benzapp.service;
 import it.insiel.innovazione.poc.benzapp.domain.*; // for static metamodels
 import it.insiel.innovazione.poc.benzapp.domain.Gestore;
 import it.insiel.innovazione.poc.benzapp.repository.GestoreRepository;
+import it.insiel.innovazione.poc.benzapp.security.SecurityUtils;
 import it.insiel.innovazione.poc.benzapp.service.dto.GestoreCriteria;
 import java.util.List;
 import javax.persistence.criteria.JoinType;
@@ -11,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.jhipster.service.QueryService;
@@ -55,6 +58,11 @@ public class GestoreQueryService extends QueryService<Gestore> {
     public Page<Gestore> findByCriteria(GestoreCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Gestore> specification = createSpecification(criteria);
+
+        if (SecurityUtils.hasCurrentUserRole(SecurityUtils.Roles.ROLE_PATROL_STATION)) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            return gestoreRepository.findByOwner(authentication.getName(), page);
+        }
         return gestoreRepository.findAll(specification, page);
     }
 
