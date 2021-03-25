@@ -72,6 +72,10 @@ public class GestoreServiceImpl implements GestoreService {
                         existingGestore.setGasolioPrezzoAlLitro(gestore.getGasolioPrezzoAlLitro());
                     }
 
+                    if (gestore.getOwner() != null) {
+                        existingGestore.setOwner(gestore.getOwner());
+                    }
+
                     return existingGestore;
                 }
             )

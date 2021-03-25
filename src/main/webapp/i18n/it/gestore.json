@@ -26,6 +26,7 @@
       "tipo": "Tipo",
       "benzinaPrezzoAlLitro": "Benzina Prezzo Al Litro",
       "gasolioPrezzoAlLitro": "Gasolio Prezzo Al Litro",
+      "owner": "Owner",
       "rifornimento": "Rifornimento",
       "marchio": "Marchio"
     }

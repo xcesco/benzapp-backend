@@ -22,6 +22,7 @@ export class CittadinoUpdateComponent implements OnInit {
     nome: [],
     cognome: [],
     codiceFiscale: [],
+    owner: [],
     fascia: [],
   });
 
@@ -46,6 +47,7 @@ export class CittadinoUpdateComponent implements OnInit {
       nome: cittadino.nome,
       cognome: cittadino.cognome,
       codiceFiscale: cittadino.codiceFiscale,
+      owner: cittadino.owner,
       fascia: cittadino.fascia,
     });
   }
@@ -71,6 +73,7 @@ export class CittadinoUpdateComponent implements OnInit {
       nome: this.editForm.get(['nome'])!.value,
       cognome: this.editForm.get(['cognome'])!.value,
       codiceFiscale: this.editForm.get(['codiceFiscale'])!.value,
+      owner: this.editForm.get(['owner'])!.value,
       fascia: this.editForm.get(['fascia'])!.value,
     };
   }

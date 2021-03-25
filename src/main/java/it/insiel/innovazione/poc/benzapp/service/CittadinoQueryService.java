@@ -90,6 +90,9 @@ public class CittadinoQueryService extends QueryService<Cittadino> {
             if (criteria.getCodiceFiscale() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCodiceFiscale(), Cittadino_.codiceFiscale));
             }
+            if (criteria.getOwner() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getOwner(), Cittadino_.owner));
+            }
             if (criteria.getDelegaId() != null) {
                 specification =
                     specification.and(

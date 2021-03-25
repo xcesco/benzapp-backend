@@ -60,6 +60,8 @@ public class GestoreCriteria implements Serializable, Criteria {
 
     private FloatFilter gasolioPrezzoAlLitro;
 
+    private StringFilter owner;
+
     private LongFilter rifornimentoId;
 
     private LongFilter marchioId;
@@ -76,6 +78,7 @@ public class GestoreCriteria implements Serializable, Criteria {
         this.tipo = other.tipo == null ? null : other.tipo.copy();
         this.benzinaPrezzoAlLitro = other.benzinaPrezzoAlLitro == null ? null : other.benzinaPrezzoAlLitro.copy();
         this.gasolioPrezzoAlLitro = other.gasolioPrezzoAlLitro == null ? null : other.gasolioPrezzoAlLitro.copy();
+        this.owner = other.owner == null ? null : other.owner.copy();
         this.rifornimentoId = other.rifornimentoId == null ? null : other.rifornimentoId.copy();
         this.marchioId = other.marchioId == null ? null : other.marchioId.copy();
     }
@@ -157,6 +160,14 @@ public class GestoreCriteria implements Serializable, Criteria {
         this.gasolioPrezzoAlLitro = gasolioPrezzoAlLitro;
     }
 
+    public StringFilter getOwner() {
+        return owner;
+    }
+
+    public void setOwner(StringFilter owner) {
+        this.owner = owner;
+    }
+
     public LongFilter getRifornimentoId() {
         return rifornimentoId;
     }
@@ -192,6 +203,7 @@ public class GestoreCriteria implements Serializable, Criteria {
             Objects.equals(tipo, that.tipo) &&
             Objects.equals(benzinaPrezzoAlLitro, that.benzinaPrezzoAlLitro) &&
             Objects.equals(gasolioPrezzoAlLitro, that.gasolioPrezzoAlLitro) &&
+            Objects.equals(owner, that.owner) &&
             Objects.equals(rifornimentoId, that.rifornimentoId) &&
             Objects.equals(marchioId, that.marchioId)
         );
@@ -209,6 +221,7 @@ public class GestoreCriteria implements Serializable, Criteria {
             tipo,
             benzinaPrezzoAlLitro,
             gasolioPrezzoAlLitro,
+            owner,
             rifornimentoId,
             marchioId
         );
@@ -227,6 +240,7 @@ public class GestoreCriteria implements Serializable, Criteria {
                 (tipo != null ? "tipo=" + tipo + ", " : "") +
                 (benzinaPrezzoAlLitro != null ? "benzinaPrezzoAlLitro=" + benzinaPrezzoAlLitro + ", " : "") +
                 (gasolioPrezzoAlLitro != null ? "gasolioPrezzoAlLitro=" + gasolioPrezzoAlLitro + ", " : "") +
+                (owner != null ? "owner=" + owner + ", " : "") +
                 (rifornimentoId != null ? "rifornimentoId=" + rifornimentoId + ", " : "") +
                 (marchioId != null ? "marchioId=" + marchioId + ", " : "") +
             "}";

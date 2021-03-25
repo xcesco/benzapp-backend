@@ -49,6 +49,9 @@ public class Gestore implements Serializable {
     @Column(name = "gasolio_prezzo_al_litro")
     private Float gasolioPrezzoAlLitro;
 
+    @Column(name = "owner")
+    private String owner;
+
     @OneToMany(mappedBy = "gestore")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "gestore", "tessera" }, allowSetters = true)
@@ -176,6 +179,19 @@ public class Gestore implements Serializable {
         this.gasolioPrezzoAlLitro = gasolioPrezzoAlLitro;
     }
 
+    public String getOwner() {
+        return this.owner;
+    }
+
+    public Gestore owner(String owner) {
+        this.owner = owner;
+        return this;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
     public Set<Rifornimento> getRifornimentos() {
         return this.rifornimentos;
     }
@@ -252,6 +268,7 @@ public class Gestore implements Serializable {
             ", tipo='" + getTipo() + "'" +
             ", benzinaPrezzoAlLitro=" + getBenzinaPrezzoAlLitro() +
             ", gasolioPrezzoAlLitro=" + getGasolioPrezzoAlLitro() +
+            ", owner='" + getOwner() + "'" +
             "}";
     }
 }
