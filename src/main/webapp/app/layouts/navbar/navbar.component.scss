@@ -47,6 +47,7 @@ Logo styles
 .logo-img {
   height: 86px;
   width: 86px;
+  margin-right: 12px;
   display: inline-block;
   vertical-align: middle;
   background: url('../../../content/images/logo-benzapp.png') no-repeat center center;
@@ -69,17 +70,4 @@ Logo styles
   vertical-align: middle;
   background: url('../../../content/images/logo-fvg-sm.png') no-repeat center center;
   background-size: contain;
-}
-
-
-/*
-Gradient
- */
-.bg-gradient {
-  position: relative;
-  height: 60px;
-  background-image: linear-gradient(#4582ec, #799dea);
-
-  border-bottom-left-radius: 50% 20%;
-  border-bottom-right-radius: 50% 20%;
 }

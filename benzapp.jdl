@@ -38,13 +38,14 @@ application {
     withAdminUi true
   }
 
-  entities Cittadino, Delega, Fascia, Gestore, Marchio, Rifornimento, Tessera
+  entities Cittadino, Delega, Fascia, Gestore, Marchio, Rifornimento, Tessera, Device
 }
 
 entity Cittadino (cittadini) {
   nome String
   cognome String
   codiceFiscale String
+  owner String
 }
 entity Delega (deleghe)
 entity Fascia {
@@ -61,6 +62,7 @@ entity Gestore (gestori) {
   tipo TipoImpianto
   benzinaPrezzoAlLitro Float
   gasolioPrezzoAlLitro Float
+  owner String
 }
 entity Marchio (marchi) {
   immagine ImageBlob
@@ -81,6 +83,11 @@ entity Tessera (tessere) {
   veicolo TipoVeicolo required
   carburante TipoCarburante required
 }
+entity Device (devices) {
+    owner String required
+    deviceId String required
+}
+
 enum TipoImpianto {
   AUTOSTRADALE,
   STRADALE,
@@ -106,6 +113,6 @@ relationship OneToMany {
   Cittadino{tessera} to Tessera{cittadino}
 }
 
-paginate Cittadino, Delega, Gestore, Marchio, Rifornimento, Tessera with pagination
-service Cittadino, Delega, Fascia, Gestore, Marchio, Rifornimento, Tessera with serviceImpl
-filter Cittadino, Delega, Gestore, Rifornimento, Tessera
+paginate Cittadino, Delega, Gestore, Marchio, Rifornimento, Tessera, Device with pagination
+service Cittadino, Delega, Fascia, Gestore, Marchio, Rifornimento, Tessera, Device with serviceImpl
+filter Cittadino, Delega, Gestore, Rifornimento, Tessera, Device

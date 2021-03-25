@@ -32,6 +32,8 @@ public class CittadinoCriteria implements Serializable, Criteria {
 
     private StringFilter codiceFiscale;
 
+    private StringFilter owner;
+
     private LongFilter delegaId;
 
     private LongFilter tesseraId;
@@ -45,6 +47,7 @@ public class CittadinoCriteria implements Serializable, Criteria {
         this.nome = other.nome == null ? null : other.nome.copy();
         this.cognome = other.cognome == null ? null : other.cognome.copy();
         this.codiceFiscale = other.codiceFiscale == null ? null : other.codiceFiscale.copy();
+        this.owner = other.owner == null ? null : other.owner.copy();
         this.delegaId = other.delegaId == null ? null : other.delegaId.copy();
         this.tesseraId = other.tesseraId == null ? null : other.tesseraId.copy();
         this.fasciaId = other.fasciaId == null ? null : other.fasciaId.copy();
@@ -87,6 +90,14 @@ public class CittadinoCriteria implements Serializable, Criteria {
         this.codiceFiscale = codiceFiscale;
     }
 
+    public StringFilter getOwner() {
+        return owner;
+    }
+
+    public void setOwner(StringFilter owner) {
+        this.owner = owner;
+    }
+
     public LongFilter getDelegaId() {
         return delegaId;
     }
@@ -125,6 +136,7 @@ public class CittadinoCriteria implements Serializable, Criteria {
             Objects.equals(nome, that.nome) &&
             Objects.equals(cognome, that.cognome) &&
             Objects.equals(codiceFiscale, that.codiceFiscale) &&
+            Objects.equals(owner, that.owner) &&
             Objects.equals(delegaId, that.delegaId) &&
             Objects.equals(tesseraId, that.tesseraId) &&
             Objects.equals(fasciaId, that.fasciaId)
@@ -133,7 +145,7 @@ public class CittadinoCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, cognome, codiceFiscale, delegaId, tesseraId, fasciaId);
+        return Objects.hash(id, nome, cognome, codiceFiscale, owner, delegaId, tesseraId, fasciaId);
     }
 
     // prettier-ignore
@@ -144,6 +156,7 @@ public class CittadinoCriteria implements Serializable, Criteria {
                 (nome != null ? "nome=" + nome + ", " : "") +
                 (cognome != null ? "cognome=" + cognome + ", " : "") +
                 (codiceFiscale != null ? "codiceFiscale=" + codiceFiscale + ", " : "") +
+                (owner != null ? "owner=" + owner + ", " : "") +
                 (delegaId != null ? "delegaId=" + delegaId + ", " : "") +
                 (tesseraId != null ? "tesseraId=" + tesseraId + ", " : "") +
                 (fasciaId != null ? "fasciaId=" + fasciaId + ", " : "") +

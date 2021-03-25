@@ -8,56 +8,6 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <!--        <div class="form-group row">-->
-        <!--          <div class="col-6 text-center">-->
-        <!--            <img style="width: 192px" src="content/images/sconto-benzina.png"/>-->
-        <!--          </div>-->
-
-        <!--          <div class="col-6 text-center">-->
-        <!--            <img style="width: 192px" src="content/images/sconto-gasolio.png"/>-->
-        <!--          </div>-->
-
-        <!--          <div class="col-6">-->
-        <!--            <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.benzinaPrezzoAlLitro"-->
-        <!--                   for="compute_prezzoBenzina"-->
-        <!--            ><img style="width: 64px" src="content/images/qrcode-scan-stop.gif"/> Gestore</label-->
-        <!--            >-->
-        <!--            <div class="input-group">-->
-        <!--              <input-->
-        <!--                type="text"-->
-        <!--                pattern="[0-9]+([\.][0-9]+)?"-->
-        <!--                id="compute_prezzoBenzina"-->
-        <!--                class="form-control"-->
-        <!--                value="{{ currentGestore?.benzinaPrezzoAlLitro }}"-->
-        <!--                readonly-->
-        <!--              />-->
-        <!--              <div class="input-group-append">-->
-        <!--                <span class="input-group-text">&euro;/Litro</span>-->
-        <!--              </div>-->
-        <!--            </div>-->
-        <!--          </div>-->
-
-        <!--          <div class="col-6">-->
-        <!--            <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.gasolioPrezzoAlLitro"-->
-        <!--                   for="compute_prezzoGasolio"-->
-        <!--            >Gestore</label-->
-        <!--            >-->
-        <!--            <div class="input-group">-->
-        <!--              <input-->
-        <!--                type="text"-->
-        <!--                pattern="[0-9]+([\.][0-9]+)?"-->
-        <!--                id="compute_prezzoGasolio"-->
-        <!--                class="form-control"-->
-        <!--                value="{{ currentGestore?.gasolioPrezzoAlLitro }}"-->
-        <!--                readonly-->
-        <!--              />-->
-        <!--              <div class="input-group-append">-->
-        <!--                <span class="input-group-text">&euro;/Litro</span>-->
-        <!--              </div>-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </div>-->
-
         <div class="form-group" [hidden]="editForm.get('id')!.value == null">
           <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
@@ -138,6 +88,11 @@
             data-cy="gasolioPrezzoAlLitro"
             formControlName="gasolioPrezzoAlLitro"
           />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="benzappApp.gestore.owner" for="field_owner">Owner</label>
+          <input type="text" class="form-control" name="owner" id="field_owner" data-cy="owner" formControlName="owner" />
         </div>
 
         <div class="form-group">

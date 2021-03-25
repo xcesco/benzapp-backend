@@ -41,6 +41,9 @@ class CittadinoResourceIT {
     private static final String DEFAULT_CODICE_FISCALE = "AAAAAAAAAA";
     private static final String UPDATED_CODICE_FISCALE = "BBBBBBBBBB";
 
+    private static final String DEFAULT_OWNER = "AAAAAAAAAA";
+    private static final String UPDATED_OWNER = "BBBBBBBBBB";
+
     @Autowired
     private CittadinoRepository cittadinoRepository;
 
@@ -62,7 +65,11 @@ class CittadinoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Cittadino createEntity(EntityManager em) {
-        Cittadino cittadino = new Cittadino().nome(DEFAULT_NOME).cognome(DEFAULT_COGNOME).codiceFiscale(DEFAULT_CODICE_FISCALE);
+        Cittadino cittadino = new Cittadino()
+            .nome(DEFAULT_NOME)
+            .cognome(DEFAULT_COGNOME)
+            .codiceFiscale(DEFAULT_CODICE_FISCALE)
+            .owner(DEFAULT_OWNER);
         return cittadino;
     }
 
@@ -73,7 +80,11 @@ class CittadinoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Cittadino createUpdatedEntity(EntityManager em) {
-        Cittadino cittadino = new Cittadino().nome(UPDATED_NOME).cognome(UPDATED_COGNOME).codiceFiscale(UPDATED_CODICE_FISCALE);
+        Cittadino cittadino = new Cittadino()
+            .nome(UPDATED_NOME)
+            .cognome(UPDATED_COGNOME)
+            .codiceFiscale(UPDATED_CODICE_FISCALE)
+            .owner(UPDATED_OWNER);
         return cittadino;
     }
 
@@ -98,6 +109,7 @@ class CittadinoResourceIT {
         assertThat(testCittadino.getNome()).isEqualTo(DEFAULT_NOME);
         assertThat(testCittadino.getCognome()).isEqualTo(DEFAULT_COGNOME);
         assertThat(testCittadino.getCodiceFiscale()).isEqualTo(DEFAULT_CODICE_FISCALE);
+        assertThat(testCittadino.getOwner()).isEqualTo(DEFAULT_OWNER);
     }
 
     @Test
@@ -132,7 +144,8 @@ class CittadinoResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(cittadino.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
             .andExpect(jsonPath("$.[*].cognome").value(hasItem(DEFAULT_COGNOME)))
-            .andExpect(jsonPath("$.[*].codiceFiscale").value(hasItem(DEFAULT_CODICE_FISCALE)));
+            .andExpect(jsonPath("$.[*].codiceFiscale").value(hasItem(DEFAULT_CODICE_FISCALE)))
+            .andExpect(jsonPath("$.[*].owner").value(hasItem(DEFAULT_OWNER)));
     }
 
     @Test
@@ -149,7 +162,8 @@ class CittadinoResourceIT {
             .andExpect(jsonPath("$.id").value(cittadino.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME))
             .andExpect(jsonPath("$.cognome").value(DEFAULT_COGNOME))
-            .andExpect(jsonPath("$.codiceFiscale").value(DEFAULT_CODICE_FISCALE));
+            .andExpect(jsonPath("$.codiceFiscale").value(DEFAULT_CODICE_FISCALE))
+            .andExpect(jsonPath("$.owner").value(DEFAULT_OWNER));
     }
 
     @Test
@@ -406,6 +420,84 @@ class CittadinoResourceIT {
 
     @Test
     @Transactional
+    void getAllCittadinosByOwnerIsEqualToSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where owner equals to DEFAULT_OWNER
+        defaultCittadinoShouldBeFound("owner.equals=" + DEFAULT_OWNER);
+
+        // Get all the cittadinoList where owner equals to UPDATED_OWNER
+        defaultCittadinoShouldNotBeFound("owner.equals=" + UPDATED_OWNER);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByOwnerIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where owner not equals to DEFAULT_OWNER
+        defaultCittadinoShouldNotBeFound("owner.notEquals=" + DEFAULT_OWNER);
+
+        // Get all the cittadinoList where owner not equals to UPDATED_OWNER
+        defaultCittadinoShouldBeFound("owner.notEquals=" + UPDATED_OWNER);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByOwnerIsInShouldWork() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where owner in DEFAULT_OWNER or UPDATED_OWNER
+        defaultCittadinoShouldBeFound("owner.in=" + DEFAULT_OWNER + "," + UPDATED_OWNER);
+
+        // Get all the cittadinoList where owner equals to UPDATED_OWNER
+        defaultCittadinoShouldNotBeFound("owner.in=" + UPDATED_OWNER);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByOwnerIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where owner is not null
+        defaultCittadinoShouldBeFound("owner.specified=true");
+
+        // Get all the cittadinoList where owner is null
+        defaultCittadinoShouldNotBeFound("owner.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByOwnerContainsSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where owner contains DEFAULT_OWNER
+        defaultCittadinoShouldBeFound("owner.contains=" + DEFAULT_OWNER);
+
+        // Get all the cittadinoList where owner contains UPDATED_OWNER
+        defaultCittadinoShouldNotBeFound("owner.contains=" + UPDATED_OWNER);
+    }
+
+    @Test
+    @Transactional
+    void getAllCittadinosByOwnerNotContainsSomething() throws Exception {
+        // Initialize the database
+        cittadinoRepository.saveAndFlush(cittadino);
+
+        // Get all the cittadinoList where owner does not contain DEFAULT_OWNER
+        defaultCittadinoShouldNotBeFound("owner.doesNotContain=" + DEFAULT_OWNER);
+
+        // Get all the cittadinoList where owner does not contain UPDATED_OWNER
+        defaultCittadinoShouldBeFound("owner.doesNotContain=" + UPDATED_OWNER);
+    }
+
+    @Test
+    @Transactional
     void getAllCittadinosByDelegaIsEqualToSomething() throws Exception {
         // Initialize the database
         cittadinoRepository.saveAndFlush(cittadino);
@@ -472,7 +564,8 @@ class CittadinoResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(cittadino.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
             .andExpect(jsonPath("$.[*].cognome").value(hasItem(DEFAULT_COGNOME)))
-            .andExpect(jsonPath("$.[*].codiceFiscale").value(hasItem(DEFAULT_CODICE_FISCALE)));
+            .andExpect(jsonPath("$.[*].codiceFiscale").value(hasItem(DEFAULT_CODICE_FISCALE)))
+            .andExpect(jsonPath("$.[*].owner").value(hasItem(DEFAULT_OWNER)));
 
         // Check, that the count call also returns 1
         restCittadinoMockMvc
@@ -520,7 +613,7 @@ class CittadinoResourceIT {
         Cittadino updatedCittadino = cittadinoRepository.findById(cittadino.getId()).get();
         // Disconnect from session so that the updates on updatedCittadino are not directly saved in db
         em.detach(updatedCittadino);
-        updatedCittadino.nome(UPDATED_NOME).cognome(UPDATED_COGNOME).codiceFiscale(UPDATED_CODICE_FISCALE);
+        updatedCittadino.nome(UPDATED_NOME).cognome(UPDATED_COGNOME).codiceFiscale(UPDATED_CODICE_FISCALE).owner(UPDATED_OWNER);
 
         restCittadinoMockMvc
             .perform(
@@ -535,6 +628,7 @@ class CittadinoResourceIT {
         assertThat(testCittadino.getNome()).isEqualTo(UPDATED_NOME);
         assertThat(testCittadino.getCognome()).isEqualTo(UPDATED_COGNOME);
         assertThat(testCittadino.getCodiceFiscale()).isEqualTo(UPDATED_CODICE_FISCALE);
+        assertThat(testCittadino.getOwner()).isEqualTo(UPDATED_OWNER);
     }
 
     @Test
@@ -581,6 +675,7 @@ class CittadinoResourceIT {
         assertThat(testCittadino.getNome()).isEqualTo(UPDATED_NOME);
         assertThat(testCittadino.getCognome()).isEqualTo(DEFAULT_COGNOME);
         assertThat(testCittadino.getCodiceFiscale()).isEqualTo(UPDATED_CODICE_FISCALE);
+        assertThat(testCittadino.getOwner()).isEqualTo(DEFAULT_OWNER);
     }
 
     @Test
@@ -595,7 +690,7 @@ class CittadinoResourceIT {
         Cittadino partialUpdatedCittadino = new Cittadino();
         partialUpdatedCittadino.setId(cittadino.getId());
 
-        partialUpdatedCittadino.nome(UPDATED_NOME).cognome(UPDATED_COGNOME).codiceFiscale(UPDATED_CODICE_FISCALE);
+        partialUpdatedCittadino.nome(UPDATED_NOME).cognome(UPDATED_COGNOME).codiceFiscale(UPDATED_CODICE_FISCALE).owner(UPDATED_OWNER);
 
         restCittadinoMockMvc
             .perform(
@@ -612,6 +707,7 @@ class CittadinoResourceIT {
         assertThat(testCittadino.getNome()).isEqualTo(UPDATED_NOME);
         assertThat(testCittadino.getCognome()).isEqualTo(UPDATED_COGNOME);
         assertThat(testCittadino.getCodiceFiscale()).isEqualTo(UPDATED_CODICE_FISCALE);
+        assertThat(testCittadino.getOwner()).isEqualTo(UPDATED_OWNER);
     }
 
     @Test

@@ -107,6 +107,9 @@ public class GestoreQueryService extends QueryService<Gestore> {
                 specification =
                     specification.and(buildRangeSpecification(criteria.getGasolioPrezzoAlLitro(), Gestore_.gasolioPrezzoAlLitro));
             }
+            if (criteria.getOwner() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getOwner(), Gestore_.owner));
+            }
             if (criteria.getRifornimentoId() != null) {
                 specification =
                     specification.and(

@@ -52,6 +52,10 @@ public class CittadinoServiceImpl implements CittadinoService {
                         existingCittadino.setCodiceFiscale(cittadino.getCodiceFiscale());
                     }
 
+                    if (cittadino.getOwner() != null) {
+                        existingCittadino.setOwner(cittadino.getOwner());
+                    }
+
                     return existingCittadino;
                 }
             )

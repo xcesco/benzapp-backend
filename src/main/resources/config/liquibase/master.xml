@@ -16,6 +16,7 @@
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210228213757_added_entity_Cittadino.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210228213757_added_entity_Device.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210228213857_added_entity_Fascia.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210228213957_added_entity_Gestore.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210228214057_added_entity_Marchio.xml" relativeToChangelogFile="false"/>

@@ -38,7 +38,7 @@
     "reactive": false,
     "skipServer": false,
     "entitySuffix": "",
-    "entities": ["Cittadino", "Fascia", "Gestore", "Marchio", "Rifornimento", "Tessera", "Delega"],
+    "entities": ["Cittadino", "Fascia", "Gestore", "Marchio", "Rifornimento", "Tessera", "Delega", "Device"],
     "skipCheckLengthOfIdentifier": false,
     "skipFakeData": false,
     "pages": [],

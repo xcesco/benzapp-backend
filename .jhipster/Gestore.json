@@ -33,6 +33,10 @@
     {
       "fieldName": "gasolioPrezzoAlLitro",
       "fieldType": "Float"
+    },
+    {
+      "fieldName": "owner",
+      "fieldType": "String"
     }
   ],
   "relationships": [

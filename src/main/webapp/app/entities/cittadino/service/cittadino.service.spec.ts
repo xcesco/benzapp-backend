@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = TestBed.inject(CittadinoService);
       httpMock = TestBed.inject(HttpTestingController);
 
-      elemDefault = new Cittadino(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new Cittadino(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -58,6 +58,7 @@ describe('Service Tests', () => {
             nome: 'BBBBBB',
             cognome: 'BBBBBB',
             codiceFiscale: 'BBBBBB',
+            owner: 'BBBBBB',
           },
           elemDefault
         );
@@ -78,6 +79,7 @@ describe('Service Tests', () => {
             nome: 'BBBBBB',
             cognome: 'BBBBBB',
             codiceFiscale: 'BBBBBB',
+            owner: 'BBBBBB',
           },
           elemDefault
         );

@@ -55,6 +55,7 @@
           <th scope="col" jhiSortBy="gasolioPrezzoAlLitro">
             <span jhiTranslate="benzappApp.gestore.gasolioPrezzoAlLitro">Gasolio Prezzo Al Litro</span> <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="owner"><span jhiTranslate="benzappApp.gestore.owner">Owner</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="marchio.id">
             <span jhiTranslate="benzappApp.gestore.marchio">Marchio</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -74,6 +75,7 @@
           <td jhiTranslate="{{ 'benzappApp.TipoImpianto.' + gestore.tipo }}">{{ gestore.tipo }}</td>
           <td>{{ gestore.benzinaPrezzoAlLitro }}</td>
           <td>{{ gestore.gasolioPrezzoAlLitro }}</td>
+          <td>{{ gestore.owner }}</td>
           <td>
             <div *ngIf="gestore.marchio">
               <a [routerLink]="['/marchio', gestore.marchio?.id, 'view']">{{ gestore.marchio?.id }}</a>

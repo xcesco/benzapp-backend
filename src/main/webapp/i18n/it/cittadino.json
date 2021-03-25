@@ -21,6 +21,7 @@
       "nome": "Nome",
       "cognome": "Cognome",
       "codiceFiscale": "Codice Fiscale",
+      "owner": "Owner",
       "delega": "Delega",
       "tessera": "Tessera",
       "fascia": "Fascia"

@@ -1,6 +1,7 @@
 package it.insiel.innovazione.poc.benzapp.web.rest;
 
 import it.insiel.innovazione.poc.benzapp.domain.Cittadino;
+import it.insiel.innovazione.poc.benzapp.security.SecurityUtils;
 import it.insiel.innovazione.poc.benzapp.service.CittadinoQueryService;
 import it.insiel.innovazione.poc.benzapp.service.CittadinoService;
 import it.insiel.innovazione.poc.benzapp.service.dto.CittadinoCriteria;
@@ -17,6 +18,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -123,6 +127,7 @@ public class CittadinoResource {
     @GetMapping("/cittadinos")
     public ResponseEntity<List<Cittadino>> getAllCittadinos(CittadinoCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Cittadinos by criteria: {}", criteria);
+
         Page<Cittadino> page = cittadinoQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
