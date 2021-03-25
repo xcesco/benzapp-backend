@@ -55,6 +55,15 @@ export class RifornimentoUpdateComponent implements OnInit {
       if (rifornimento.id === undefined) {
         const today = dayjs(new Date());
         rifornimento.data = today;
+
+        rifornimento.litriErogati = 20;
+        rifornimento.prezzoAlLitro = 1.5;
+        rifornimento.sconto = 0.25;
+        this.importoDovuto = ((rifornimento.prezzoAlLitro - rifornimento.sconto) * rifornimento.litriErogati);
+
+        // this.onChangeLitriErogati();
+        // rifornimento.
+
       }
 
       this.updateForm(rifornimento);
