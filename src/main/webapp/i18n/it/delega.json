@@ -2,17 +2,17 @@
   "benzappApp": {
     "delega": {
       "home": {
-        "title": "Delegas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Genera un nuovo Delega",
-        "createOrEditLabel": "Genera o modifica un Delega",
-        "notFound": "No Delegas found"
+        "title": "Elenco deleghe",
+        "refreshListLabel": "Aggiorna lista",
+        "createLabel": "Genera una nuova delega",
+        "createOrEditLabel": "Genera o modifica una delega",
+        "notFound": "Nessuna delega trovata"
       },
-      "created": "&Egrave; stato generato un nuovo Delega con identificatore {{ param }}",
-      "updated": "&Egrave; stato aggiornato Delega identificato da {{ param }}",
-      "deleted": "&Egrave; stato eliminato Delega con identificatore {{ param }}",
+      "created": "&Egrave; stato generato una nuova delega con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornata la delega identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminata la delega con identificatore {{ param }}",
       "delete": {
-        "question": "Sei sicuro di volere eliminare Delega {{ id }}?"
+        "question": "Sei sicuro di volere eliminare la delega {{ id }}?"
       },
       "detail": {
         "title": "Delega"

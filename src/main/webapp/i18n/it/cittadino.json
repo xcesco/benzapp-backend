@@ -2,17 +2,17 @@
   "benzappApp": {
     "cittadino": {
       "home": {
-        "title": "Cittadinos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Genera un nuovo Cittadino",
-        "createOrEditLabel": "Genera o modifica un Cittadino",
+        "title": "Elenco cittadini",
+        "refreshListLabel": "Aggiorna lista",
+        "createLabel": "Nuovo cittadino",
+        "createOrEditLabel": "Registra o modifica cittadino",
         "notFound": "No Cittadinos found"
       },
-      "created": "&Egrave; stato generato un nuovo Cittadino con identificatore {{ param }}",
-      "updated": "&Egrave; stato aggiornato Cittadino identificato da {{ param }}",
-      "deleted": "&Egrave; stato eliminato Cittadino con identificatore {{ param }}",
+      "created": "&Egrave; stato registrato un nuovo cittadino con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato cittadino identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato cittadino con identificatore {{ param }}",
       "delete": {
-        "question": "Sei sicuro di volere eliminare Cittadino {{ id }}?"
+        "question": "Sei sicuro di volere eliminare cittadino {{ id }}?"
       },
       "detail": {
         "title": "Cittadino"

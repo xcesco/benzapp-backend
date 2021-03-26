@@ -2,9 +2,9 @@
   "benzappApp": {
     "device": {
       "home": {
-        "title": "Devices",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Genera un nuovo Device",
+        "title": "Elenco device",
+        "refreshListLabel": "Aggiorna lista",
+        "createLabel": "Genera un nuovo device",
         "createOrEditLabel": "Genera o modifica un Device",
         "notFound": "No Devices found"
       },

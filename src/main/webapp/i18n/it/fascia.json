@@ -2,17 +2,17 @@
   "benzappApp": {
     "fascia": {
       "home": {
-        "title": "Fascias",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Genera un nuovo Fascia",
-        "createOrEditLabel": "Genera o modifica un Fascia",
+        "title": "Fascia",
+        "refreshListLabel": "Aggiorna lista",
+        "createLabel": "Nuova fascia",
+        "createOrEditLabel": "Genera o modifica un fascia",
         "notFound": "No Fascias found"
       },
-      "created": "&Egrave; stato generato un nuovo Fascia con identificatore {{ param }}",
-      "updated": "&Egrave; stato aggiornato Fascia identificato da {{ param }}",
-      "deleted": "&Egrave; stato eliminato Fascia con identificatore {{ param }}",
+      "created": "&Egrave; stato generato una nuova fascia con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornata fascia identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminata fascia con identificatore {{ param }}",
       "delete": {
-        "question": "Sei sicuro di volere eliminare Fascia {{ id }}?"
+        "question": "Sei sicuro di volere eliminare la fascia {{ id }}?"
       },
       "detail": {
         "title": "Fascia"

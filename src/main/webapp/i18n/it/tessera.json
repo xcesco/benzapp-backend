@@ -2,17 +2,17 @@
   "benzappApp": {
     "tessera": {
       "home": {
-        "title": "Tesseras",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Genera un nuovo Tessera",
-        "createOrEditLabel": "Genera o modifica un Tessera",
-        "notFound": "No Tesseras found"
+        "title": "Elenco tessere",
+        "refreshListLabel": "Aggiorna lista",
+        "createLabel": "Nuova tessera",
+        "createOrEditLabel": "Genera o modifica una tessera",
+        "notFound": "Nessuna tessera trovata"
       },
-      "created": "&Egrave; stato generato un nuovo Tessera con identificatore {{ param }}",
-      "updated": "&Egrave; stato aggiornato Tessera identificato da {{ param }}",
-      "deleted": "&Egrave; stato eliminato Tessera con identificatore {{ param }}",
+      "created": "&Egrave; stato generato una nuova tessera con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornata una tessera identificata da {{ param }}",
+      "deleted": "&Egrave; stato eliminato la tessera con identificatore {{ param }}",
       "delete": {
-        "question": "Sei sicuro di volere eliminare Tessera {{ id }}?"
+        "question": "Sei sicuro di volere eliminare la tessera {{ id }}?"
       },
       "detail": {
         "title": "Tessera"

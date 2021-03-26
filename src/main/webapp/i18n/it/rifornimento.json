@@ -2,17 +2,17 @@
   "benzappApp": {
     "rifornimento": {
       "home": {
-        "title": "Rifornimenti",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Registra un rifornimento",
+        "title": "Elenco rifornimenti",
+        "refreshListLabel": "Aggiorna lista",
+        "createLabel": "Nuovo rifornimento",
         "createOrEditLabel": "Registra nuovo rifornimento",
         "notFound": "Nessun rifornimento trovato"
       },
-      "created": "&Egrave; stato generato un nuovo Rifornimento con identificatore {{ param }}",
-      "updated": "&Egrave; stato aggiornato Rifornimento identificato da {{ param }}",
-      "deleted": "&Egrave; stato eliminato Rifornimento con identificatore {{ param }}",
+      "created": "&Egrave; stato generato un nuovo rifornimento con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato rifornimento identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato rifornimento con identificatore {{ param }}",
       "delete": {
-        "question": "Sei sicuro di volere eliminare Rifornimento {{ id }}?"
+        "question": "Sei sicuro di volere eliminare il rifornimento {{ id }}?"
       },
       "detail": {
         "title": "Rifornimento"

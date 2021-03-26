@@ -2,17 +2,17 @@
   "benzappApp": {
     "gestore": {
       "home": {
-        "title": "Gestores",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Genera un nuovo Gestore",
-        "createOrEditLabel": "Genera o modifica un Gestore",
+        "title": "Elenco gestori",
+        "refreshListLabel": "Aggiorna lista",
+        "createLabel": "Regista un nuovo gestore",
+        "createOrEditLabel": "Genera o modifica un gestore",
         "notFound": "No Gestores found"
       },
-      "created": "&Egrave; stato generato un nuovo Gestore con identificatore {{ param }}",
-      "updated": "&Egrave; stato aggiornato Gestore identificato da {{ param }}",
-      "deleted": "&Egrave; stato eliminato Gestore con identificatore {{ param }}",
+      "created": "&Egrave; stato registrato un nuovo gestore con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato il gestore identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato il gestore con identificatore {{ param }}",
       "delete": {
-        "question": "Sei sicuro di volere eliminare Gestore {{ id }}?"
+        "question": "Sei sicuro di volere eliminare il gestore {{ id }}?"
       },
       "detail": {
         "title": "Gestore"
