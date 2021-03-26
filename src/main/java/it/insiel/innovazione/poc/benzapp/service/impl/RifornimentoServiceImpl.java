@@ -54,19 +54,17 @@ public class RifornimentoServiceImpl implements RifornimentoService {
                     PushNotificationRequest request = new PushNotificationRequest();
                     request.setMessage(
                         String.format(
-                            "Il distributore %s %s ha effettuato un rifornimento di litri %.2f per il veicolo a targa %s",
-                            result.getGestore().getMarchio().getNome(),
-                            result.getGestore().getIndirizzo(),
+                            "E' stato registrato il rifornimento di %.2f litri per il veicolo %s presso %s %s",
                             result.getLitriErogati(),
-                            result.getTessera().getTarga()
+                            result.getTessera().getTarga(),
+                            result.getGestore().getMarchio().getNome(),
+                            result.getGestore().getIndirizzo()
                         )
                     );
                     request.setToken(device.getDeviceId());
                     try {
                         fcmService.sendMessageToToken(request);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
+                    } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
                 }
