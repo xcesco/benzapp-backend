@@ -8,6 +8,8 @@ import { LANGUAGES } from 'app/config/language.constants';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { Observable } from 'rxjs';
+import { Account } from 'app/core/auth/account.model';
 
 @Component({
   selector: 'jhi-navbar',
@@ -69,4 +71,8 @@ export class NavbarComponent implements OnInit {
   getImageUrl(): string {
     return this.isAuthenticated() ? this.accountService.getImageUrl() : '';
   }
+
+  // getIdentity(): Observable<Account | null> {
+  //   return this.accountService.identity();
+  // }
 }

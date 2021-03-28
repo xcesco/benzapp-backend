@@ -3,6 +3,7 @@ package it.insiel.innovazione.poc.benzapp.service;
 import it.insiel.innovazione.poc.benzapp.domain.*; // for static metamodels
 import it.insiel.innovazione.poc.benzapp.domain.Delega;
 import it.insiel.innovazione.poc.benzapp.repository.DelegaRepository;
+import it.insiel.innovazione.poc.benzapp.security.SecurityUtils;
 import it.insiel.innovazione.poc.benzapp.service.dto.DelegaCriteria;
 import java.util.List;
 import javax.persistence.criteria.JoinType;
@@ -11,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.jhipster.service.QueryService;
@@ -55,6 +58,12 @@ public class DelegaQueryService extends QueryService<Delega> {
     public Page<Delega> findByCriteria(DelegaCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Delega> specification = createSpecification(criteria);
+
+        if (SecurityUtils.hasCurrentUserRole(SecurityUtils.Roles.ROLE_USER)) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            return delegaRepository.findByCittadinoOwner(authentication.getName(), page);
+        }
+
         return delegaRepository.findAll(specification, page);
     }
 
