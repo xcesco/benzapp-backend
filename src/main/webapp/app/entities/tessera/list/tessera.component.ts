@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest } from 'rxjs';
+import { combineLatest, of } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ITessera } from '../tessera.model';
@@ -10,6 +10,10 @@ import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { TesseraService } from '../service/tessera.service';
 import { TesseraDeleteDialogComponent } from '../delete/tessera-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
+import { DelegaService } from 'app/entities/delega/service/delega.service';
+import { IDelega } from 'app/entities/delega/delega.model';
+import { map } from 'rxjs/operators';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-tessera',
@@ -24,9 +28,12 @@ export class TesseraComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  deleghe: ITessera[] | null = null;
 
   constructor(
     protected tesseraService: TesseraService,
+    protected delegheService: DelegaService,
+    protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected dataUtils: DataUtils,
     protected router: Router,
@@ -57,6 +64,25 @@ export class TesseraComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleNavigation();
+
+    if (this.accountService.hasAnyAuthority(['ROLE_USER'])) {
+      this.delegheService.query().subscribe(response => {
+        console.error(response.body);
+        const values = response.body;
+
+        if (values) {
+          const deleghe: ITessera[] = [];
+          values.forEach(item => {
+            if (item.tessera) {
+              deleghe.push(item.tessera);
+            }
+          });
+          this.deleghe = deleghe;
+        }
+      });
+    } else {
+      this.deleghe = [];
+    }
   }
 
   protected handleNavigation(): void {

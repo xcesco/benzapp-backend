@@ -9,6 +9,7 @@
       </button>
 
       <button
+        *jhiHasAnyAuthority="['ROLE_ADMIN']"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-tessera"
@@ -32,50 +33,62 @@
     <table class="table table-striped table-hover" aria-describedby="page-heading">
       <thead class="thead-dark">
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="codice">
-            <span jhiTranslate="benzappApp.tessera.codice">Codice</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="dataEmissione">
-            <span jhiTranslate="benzappApp.tessera.dataEmissione">Data Emissione</span> <fa-icon icon="sort"></fa-icon>
+          <th *jhiHasAnyAuthority="['ROLE_ADMIN']" scope="col" jhiSortBy="id">
+            <span jhiTranslate="global.field.id">ID</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="immagine">
-            <span jhiTranslate="benzappApp.tessera.immagine">Immagine</span> <fa-icon icon="sort"></fa-icon>
+            <span jhiTranslate="benzappApp.tessera.immagine">Immagine</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="targa"><span jhiTranslate="benzappApp.tessera.targa">Targa</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="targa">
+            <span jhiTranslate="benzappApp.tessera.targa">Targa</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th *jhiHasAnyAuthority="['ROLE_ADMIN']" scope="col" jhiSortBy="codice">
+            <span jhiTranslate="benzappApp.tessera.codice">Codice</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th *jhiHasAnyAuthority="['ROLE_ADMIN']" scope="col" jhiSortBy="dataEmissione">
+            <span jhiTranslate="benzappApp.tessera.dataEmissione">Data Emissione</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="veicolo">
-            <span jhiTranslate="benzappApp.tessera.veicolo">Veicolo</span> <fa-icon icon="sort"></fa-icon>
+            <span jhiTranslate="benzappApp.tessera.veicolo">Veicolo</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="carburante">
-            <span jhiTranslate="benzappApp.tessera.carburante">Carburante</span> <fa-icon icon="sort"></fa-icon>
+            <span jhiTranslate="benzappApp.tessera.carburante">Carburante</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="cittadino.id">
-            <span jhiTranslate="benzappApp.tessera.cittadino">Cittadino</span> <fa-icon icon="sort"></fa-icon>
+          <th *jhiHasAnyAuthority="['ROLE_ADMIN']" scope="col" jhiSortBy="cittadino.id">
+            <span jhiTranslate="benzappApp.tessera.cittadino">Cittadino</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let tessera of tesseras; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <td *jhiHasAnyAuthority="['ROLE_ADMIN']">
             <a [routerLink]="['/tessera', tessera.id, 'view']">{{ tessera.id }}</a>
           </td>
-          <td>{{ tessera.codice }}</td>
-          <td>{{ tessera.dataEmissione | formatMediumDatetime }}</td>
           <td>
             <a *ngIf="tessera.immagine" (click)="openFile(tessera.immagine, tessera.immagineContentType)">
               <img
                 [src]="'data:' + tessera.immagineContentType + ';base64,' + tessera.immagine"
-                style="max-height: 30px"
+                style="max-height: 48px"
                 alt="tessera image"
               />
             </a>
-            <span *ngIf="tessera.immagine">{{ tessera.immagineContentType }}, {{ byteSize(tessera.immagine) }}</span>
+            <!--            <span *ngIf="tessera.immagine">{{ tessera.immagineContentType }}, {{ byteSize(tessera.immagine) }}</span>-->
           </td>
           <td>{{ tessera.targa }}</td>
+          <td *jhiHasAnyAuthority="['ROLE_ADMIN']">{{ tessera.codice }}</td>
+          <td *jhiHasAnyAuthority="['ROLE_ADMIN']">{{ tessera.dataEmissione | formatMediumDatetime }}</td>
           <td jhiTranslate="{{ 'benzappApp.TipoVeicolo.' + tessera.veicolo }}">{{ tessera.veicolo }}</td>
           <td jhiTranslate="{{ 'benzappApp.TipoCarburante.' + tessera.carburante }}">{{ tessera.carburante }}</td>
-          <td>
+          <td *jhiHasAnyAuthority="['ROLE_ADMIN']">
             <div *ngIf="tessera.cittadino">
               <a [routerLink]="['/cittadino', tessera.cittadino?.id, 'view']">{{ tessera.cittadino?.id }}</a>
             </div>
@@ -92,7 +105,12 @@
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
 
+              <button type="button" class="btn btn-outline-primary" data-cy="entityDelegaButton">
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delega">Delega</span>
+              </button>
+
               <button
+                *jhiHasAnyAuthority="['ROLE_ADMIN']"
                 type="submit"
                 [routerLink]="['/tessera', tessera.id, 'edit']"
                 class="btn btn-outline-primary"
@@ -102,7 +120,13 @@
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(tessera)" class="btn btn-outline-danger" data-cy="entityDeleteButton">
+              <button
+                *jhiHasAnyAuthority="['ROLE_ADMIN']"
+                type="submit"
+                (click)="delete(tessera)"
+                class="btn btn-outline-danger"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
@@ -128,6 +152,55 @@
         [boundaryLinks]="true"
         (pageChange)="loadPage($event)"
       ></ngb-pagination>
+    </div>
+  </div>
+
+  <!-- deleghe -->
+  <div *ngIf="deleghe && deleghe.length > 0">
+    <h2>
+      <span>Deleghe ricevute</span>
+    </h2>
+
+    <div class="table-responsive" id="deleghe">
+      <table class="table table-striped table-hover" aria-describedby="page-heading">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">
+              <span jhiTranslate="benzappApp.tessera.immagine">Immagine</span>
+            </th>
+            <th scope="col"><span jhiTranslate="benzappApp.tessera.targa">Targa</span></th>
+            <th scope="col">
+              <span jhiTranslate="benzappApp.tessera.veicolo">Veicolo</span>
+            </th>
+            <th scope="col">
+              <span jhiTranslate="benzappApp.tessera.carburante">Carburante</span>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tessera of deleghe; trackBy: trackId" data-cy="entityTable">
+            <td>
+              <a *ngIf="tessera.immagine" (click)="openFile(tessera.immagine, tessera.immagineContentType)">
+                <img
+                  [src]="'data:' + tessera.immagineContentType + ';base64,' + tessera.immagine"
+                  style="max-height: 48px"
+                  alt="tessera image"
+                />
+              </a>
+              <!--            <span *ngIf="tessera.immagine">{{ tessera.immagineContentType }}, {{ byteSize(tessera.immagine) }}</span>-->
+            </td>
+            <td>{{ tessera.targa }}</td>
+            <td jhiTranslate="{{ 'benzappApp.TipoVeicolo.' + tessera.veicolo }}">{{ tessera.veicolo }}</td>
+            <td jhiTranslate="{{ 'benzappApp.TipoCarburante.' + tessera.carburante }}">{{ tessera.carburante }}</td>
+            <td class="text-right">
+              <div>
+                <button type="button" class="btn btn-outline-danger" data-cy="entityDelegaButton">Rimuovi delega</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

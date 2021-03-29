@@ -10,19 +10,11 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
-        <dd>
+        <dt *jhiHasAnyAuthority="['ROLE_ADMIN']"><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <span>{{ tessera.id }}</span>
         </dd>
-        <dt><span jhiTranslate="benzappApp.tessera.codice">Codice</span></dt>
-        <dd>
-          <span>{{ tessera.codice }}</span>
-        </dd>
-        <dt><span jhiTranslate="benzappApp.tessera.dataEmissione">Data Emissione</span></dt>
-        <dd>
-          <span>{{ tessera.dataEmissione | formatMediumDatetime }}</span>
-        </dd>
-        <dt><span jhiTranslate="benzappApp.tessera.immagine">Immagine</span></dt>
+        <dt><!--<span jhiTranslate="benzappApp.tessera.immagine">Immagine</span>--></dt>
         <dd>
           <div *ngIf="tessera.immagine">
             <a (click)="openFile(tessera.immagine, tessera.immagineContentType)">
@@ -32,13 +24,22 @@
                 alt="tessera image"
               />
             </a>
-            {{ tessera.immagineContentType }}, {{ byteSize(tessera.immagine) }}
+            <!--            {{ tessera.immagineContentType }}, {{ byteSize(tessera.immagine) }}-->
           </div>
         </dd>
         <dt><span jhiTranslate="benzappApp.tessera.targa">Targa</span></dt>
         <dd>
           <span>{{ tessera.targa }}</span>
         </dd>
+        <dt><span jhiTranslate="benzappApp.tessera.codice">Codice</span></dt>
+        <dd>
+          <span>{{ tessera.codice }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.tessera.dataEmissione">Data Emissione</span></dt>
+        <dd>
+          <span>{{ tessera.dataEmissione | formatMediumDatetime }}</span>
+        </dd>
+
         <dt><span jhiTranslate="benzappApp.tessera.veicolo">Veicolo</span></dt>
         <dd>
           <span jhiTranslate="{{ 'benzappApp.TipoVeicolo.' + tessera.veicolo }}">{{ tessera.veicolo }}</span>
@@ -47,8 +48,8 @@
         <dd>
           <span jhiTranslate="{{ 'benzappApp.TipoCarburante.' + tessera.carburante }}">{{ tessera.carburante }}</span>
         </dd>
-        <dt><span jhiTranslate="benzappApp.tessera.cittadino">Cittadino</span></dt>
-        <dd>
+        <dt *jhiHasAnyAuthority="['ROLE_ADMIN']"><span jhiTranslate="benzappApp.tessera.cittadino">Cittadino</span></dt>
+        <dd *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <div *ngIf="tessera.cittadino">
             <a [routerLink]="['/cittadino', tessera.cittadino?.id, 'view']">{{ tessera.cittadino?.id }}</a>
           </div>
@@ -59,7 +60,7 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/tessera', tessera.id, 'edit']" class="btn btn-primary">
+      <button *jhiHasAnyAuthority="['ROLE_ADMIN']" type="button" [routerLink]="['/tessera', tessera.id, 'edit']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>

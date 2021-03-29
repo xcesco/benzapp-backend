@@ -12,7 +12,7 @@ const tesseraRoute: Routes = [
     path: '',
     component: TesseraComponent,
     data: {
-      defaultSort: 'id,asc',
+      defaultSort: 'targa,asc',
     },
     canActivate: [UserRouteAccessService],
   },

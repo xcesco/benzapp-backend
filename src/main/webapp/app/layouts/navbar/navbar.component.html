@@ -54,6 +54,21 @@
               </span>
             </a>
             <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="functions-menu">
+              <!-- funzioni user -->
+              <li *jhiHasAnyAuthority="'ROLE_USER'">
+                <a
+                  class="dropdown-item"
+                  routerLink="tessera"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span jhiTranslate="global.menu.entities.tessera">Tessera</span>
+                </a>
+              </li>
+
+              <!-- funzioni patrol -->
               <li *jhiHasAnyAuthority="'ROLE_PATROL_STATION'">
                 <a
                   class="dropdown-item"
@@ -76,42 +91,6 @@
                 >
                   <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                   <span jhiTranslate="global.menu.entities.rifornimento">Rifornimento</span>
-                </a>
-              </li>
-              <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
-                <a
-                  class="dropdown-item"
-                  routerLink="fascia"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.entities.fascia">Fascia</span>
-                </a>
-              </li>
-              <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
-                <a
-                  class="dropdown-item"
-                  routerLink="gestore"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.entities.gestore">Gestore</span>
-                </a>
-              </li>
-              <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
-                <a
-                  class="dropdown-item"
-                  routerLink="marchio"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.entities.marchio">Marchio</span>
                 </a>
               </li>
               <li *jhiHasAnyAuthority="'ROLE_PATROL_STATION'">
@@ -138,43 +117,6 @@
                   <span jhiTranslate="global.menu.entities.rifornimento_smartphone">Rifornimento Smartphone</span>
                 </a>
               </li>
-              <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
-                <a
-                  class="dropdown-item"
-                  routerLink="tessera"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.entities.tessera">Tessera</span>
-                </a>
-              </li>
-              <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
-                <a
-                  class="dropdown-item"
-                  routerLink="delega"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.entities.delega">Delega</span>
-                </a>
-              </li>
-              <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
-                <a
-                  class="dropdown-item"
-                  routerLink="device"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.entities.device">Device</span>
-                </a>
-              </li>
-              <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
             </ul>
           </li>
           <!-- entity -->

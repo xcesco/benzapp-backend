@@ -11,5 +11,6 @@ import { DelegaRoutingModule } from './route/delega-routing.module';
   imports: [SharedModule, DelegaRoutingModule],
   declarations: [DelegaComponent, DelegaDetailComponent, DelegaUpdateComponent, DelegaDeleteDialogComponent],
   entryComponents: [DelegaDeleteDialogComponent],
+  exports: [DelegaComponent],
 })
 export class DelegaModule {}

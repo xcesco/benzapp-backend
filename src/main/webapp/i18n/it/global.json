@@ -11,15 +11,15 @@
       },
       "entities": {
         "main": "Entità",
-        "cittadino": "Cittadino",
-        "fascia": "Fascia",
-        "gestore": "Gestore",
-        "marchio": "Marchio",
+        "cittadino": "Cittadini",
+        "fascia": "Fasce",
+        "gestore": "Gestori",
+        "marchio": "Marchi",
         "rifornimento": "Rifornimenti",
         "rifornimento_lettore": "Rifornimento via lettore QRCode",
         "rifornimento_smartphone": "Rifornimento via camera",
-        "tessera": "Tessera",
-        "delega": "Delega",
+        "tessera": "Tessere",
+        "delega": "Deleghe",
         "device": "Device",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
@@ -112,7 +112,8 @@
       "open": "Open",
       "save": "Salva",
       "view": "Visualizza",
-      "retry": "Riprova"
+      "retry": "Riprova",
+      "delega": "Delega"
     },
     "detail": {
       "field": "Campo",
