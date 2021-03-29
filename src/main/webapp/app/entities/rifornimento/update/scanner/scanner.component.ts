@@ -1,8 +1,10 @@
-import { Component, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { BarcodeFormat } from '@zxing/library';
 import { BehaviorSubject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EventEmitter } from '@angular/core';
+import { IQRCode } from 'app/entities/rifornimento/rifornimento.model';
+import { TipoCarburante } from 'app/entities/enumerations/tipo-carburante.model';
+import { TipoVeicolo } from 'app/entities/enumerations/tipo-veicolo.model';
 
 @Component({
   selector: 'jhi-scanner',
@@ -10,7 +12,7 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./scanner.component.scss'],
 })
 export class ScannerComponent {
-  @Output() completed = new EventEmitter<string>();
+  @Output() completed = new EventEmitter<IQRCode>();
 
   scannerEnabled = true;
   private information = 'Nessuna informazione sul codice rilevata. Ingrandisci un codice QR per scansionarlo.';
@@ -35,9 +37,21 @@ export class ScannerComponent {
     this.scannerEnabled = false;
     this.information = 'Attendi recupero informazioni ...';
 
-    this.completed.emit($event);
+    try {
+      const value: IQRCode = JSON.parse($event);
+      this.completed.emit(value);
 
-    console.error($event);
+      console.error(value);
+    } catch (e) {
+      const errorValue: IQRCode = {
+        carburante: TipoCarburante.BENZINA,
+        targa: '',
+        tesseraNumero: '',
+        veicolo: TipoVeicolo.AUTOVEICOLO,
+        codiceFiscale: '',
+      };
+      this.completed.emit(errorValue);
+    }
   }
 
   public enableScanner(): void {

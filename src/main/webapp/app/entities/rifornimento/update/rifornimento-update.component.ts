@@ -15,7 +15,6 @@ import { TesseraService } from 'app/entities/tessera/service/tessera.service';
 import { CittadinoService } from 'app/entities/cittadino/service/cittadino.service';
 import { TipoCarburante } from 'app/entities/enumerations/tipo-carburante.model';
 import { AccountService } from 'app/core/auth/account.service';
-import { Dayjs } from 'dayjs';
 
 @Component({
   selector: 'jhi-rifornimento-update',
@@ -31,6 +30,7 @@ export class RifornimentoUpdateComponent implements OnInit {
   currentGestore: IGestore | null = null;
   currentTessera: ITessera | null = null;
   isCollapsed = true;
+  activePanel = 0;
 
   editForm = this.fb.group({
     id: [],
@@ -42,6 +42,7 @@ export class RifornimentoUpdateComponent implements OnInit {
     gestore: [],
     tessera: [],
   });
+  private type = '';
 
   constructor(
     protected rifornimentoService: RifornimentoService,
@@ -60,6 +61,7 @@ export class RifornimentoUpdateComponent implements OnInit {
         rifornimento.data = today;
       }
 
+      this.type = type;
       console.error('tipo', type);
 
       this.updateForm(rifornimento);
@@ -87,7 +89,11 @@ export class RifornimentoUpdateComponent implements OnInit {
   }
 
   previousState(): void {
-    window.history.back();
+    if (this.accountService.hasAnyAuthority(['ROLE_PATROL_STATION'])) {
+      this.resetForm();
+    } else {
+      window.history.back();
+    }
   }
 
   save(): void {
@@ -124,7 +130,9 @@ export class RifornimentoUpdateComponent implements OnInit {
   protected onSaveSuccess(): void {
     this.isSaving = false;
 
-    if (!this.accountService.hasAnyAuthority(['ROLE_PATROL_STATION'])) {
+    if (this.accountService.hasAnyAuthority(['ROLE_PATROL_STATION'])) {
+      this.resetForm();
+    } else {
       this.previousState();
     }
   }
@@ -141,9 +149,13 @@ export class RifornimentoUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  onQRCodeCompleted(qrcodeContent: string): void {
-    console.error(qrcodeContent);
-    const qrcode: IQRCode = JSON.parse(qrcodeContent);
+  onQRCodeCompleted(qrcode: IQRCode): void {
+    console.error(qrcode);
+
+    if (!qrcode.codiceFiscale) {
+      this.activePanel = 4;
+      return;
+    }
 
     this.tesseraService.query({ 'codice.equals': qrcode.tesseraNumero }).subscribe(result => {
       if (result.body) {
@@ -169,7 +181,8 @@ export class RifornimentoUpdateComponent implements OnInit {
 
         this.updateForm(rifornimento);
         this.onChangeLitriErogati();
-        this.isCollapsed = false;
+
+        this.activePanel = 3;
       }
     });
     console.error(qrcode);
@@ -196,7 +209,9 @@ export class RifornimentoUpdateComponent implements OnInit {
 
         console.error(this.buffer);
 
-        this.onQRCodeCompleted(this.buffer);
+        const value: IQRCode = JSON.parse(this.buffer);
+
+        this.onQRCodeCompleted(value);
         this.bufferStatus = QRReaderStatus.FINISHED;
         // litriErogati.focus();
       }
@@ -234,16 +249,23 @@ export class RifornimentoUpdateComponent implements OnInit {
       (this.editForm.get('prezzoAlLitro')?.value - this.editForm.get('sconto')?.value) * this.editForm.get('litriErogati')?.value;
   }
 
-  azzera(): void {
-    const litriErogati: any | null = this.editForm.get('litriErogati')?.value;
+  resetForm(): void {
     this.editForm.reset();
-    this.editForm.get('litriErogati')?.setValue(litriErogati);
-    this.isCollapsed = true;
+    this.activePanel = 0;
   }
 
   getData(): Date {
     const data = new Date(this.editForm.get('data')?.value ?? dayjs(new Date()));
-    console.error(data);
     return data;
+  }
+
+  navigateToQRCode(): void {
+    // if (this.type==='')
+    //SMARTPHONE, PC
+    if (this.type === 'SMARTPHONE') {
+      this.activePanel = 1;
+    } else {
+      this.activePanel = 2;
+    }
   }
 }

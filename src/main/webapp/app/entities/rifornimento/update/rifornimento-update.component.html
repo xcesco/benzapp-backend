@@ -235,18 +235,16 @@
         <div *jhiHasAnyAuthority="['ROLE_PATROL_STATION']">
           <!-- switch -->
           <div style="margin-bottom: 12px">
-            <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.step">Step</label>
-
-            <ul ngbNav #nav="ngbNav" class="nav-pills">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="activePanel" hidden class="nav-pills">
               <!-- Litri erogati -->
-              <li ngbNavItem>
+              <li [ngbNavItem]="0">
                 <a ngbNavLink
                   ><label class="form-control-label" jhiTranslate="benzappApp.rifornimento.tab_litri_erogati">Litri erogati</label></a
                 >
                 <ng-template ngbNavContent>
                   <!-- litri erogati -->
                   <div class="row">
-                    <div class="col-md-12 col-lg-6 form-group align">
+                    <div class="col-md-12 col-lg-3 form-group align">
                       <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.litriErogati" for="field_litriErogati1"
                         >Litri Erogati</label
                       >
@@ -290,7 +288,12 @@
                     <div class="col-md-12 col-lg-6 form-group align">
                       <label>&nbsp;</label>
                       <div class="input-group">
-                        <button type="button" [disabled]="editForm.get('litriErogati')!.invalid" class="btn btn-primary btn-lg">
+                        <button
+                          (click)="navigateToQRCode()"
+                          type="button"
+                          [disabled]="editForm.get('litriErogati')!.invalid"
+                          class="btn btn-primary btn-lg"
+                        >
                           <span jhiTranslate="benzappApp.rifornimento.prosegui">Prosegui</span>
                         </button>
                       </div>
@@ -299,7 +302,7 @@
                 </ng-template>
               </li>
               <!-- camera -->
-              <li ngbNavItem>
+              <li [ngbNavItem]="1">
                 <a ngbNavLink
                   ><label class="form-control-label" jhiTranslate="benzappApp.rifornimento.camera" for="button_camera">Camera</label></a
                 >
@@ -308,7 +311,7 @@
                 </ng-template>
               </li>
               <!-- lettore bar code -->
-              <li ngbNavItem>
+              <li [ngbNavItem]="2">
                 <a ngbNavLink
                   ><label class="form-control-label" jhiTranslate="benzappApp.rifornimento.lettore" for="button_lettore">Lettore</label></a
                 >
@@ -340,7 +343,7 @@
                 </ng-template>
               </li>
               <!-- riepilogo -->
-              <li ngbNavItem>
+              <li [ngbNavItem]="3">
                 <a ngbNavLink><label class="form-control-label" jhiTranslate="benzappApp.rifornimento.riepilogo">Riepilogo</label></a>
                 <ng-template ngbNavContent>
                   <div class="row">
@@ -366,14 +369,6 @@
                       </div>
 
                       <div class="col-sm-12 col-lg-4 form-group">
-                        <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.data" for="field_data_admin">Data</label>
-
-                        <div class="d-flex">
-                          <input class="form-control form-control-lg" readonly value="{{ getData() | date: 'dd/MM/yyyy' }}" />
-                        </div>
-                      </div>
-
-                      <div class="col-sm-12 col-lg-4 form-group">
                         <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.tessera" for="field_tessera">Tessera</label>
                         <input
                           readonly
@@ -383,6 +378,14 @@
                           name="tessera"
                           value="{{ editForm.get('tessera')?.value?.targa }}"
                         />
+                      </div>
+
+                      <div class="col-sm-12 col-lg-4 form-group">
+                        <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.data" for="field_data_admin">Data</label>
+
+                        <div class="d-flex">
+                          <input class="form-control form-control-lg" readonly value="{{ getData() | date: 'dd/MM/yyyy' }}" />
+                        </div>
                       </div>
 
                       <div class="col-sm-12 col-lg-4 form-group">
@@ -476,32 +479,34 @@
                 </ng-template>
               </li>
               <!-- fallimento -->
-              <li ngbNavItem>
+              <li [ngbNavItem]="4">
                 <a ngbNavLink><label class="form-control-label" jhiTranslate="benzappApp.rifornimento.invalido">invalido</label></a>
                 <ng-template ngbNavContent>
                   <div class="row">
-                    <div class="col-sm-12 col-lg-2">
+                    <div class="col-sm-12 col-lg-2 text-center">
                       <span style="color: Red">
-                        <fa-icon size="10x" icon="check"></fa-icon>
+                        <fa-icon size="10x" icon="times"></fa-icon>
                       </span>
                     </div>
 
-                    <div class="col-sm-12 col-lg-10 row"></div>
+                    <div class="col-sm-12 col-lg-10 alert-danger row">
+                      <h2 style="color: white">QR code invalido.</h2>
+                    </div>
                   </div>
                   <div style="margin-top: 32px; margin-bottom: 32px">
-                    <!--                    <button type="button" id="cancel-save" class="btn btn-secondary btn-lg" (click)="previousState()">-->
-                    <!--                      <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>-->
-                    <!--                    </button>-->
+                    <button type="button" id="cancel-save-fail" class="btn btn-secondary btn-lg" (click)="previousState()">
+                      <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                    </button>
 
-                    <!--                    <button-->
-                    <!--                      type="submit"-->
-                    <!--                      id="save-entity"-->
-                    <!--                      data-cy="entityCreateSaveButton"-->
-                    <!--                      [disabled]="editForm.invalid || isSaving"-->
-                    <!--                      class="btn btn-primary btn-lg"-->
-                    <!--                    >-->
-                    <!--                      <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>-->
-                    <!--                    </button>-->
+                    <button
+                      type="button"
+                      (click)="resetForm()"
+                      id="retry-entity"
+                      data-cy="entityRetryButton"
+                      class="btn btn-primary btn-lg"
+                    >
+                      &nbsp;<span jhiTranslate="entity.action.retry">Retry</span>
+                    </button>
                   </div>
                 </ng-template>
               </li>
