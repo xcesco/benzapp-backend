@@ -8,6 +8,7 @@ import { IGestore, Gestore } from '../gestore.model';
 import { GestoreService } from '../service/gestore.service';
 import { IMarchio } from 'app/entities/marchio/marchio.model';
 import { MarchioService } from 'app/entities/marchio/service/marchio.service';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-gestore-update',
@@ -32,6 +33,7 @@ export class GestoreUpdateComponent implements OnInit {
   });
 
   constructor(
+    protected accountService: AccountService,
     protected gestoreService: GestoreService,
     protected marchioService: MarchioService,
     protected activatedRoute: ActivatedRoute,
@@ -102,7 +104,10 @@ export class GestoreUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+
+    if (!this.accountService.hasAnyAuthority(['ROLE_PATROL_STATION'])) {
+      this.previousState();
+    }
   }
 
   protected onSaveError(): void {

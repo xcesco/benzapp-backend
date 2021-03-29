@@ -114,4 +114,11 @@ export class RifornimentoComponent implements OnInit {
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
   }
+
+  getImportoDovuto(rifornimento: IRifornimento): number {
+    const prezzoAlLitro = rifornimento.prezzoAlLitro ?? 0;
+    const sconto = rifornimento.sconto ?? 0;
+    const litriErogati = rifornimento.litriErogati ?? 0;
+    return (prezzoAlLitro - sconto) * litriErogati;
+  }
 }

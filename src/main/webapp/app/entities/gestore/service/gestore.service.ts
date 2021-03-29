@@ -27,6 +27,10 @@ export class GestoreService {
     return this.http.get<IGestore>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  queryByOwner(owner: string): Observable<EntityArrayResponseType> {
+    return this.http.get<IGestore[]>(`${this.resourceUrl}/?owner.equals=${owner}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IGestore[]>(this.resourceUrl, { params: options, observe: 'response' });

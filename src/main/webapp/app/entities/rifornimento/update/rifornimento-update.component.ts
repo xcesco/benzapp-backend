@@ -14,6 +14,8 @@ import { ITessera } from 'app/entities/tessera/tessera.model';
 import { TesseraService } from 'app/entities/tessera/service/tessera.service';
 import { CittadinoService } from 'app/entities/cittadino/service/cittadino.service';
 import { TipoCarburante } from 'app/entities/enumerations/tipo-carburante.model';
+import { AccountService } from 'app/core/auth/account.service';
+import { Dayjs } from 'dayjs';
 
 @Component({
   selector: 'jhi-rifornimento-update',
@@ -46,16 +48,19 @@ export class RifornimentoUpdateComponent implements OnInit {
     protected gestoreService: GestoreService,
     protected tesseraService: TesseraService,
     protected cittadinoService: CittadinoService,
+    protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ rifornimento }) => {
+    this.activatedRoute.data.subscribe(({ rifornimento, type }) => {
       if (rifornimento.id === undefined) {
         const today = dayjs(new Date());
         rifornimento.data = today;
       }
+
+      console.error('tipo', type);
 
       this.updateForm(rifornimento);
 
@@ -118,7 +123,10 @@ export class RifornimentoUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+
+    if (!this.accountService.hasAnyAuthority(['ROLE_PATROL_STATION'])) {
+      this.previousState();
+    }
   }
 
   protected onSaveError(): void {
@@ -167,13 +175,7 @@ export class RifornimentoUpdateComponent implements OnInit {
     console.error(qrcode);
   }
 
-  onReadQRCode(
-    $event: KeyboardEvent,
-    qrinfo_stop: HTMLDivElement,
-    qrinfo_run: HTMLDivElement,
-    qrinfo_spinner: HTMLDivElement,
-    litriErogati: HTMLInputElement
-  ): void {
+  onReadQRCode($event: KeyboardEvent, qrinfo_stop: HTMLDivElement, qrinfo_run: HTMLDivElement, qrinfo_spinner: HTMLDivElement): void {
     if ($event.key === '{') {
       // avvio
       qrinfo_stop.hidden = true;
@@ -237,5 +239,11 @@ export class RifornimentoUpdateComponent implements OnInit {
     this.editForm.reset();
     this.editForm.get('litriErogati')?.setValue(litriErogati);
     this.isCollapsed = true;
+  }
+
+  getData(): Date {
+    const data = new Date(this.editForm.get('data')?.value ?? dayjs(new Date()));
+    console.error(data);
+    return data;
   }
 }

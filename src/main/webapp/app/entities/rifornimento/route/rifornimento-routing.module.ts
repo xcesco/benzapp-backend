@@ -12,7 +12,7 @@ const rifornimentoRoute: Routes = [
     path: '',
     component: RifornimentoComponent,
     data: {
-      defaultSort: 'id,asc',
+      defaultSort: 'data,desc',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -27,6 +27,31 @@ const rifornimentoRoute: Routes = [
   {
     path: 'new',
     component: RifornimentoUpdateComponent,
+    data: {
+      type: 'NORMAL',
+    },
+    resolve: {
+      rifornimento: RifornimentoRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'new-smartphone',
+    component: RifornimentoUpdateComponent,
+    data: {
+      type: 'SMARTPHONE',
+    },
+    resolve: {
+      rifornimento: RifornimentoRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'new-pc',
+    component: RifornimentoUpdateComponent,
+    data: {
+      type: 'PC',
+    },
     resolve: {
       rifornimento: RifornimentoRoutingResolveService,
     },

@@ -6,13 +6,16 @@
         "refreshListLabel": "Aggiorna lista",
         "createLabel": "Regista un nuovo gestore",
         "createOrEditLabel": "Genera o modifica un gestore",
-        "notFound": "No Gestores found"
+        "notFound": "No Gestores found",
+        "scenarioGestore": {
+          "createOrEditLabel": "Imposta prezzi"
+        }
       },
-      "created": "&Egrave; stato registrato un nuovo gestore con identificatore {{ param }}",
-      "updated": "&Egrave; stato aggiornato il gestore identificato da {{ param }}",
-      "deleted": "&Egrave; stato eliminato il gestore con identificatore {{ param }}",
+      "created": "&Egrave; stato registrato un nuovo gestore con id {{ param }}",
+      "updated": "&Egrave; stato aggiornato il gestore con id {{ param }}",
+      "deleted": "&Egrave; stato eliminato il gestore con id {{ param }}",
       "delete": {
-        "question": "Sei sicuro di volere eliminare il gestore {{ id }}?"
+        "question": "Sei sicuro di volere eliminare il gestore con id {{ id }}?"
       },
       "detail": {
         "title": "Gestore"

@@ -17,11 +17,12 @@
       "detail": {
         "title": "Rifornimento"
       },
+      "tab_litri_erogati": "Litri erogati",
       "benzinaPrezzoAlLitro": "Benzina",
       "gasolioPrezzoAlLitro": "Gasolio",
       "id": "ID",
       "data": "Data",
-      "litriErogati": "Litri Erogati",
+      "litriErogati": "Litri Erogati (L.)",
       "importoDovuto": "Importo dovuto",
       "sconto": "Sconto applicato",
       "prezzoAlLitro": "Prezzo Al Litro",
@@ -29,9 +30,13 @@
       "gestore": "Gestore",
       "tessera": "Targa",
       "qrcode": "QRCode",
-      "tipoLettura": "Tipo acquisizione",
+      "step": "Stati",
+      "prosegui": "Prosegui",
       "lettore": "Lettore",
-      "camera": "Camera"
+      "camera": "Camera",
+      "importo": "Importo (€)",
+      "riepilogo": "Riepilogo",
+      "invalido": "Lettura fallita"
     }
   }
 }

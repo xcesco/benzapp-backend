@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICittadino } from '../cittadino.model';
+import { IGestore } from 'app/entities/gestore/gestore.model';
 
 type EntityResponseType = HttpResponse<ICittadino>;
 type EntityArrayResponseType = HttpResponse<ICittadino[]>;
@@ -25,6 +26,10 @@ export class CittadinoService {
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<ICittadino>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  queryByOwner(owner: string): Observable<EntityArrayResponseType> {
+    return this.http.get<ICittadino[]>(`${this.resourceUrl}/?owner.equals=${owner}`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

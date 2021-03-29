@@ -9,6 +9,7 @@
       </button>
 
       <button
+        *jhiHasAnyAuthority="['ROLE_ADMIN']"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-rifornimento"
@@ -32,49 +33,56 @@
     <table class="table table-striped table-hover" aria-describedby="page-heading">
       <thead class="thead-dark">
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <!--          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>-->
           <th scope="col" jhiSortBy="data">
             <span jhiTranslate="benzappApp.rifornimento.data">Data</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="litriErogati">
-            <span jhiTranslate="benzappApp.rifornimento.litriErogati">Litri Erogati</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="sconto">
-            <span jhiTranslate="benzappApp.rifornimento.sconto">Sconto</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="prezzoAlLitro">
-            <span jhiTranslate="benzappApp.rifornimento.prezzoAlLitro">Prezzo Al Litro</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="tipoCarburante">
-            <span jhiTranslate="benzappApp.rifornimento.tipoCarburante">Tipo Carburante</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="gestore.id">
-            <span jhiTranslate="benzappApp.rifornimento.gestore">Gestore</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="tessera.id">
             <span jhiTranslate="benzappApp.rifornimento.tessera">Tessera</span> <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col">
+            <span jhiTranslate="benzappApp.rifornimento.importo">Importo</span>
+          </th>
+          <th scope="col" jhiSortBy="litriErogati">
+            <span jhiTranslate="benzappApp.rifornimento.litriErogati">Litri Erogati</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <!--          <th scope="col" jhiSortBy="sconto">-->
+          <!--            <span jhiTranslate="benzappApp.rifornimento.sconto">Sconto</span> <fa-icon icon="sort"></fa-icon>-->
+          <!--          </th>-->
+          <!--          <th scope="col" jhiSortBy="prezzoAlLitro">-->
+          <!--            <span jhiTranslate="benzappApp.rifornimento.prezzoAlLitro">Prezzo Al Litro</span> <fa-icon icon="sort"></fa-icon>-->
+          <!--          </th>-->
+          <th scope="col" jhiSortBy="tipoCarburante">
+            <span jhiTranslate="benzappApp.rifornimento.tipoCarburante">Tipo Carburante</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']" scope="col" jhiSortBy="gestore.id">
+            <span jhiTranslate="benzappApp.rifornimento.gestore">Gestore</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let rifornimento of rifornimentos; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/rifornimento', rifornimento.id, 'view']">{{ rifornimento.id }}</a>
-          </td>
-          <td>{{ rifornimento.data | formatMediumDatetime }}</td>
-          <td>{{ rifornimento.litriErogati }}</td>
-          <td>{{ rifornimento.sconto }}</td>
-          <td>{{ rifornimento.prezzoAlLitro }}</td>
-          <td jhiTranslate="{{ 'benzappApp.TipoCarburante.' + rifornimento.tipoCarburante }}">{{ rifornimento.tipoCarburante }}</td>
-          <td>
-            <div *ngIf="rifornimento.gestore">
-              <a [routerLink]="['/gestore', rifornimento.gestore?.id, 'view']">{{ rifornimento.gestore?.id }}</a>
-            </div>
-          </td>
+          <!--          <td>-->
+          <!--            <a [routerLink]="['/rifornimento', rifornimento.id, 'view']">{{ rifornimento.id }}</a>-->
+          <!--          </td>-->
+          <td>{{ rifornimento?.data?.format('DD/MM/YYYY, hh:mm') }}</td>
           <td>
             <div *ngIf="rifornimento.tessera">
               <a [routerLink]="['/tessera', rifornimento.tessera?.id, 'view']">{{ rifornimento.tessera?.targa }}</a>
+            </div>
+          </td>
+          <td>{{ getImportoDovuto(rifornimento) | number: '1.0-2' }}</td>
+          <td>{{ rifornimento.litriErogati }}</td>
+          <!--          <td>{{ rifornimento.sconto }}</td>-->
+          <!--          <td>{{ rifornimento.prezzoAlLitro }}</td>-->
+          <td jhiTranslate="{{ 'benzappApp.TipoCarburante.' + rifornimento.tipoCarburante }}">{{ rifornimento.tipoCarburante }}</td>
+          <td *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']">
+            <div *ngIf="rifornimento.gestore">
+              <a [routerLink]="['/gestore', rifornimento.gestore?.id, 'view']">{{
+                rifornimento.gestore?.indirizzo + ' ' + rifornimento.gestore?.comune
+              }}</a>
             </div>
           </td>
           <td class="text-right">
@@ -90,6 +98,7 @@
               </button>
 
               <button
+                *jhiHasAnyAuthority="['ROLE_ADMIN']"
                 type="submit"
                 [routerLink]="['/rifornimento', rifornimento.id, 'edit']"
                 class="btn btn-outline-primary"
@@ -99,7 +108,13 @@
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(rifornimento)" class="btn btn-outline-danger" data-cy="entityDeleteButton">
+              <button
+                *jhiHasAnyAuthority="['ROLE_ADMIN']"
+                type="submit"
+                (click)="delete(rifornimento)"
+                class="btn btn-outline-danger"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>

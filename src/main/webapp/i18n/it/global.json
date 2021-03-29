@@ -5,13 +5,19 @@
     "menu": {
       "home": "Home",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+      "functions": {
+        "main": "Funzioni",
+        "price": "Imposta prezzi"
+      },
       "entities": {
         "main": "Entità",
         "cittadino": "Cittadino",
         "fascia": "Fascia",
         "gestore": "Gestore",
         "marchio": "Marchio",
-        "rifornimento": "Rifornimento",
+        "rifornimento": "Rifornimenti",
+        "rifornimento_lettore": "Rifornimento via lettore QRCode",
+        "rifornimento_smartphone": "Rifornimento via camera",
         "tessera": "Tessera",
         "delega": "Delega",
         "device": "Device",
@@ -93,7 +99,7 @@
     "ribbon": {
       "dev": "Development"
     },
-    "item-count": "Mostra {{first}} - {{second}} di {{total}} articoli."
+    "item-count": "Mostra {{first}} - {{second}} di {{total}} elementi."
   },
   "entity": {
     "action": {

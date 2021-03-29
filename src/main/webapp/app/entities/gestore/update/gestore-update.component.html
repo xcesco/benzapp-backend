@@ -1,116 +1,197 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-gestore-heading" data-cy="GestoreCreateUpdateHeading" jhiTranslate="benzappApp.gestore.home.createOrEditLabel">
+      <h2
+        *jhiHasAnyAuthority="'ROLE_PATROL_STATION'"
+        id="jhi-gestore-heading-gestore"
+        data-cy="GestoreCreateUpdateHeading"
+        jhiTranslate="benzappApp.gestore.home.scenarioGestore.createOrEditLabel"
+      >
+        Create or edit a Gestore
+      </h2>
+      <h2
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        id="jhi-gestore-heading"
+        data-cy="GestoreCreateUpdateHeading"
+        jhiTranslate="benzappApp.gestore.home.createOrEditLabel"
+      >
         Create or edit a Gestore
       </h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
-          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
+        <jhi-alert *jhiHasAnyAuthority="'ROLE_PATROL_STATION'"></jhi-alert>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="benzappApp.gestore.provincia" for="field_provincia">Provincia</label>
-          <input type="text" class="form-control" name="provincia" id="field_provincia" data-cy="provincia" formControlName="provincia" />
-        </div>
+        <!-- ROLE_PATROL_STATION -->
+        <div *jhiHasAnyAuthority="'ROLE_PATROL_STATION'" style="margin-bottom: 24px">
+          <div class="form-group row">
+            <div class="col-md-12 col-lg-6 text-center">
+              <div class="col-12">
+                <img style="width: 90%" src="content/images/sconto-benzina.png" />
+              </div>
+              <div class="col-12">
+                <label
+                  class="form-control-label"
+                  jhiTranslate="benzappApp.rifornimento.benzinaPrezzoAlLitro"
+                  for="field_benzinaPrezzoAlLitro1"
+                >
+                  Gestore</label
+                >
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="benzappApp.gestore.comune" for="field_comune">Comune</label>
-          <input type="text" class="form-control" name="comune" id="field_comune" data-cy="comune" formControlName="comune" />
-        </div>
+                <div class="input-group input-group-lg">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="benzinaPrezzoAlLitro1"
+                    id="field_benzinaPrezzoAlLitro1"
+                    data-cy="benzinaPrezzoAlLitro"
+                    formControlName="benzinaPrezzoAlLitro"
+                  />
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="benzappApp.gestore.indirizzo" for="field_indirizzo">Indirizzo</label>
-          <input type="text" class="form-control" name="indirizzo" id="field_indirizzo" data-cy="indirizzo" formControlName="indirizzo" />
-        </div>
+                  <div class="input-group-append">
+                    <span class="input-group-text">&euro;/Litro</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="benzappApp.gestore.longitudine" for="field_longitudine">Longitudine</label>
-          <input
-            type="number"
-            class="form-control"
-            name="longitudine"
-            id="field_longitudine"
-            data-cy="longitudine"
-            formControlName="longitudine"
-          />
+            <div class="col-md-12 col-lg-6 text-center">
+              <div class="col-12">
+                <img style="width: 90%" src="content/images/sconto-gasolio.png" />
+              </div>
+              <div class="col-12">
+                <label
+                  class="form-control-label"
+                  jhiTranslate="benzappApp.rifornimento.gasolioPrezzoAlLitro"
+                  for="field_gasolioPrezzoAlLitro1"
+                  >Gestore</label
+                >
+                <div class="input-group input-group-lg">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="gasolioPrezzoAlLitro1"
+                    id="field_gasolioPrezzoAlLitro1"
+                    data-cy="gasolioPrezzoAlLitro"
+                    formControlName="gasolioPrezzoAlLitro"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text">&euro;/Litro</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        <!-- -->
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="benzappApp.gestore.latitudine" for="field_latitudine">Latitudine</label>
-          <input
-            type="number"
-            class="form-control"
-            name="latitudine"
-            id="field_latitudine"
-            data-cy="latitudine"
-            formControlName="latitudine"
-          />
-        </div>
+        <!-- ROLE_ADMIN -->
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'" style="margin-bottom: 24px">
+          <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+            <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="benzappApp.gestore.tipo" for="field_tipo">Tipo</label>
-          <select class="form-control" name="tipo" formControlName="tipo" id="field_tipo" data-cy="tipo">
-            <option [ngValue]="null">{{ 'benzappApp.TipoImpianto.null' | translate }}</option>
-            <option value="AUTOSTRADALE">{{ 'benzappApp.TipoImpianto.AUTOSTRADALE' | translate }}</option>
-            <option value="STRADALE">{{ 'benzappApp.TipoImpianto.STRADALE' | translate }}</option>
-            <option value="NAVALE">{{ 'benzappApp.TipoImpianto.NAVALE' | translate }}</option>
-          </select>
-        </div>
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="benzappApp.gestore.provincia" for="field_provincia">Provincia</label>
+            <input type="text" class="form-control" name="provincia" id="field_provincia" data-cy="provincia" formControlName="provincia" />
+          </div>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="benzappApp.gestore.benzinaPrezzoAlLitro" for="field_benzinaPrezzoAlLitro"
-            >Benzina Prezzo Al Litro</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            name="benzinaPrezzoAlLitro"
-            id="field_benzinaPrezzoAlLitro"
-            data-cy="benzinaPrezzoAlLitro"
-            formControlName="benzinaPrezzoAlLitro"
-          />
-        </div>
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="benzappApp.gestore.comune" for="field_comune">Comune</label>
+            <input type="text" class="form-control" name="comune" id="field_comune" data-cy="comune" formControlName="comune" />
+          </div>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="benzappApp.gestore.gasolioPrezzoAlLitro" for="field_gasolioPrezzoAlLitro"
-            >Gasolio Prezzo Al Litro</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            name="gasolioPrezzoAlLitro"
-            id="field_gasolioPrezzoAlLitro"
-            data-cy="gasolioPrezzoAlLitro"
-            formControlName="gasolioPrezzoAlLitro"
-          />
-        </div>
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="benzappApp.gestore.indirizzo" for="field_indirizzo">Indirizzo</label>
+            <input type="text" class="form-control" name="indirizzo" id="field_indirizzo" data-cy="indirizzo" formControlName="indirizzo" />
+          </div>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="benzappApp.gestore.owner" for="field_owner">Owner</label>
-          <input type="text" class="form-control" name="owner" id="field_owner" data-cy="owner" formControlName="owner" />
-        </div>
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="benzappApp.gestore.longitudine" for="field_longitudine">Longitudine</label>
+            <input
+              type="number"
+              class="form-control"
+              name="longitudine"
+              id="field_longitudine"
+              data-cy="longitudine"
+              formControlName="longitudine"
+            />
+          </div>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="benzappApp.gestore.marchio" for="field_marchio">Marchio</label>
-          <select class="form-control" id="field_marchio" data-cy="marchio" name="marchio" formControlName="marchio">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="marchioOption.id === editForm.get('marchio')!.value?.id ? editForm.get('marchio')!.value : marchioOption"
-              *ngFor="let marchioOption of marchios; trackBy: trackMarchioById"
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="benzappApp.gestore.latitudine" for="field_latitudine">Latitudine</label>
+            <input
+              type="number"
+              class="form-control"
+              name="latitudine"
+              id="field_latitudine"
+              data-cy="latitudine"
+              formControlName="latitudine"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="benzappApp.gestore.tipo" for="field_tipo">Tipo</label>
+            <select class="form-control" name="tipo" formControlName="tipo" id="field_tipo" data-cy="tipo">
+              <option [ngValue]="null">{{ 'benzappApp.TipoImpianto.null' | translate }}</option>
+              <option value="AUTOSTRADALE">{{ 'benzappApp.TipoImpianto.AUTOSTRADALE' | translate }}</option>
+              <option value="STRADALE">{{ 'benzappApp.TipoImpianto.STRADALE' | translate }}</option>
+              <option value="NAVALE">{{ 'benzappApp.TipoImpianto.NAVALE' | translate }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="benzappApp.gestore.benzinaPrezzoAlLitro" for="field_benzinaPrezzoAlLitro"
+              >Benzina Prezzo Al Litro</label
             >
-              {{ marchioOption.id }}
-            </option>
-          </select>
+            <input
+              type="number"
+              class="form-control"
+              name="benzinaPrezzoAlLitro"
+              id="field_benzinaPrezzoAlLitro"
+              data-cy="benzinaPrezzoAlLitro"
+              formControlName="benzinaPrezzoAlLitro"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="benzappApp.gestore.gasolioPrezzoAlLitro" for="field_gasolioPrezzoAlLitro"
+              >Gasolio Prezzo Al Litro</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="gasolioPrezzoAlLitro"
+              id="field_gasolioPrezzoAlLitro"
+              data-cy="gasolioPrezzoAlLitro"
+              formControlName="gasolioPrezzoAlLitro"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="benzappApp.gestore.owner" for="field_owner">Owner</label>
+            <input type="text" class="form-control" name="owner" id="field_owner" data-cy="owner" formControlName="owner" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="benzappApp.gestore.marchio" for="field_marchio">Marchio</label>
+            <select class="form-control" id="field_marchio" data-cy="marchio" name="marchio" formControlName="marchio">
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="marchioOption.id === editForm.get('marchio')!.value?.id ? editForm.get('marchio')!.value : marchioOption"
+                *ngFor="let marchioOption of marchios; trackBy: trackMarchioById"
+              >
+                {{ marchioOption.id }}
+              </option>
+            </select>
+          </div>
         </div>
       </div>
 
       <div>
-        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+        <button type="button" id="cancel-save" class="btn btn-secondary btn-lg" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
@@ -119,7 +200,7 @@
           id="save-entity"
           data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+          class="btn btn-primary btn-lg"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
