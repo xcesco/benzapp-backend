@@ -42,6 +42,9 @@
     "skipCheckLengthOfIdentifier": false,
     "skipFakeData": false,
     "pages": [],
-    "lastLiquibaseTimestamp": 1614548637000
+    "lastLiquibaseTimestamp": 1614548637000,
+    "herokuAppName": "benzapp",
+    "herokuDeployType": "git",
+    "herokuJavaVersion": "11"
   }
 }
