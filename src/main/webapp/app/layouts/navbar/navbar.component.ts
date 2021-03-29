@@ -21,6 +21,8 @@ export class NavbarComponent implements OnInit {
   isNavbarCollapsed = true;
   languages = LANGUAGES;
   openAPIEnabled?: boolean;
+  account: Account | null = null;
+  accountAuthenticated = false;
   version: string;
 
   constructor(
@@ -38,6 +40,16 @@ export class NavbarComponent implements OnInit {
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.openAPIEnabled = profileInfo.openAPIEnabled;
+    });
+
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account != null) {
+        this.account = account;
+        this.accountAuthenticated = true;
+      } else {
+        this.account = null;
+        this.accountAuthenticated = false;
+      }
     });
   }
 
@@ -71,8 +83,4 @@ export class NavbarComponent implements OnInit {
   getImageUrl(): string {
     return this.isAuthenticated() ? this.accountService.getImageUrl() : '';
   }
-
-  // getIdentity(): Observable<Account | null> {
-  //   return this.accountService.identity();
-  // }
 }
