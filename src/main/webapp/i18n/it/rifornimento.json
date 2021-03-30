@@ -22,7 +22,7 @@
       "gasolioPrezzoAlLitro": "Gasolio",
       "id": "ID",
       "data": "Data",
-      "litriErogati": "Litri Erogati (L.)",
+      "litriErogati": "Litri Erogati",
       "importoDovuto": "Importo dovuto",
       "sconto": "Sconto applicato",
       "prezzoAlLitro": "Prezzo Al Litro",
@@ -34,7 +34,7 @@
       "prosegui": "Prosegui",
       "lettore": "Lettore",
       "camera": "Camera",
-      "importo": "Importo (€)",
+      "importo": "Importo",
       "riepilogo": "Riepilogo",
       "invalido": "Lettura fallita"
     }

@@ -23,7 +23,7 @@ import { AccountService } from 'app/core/auth/account.service';
 export class RifornimentoUpdateComponent implements OnInit {
   buffer = '';
   bufferStatus = QRReaderStatus.INACTIVE;
-  importoDovuto: number | null = null;
+  importoDovuto: string | null = null;
   isSaving = false;
   gestores: IGestore[] = [];
   tesseras: ITessera[] = [];
@@ -158,6 +158,7 @@ export class RifornimentoUpdateComponent implements OnInit {
     }
 
     this.tesseraService.query({ 'codice.equals': qrcode.tesseraNumero }).subscribe(result => {
+      this.importoDovuto = '0';
       if (result.body) {
         const value: ITessera = result.body[0];
         const currentSconto: number =
@@ -180,7 +181,7 @@ export class RifornimentoUpdateComponent implements OnInit {
         };
 
         this.updateForm(rifornimento);
-        this.onChangeLitriErogati();
+        this.calcolaImporto();
 
         this.activePanel = 3;
       }
@@ -244,11 +245,6 @@ export class RifornimentoUpdateComponent implements OnInit {
     return '';
   }
 
-  onChangeLitriErogati(): void {
-    this.importoDovuto =
-      (this.editForm.get('prezzoAlLitro')?.value - this.editForm.get('sconto')?.value) * this.editForm.get('litriErogati')?.value;
-  }
-
   resetForm(): void {
     this.editForm.reset();
     this.activePanel = 0;
@@ -267,5 +263,12 @@ export class RifornimentoUpdateComponent implements OnInit {
     } else {
       this.activePanel = 2;
     }
+  }
+
+  calcolaImporto(): void {
+    const numero =
+      (this.editForm.get('prezzoAlLitro')?.value - this.editForm.get('sconto')?.value) * this.editForm.get('litriErogati')?.value;
+    this.importoDovuto = (Math.round(numero * 100) / 100).toFixed(2);
+    console.error('err', this.importoDovuto);
   }
 }

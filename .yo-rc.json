@@ -29,7 +29,7 @@
     "clientThemeVariant": "primary",
     "creationTimestamp": 1614548217890,
     "dtoSuffix": "DTO",
-    "jhipsterVersion": "7.0.0-beta.1",
+    "jhipsterVersion": "7.0.0",
     "jwtSecretKey": "MmQ3OTk0N2VlOWY2Y2NhNjI0ZGExMGQ5YWFkZjZhM2Q5NmEyZmJhMmNhZTczMzJlNGRmYjJkODgwZGQwZTQ3MzQ2ZTU2Y2JkODQ4MGY2ZmU4YWZmZmQzYzAwYmEwNGJhYThkZmNmM2RmMjM2NzNkZGZkZDQyN2JiMzBjY2JhZTA=",
     "nativeLanguage": "it",
     "otherModules": [],
@@ -42,9 +42,6 @@
     "skipCheckLengthOfIdentifier": false,
     "skipFakeData": false,
     "pages": [],
-    "lastLiquibaseTimestamp": 1614548637000,
-    "herokuAppName": "benzapp",
-    "herokuDeployType": "git",
-    "herokuJavaVersion": "11"
+    "lastLiquibaseTimestamp": 1617100543000
   }
 }

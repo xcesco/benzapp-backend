@@ -54,10 +54,10 @@ public class RifornimentoServiceImpl implements RifornimentoService {
                     PushNotificationRequest request = new PushNotificationRequest();
                     request.setMessage(
                         String.format(
-                            "E' stato registrato il rifornimento di %.2f litri per il veicolo %s presso %s %s",
+                            "E' stato registrato il rifornimento di %.2f litri per il veicolo %s presso %s",
                             result.getLitriErogati(),
                             result.getTessera().getTarga(),
-                            result.getGestore().getMarchio().getNome(),
+                            //                            result.getGestore().getMarchio().getNome(),
                             result.getGestore().getIndirizzo()
                         )
                     );

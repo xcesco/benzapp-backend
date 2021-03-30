@@ -2,13 +2,13 @@
   <div class="col-md-12 col-lg-10 col-xl-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <div class="row">
-        <div class="col-2">
+        <div class="col-4">
           <img
-            style="width: 82px; height: 82px"
+            class="img-fluid"
             [src]="'data:' + currentGestore?.marchio?.immagineContentType + ';base64,' + currentGestore?.marchio?.immagine"
           />
         </div>
-        <div class="col-10">
+        <div class="col-8">
           <h1>{{ currentGestore?.marchio?.nome }}</h1>
           <small class="text-muted">{{ currentGestore?.comune }}, {{ currentGestore?.indirizzo }}</small>
         </div>
@@ -347,9 +347,9 @@
                 <a ngbNavLink><label class="form-control-label" jhiTranslate="benzappApp.rifornimento.riepilogo">Riepilogo</label></a>
                 <ng-template ngbNavContent>
                   <div class="row">
-                    <div class="col-sm-12 col-lg-2">
+                    <div class="col-sm-12 col-lg-2 text-center">
                       <span style="color: Green">
-                        <fa-icon size="8x" icon="check"></fa-icon>
+                        <fa-icon size="6x" icon="check"></fa-icon>
                       </span>
                     </div>
 
@@ -358,14 +358,22 @@
                         <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.importo" for="field_tipoCarburante"
                           >Importo</label
                         >
-                        <input
-                          readonly
-                          class="form-control"
-                          name="tipoCarburante"
-                          formControlName="tipoCarburante"
-                          id="field_tipoCarburante1"
-                          data-cy="tipoCarburante"
-                        />
+
+                        <div class="input-group">
+                          <input
+                            readonly
+                            type="number"
+                            class="form-control form-control-lg"
+                            name="tipoCarburante"
+                            id="field_tipoCarburante1"
+                            data-cy="tipoCarburante"
+                            [value]="importoDovuto"
+                          />
+
+                          <div class="input-group-append">
+                            <span class="input-group-text">&euro;</span>
+                          </div>
+                        </div>
                       </div>
 
                       <div class="col-sm-12 col-lg-4 form-group">
@@ -384,7 +392,7 @@
                         <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.data" for="field_data_admin">Data</label>
 
                         <div class="d-flex">
-                          <input class="form-control form-control-lg" readonly value="{{ getData() | date: 'dd/MM/yyyy' }}" />
+                          <input class="form-control form-control-lg" readonly value="{{ getData() | date: 'dd/MM/yyyy HH:mm' }}" />
                         </div>
                       </div>
 
@@ -485,7 +493,7 @@
                   <div class="row">
                     <div class="col-sm-12 col-lg-2 text-center">
                       <span style="color: Red">
-                        <fa-icon size="10x" icon="times"></fa-icon>
+                        <fa-icon size="6x" icon="times"></fa-icon>
                       </span>
                     </div>
 

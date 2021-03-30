@@ -112,21 +112,8 @@ export class TesseraUpdateComponent implements OnInit {
     }
   }
 
-  private createFromForm(): ITessera {
-    return {
-      ...new Tessera(),
-      id: this.editForm.get(['id'])!.value,
-      codice: this.editForm.get(['codice'])!.value,
-      dataEmissione: this.editForm.get(['dataEmissione'])!.value
-        ? dayjs(this.editForm.get(['dataEmissione'])!.value, DATE_TIME_FORMAT)
-        : undefined,
-      immagineContentType: this.editForm.get(['immagineContentType'])!.value,
-      immagine: this.editForm.get(['immagine'])!.value,
-      targa: this.editForm.get(['targa'])!.value,
-      veicolo: this.editForm.get(['veicolo'])!.value,
-      carburante: this.editForm.get(['carburante'])!.value,
-      cittadino: this.editForm.get(['cittadino'])!.value,
-    };
+  trackCittadinoById(index: number, item: ICittadino): number {
+    return item.id!;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ITessera>>): void {
@@ -145,7 +132,20 @@ export class TesseraUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackCittadinoById(index: number, item: ICittadino): number {
-    return item.id!;
+  private createFromForm(): ITessera {
+    return {
+      ...new Tessera(),
+      id: this.editForm.get(['id'])!.value,
+      codice: this.editForm.get(['codice'])!.value,
+      dataEmissione: this.editForm.get(['dataEmissione'])!.value
+        ? dayjs(this.editForm.get(['dataEmissione'])!.value, DATE_TIME_FORMAT)
+        : undefined,
+      immagineContentType: this.editForm.get(['immagineContentType'])!.value,
+      immagine: this.editForm.get(['immagine'])!.value,
+      targa: this.editForm.get(['targa'])!.value,
+      veicolo: this.editForm.get(['veicolo'])!.value,
+      carburante: this.editForm.get(['carburante'])!.value,
+      cittadino: this.editForm.get(['cittadino'])!.value,
+    };
   }
 }

@@ -9,7 +9,7 @@
     {
       "fieldName": "deviceId",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "unique"]
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [],
@@ -22,5 +22,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": ["benzapp"],
-  "changelogDate": "20210228213757"
+  "changelogDate": "20210330103543"
 }
