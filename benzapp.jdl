@@ -38,7 +38,18 @@ application {
     withAdminUi true
   }
 
-  entities Cittadino, Delega, Fascia, Gestore, Marchio, Rifornimento, Tessera, Device
+  entities Device, Fascia, Cittadino, Tessera, Delega, Marchio, Gestore, Rifornimento
+}
+
+entity Device (devices) {
+    owner String required
+    deviceId String required
+}
+
+entity Fascia {
+  descrizione String
+  scontoBenzina Float
+  scontoGasolio Float
 }
 
 entity Cittadino (cittadini) {
@@ -47,12 +58,23 @@ entity Cittadino (cittadini) {
   codiceFiscale String
   owner String
 }
-entity Delega (deleghe)
-entity Fascia {
-  descrizione String
-  scontoBenzina Float
-  scontoGasolio Float
+
+entity Tessera (tessere) {
+  codice String required
+  dataEmissione ZonedDateTime required
+  immagine ImageBlob
+  targa String required
+  veicolo TipoVeicolo required
+  carburante TipoCarburante required
 }
+
+entity Delega (deleghe)
+
+entity Marchio (marchi) {
+  immagine ImageBlob
+  nome String required
+}
+
 entity Gestore (gestori) {
   provincia String
   comune String
@@ -64,28 +86,13 @@ entity Gestore (gestori) {
   gasolioPrezzoAlLitro Float
   owner String
 }
-entity Marchio (marchi) {
-  immagine ImageBlob
-  nome String required
-}
+
 entity Rifornimento (rifornimenti) {
   data ZonedDateTime required
   litriErogati Float required
   sconto Float required
   prezzoAlLitro Float required
   tipoCarburante TipoCarburante required
-}
-entity Tessera (tessere) {
-  codice String required
-  dataEmissione ZonedDateTime required
-  immagine ImageBlob
-  targa String required
-  veicolo TipoVeicolo required
-  carburante TipoCarburante required
-}
-entity Device (devices) {
-    owner String required
-    deviceId String required
 }
 
 enum TipoImpianto {
