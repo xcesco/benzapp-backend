@@ -3,22 +3,25 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
-        Added the entity Device.
+        Added the entity Marchio.
     -->
-    <changeSet id="20210228213757-1" author="jhipster">
-        <createTable tableName="devices">
+    <changeSet id="20210330103539-1" author="jhipster">
+        <createTable tableName="marchi">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="owner" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="immagine" type="longblob">
+                <constraints nullable="true" />
             </column>
-            <column name="device_id" type="varchar(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_devices__device_id" />
+            <column name="immagine_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="nome" type="varchar(255)">
+                <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -34,14 +37,15 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20210228213757-1-data" author="jhipster" context="faker">
+    <changeSet id="20210330103539-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/devices.csv"
+                  file="config/liquibase/fake-data/marchi.csv"
                   separator=";"
-                  tableName="devices">
+                  tableName="marchi">
             <column name="id" type="numeric"/>
-            <column name="owner" type="string"/>
-            <column name="device_id" type="string"/>
+            <column name="immagine" type="blob"/>
+            <column name="immagine_content_type" type="string"/>
+            <column name="nome" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

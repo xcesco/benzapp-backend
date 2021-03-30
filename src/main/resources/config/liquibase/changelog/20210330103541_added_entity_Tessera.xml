@@ -3,13 +3,13 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
         Added the entity Tessera.
     -->
-    <changeSet id="20210228214257-1" author="jhipster">
+    <changeSet id="20210330103541-1" author="jhipster">
         <createTable tableName="tessere">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
@@ -53,7 +53,7 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20210228214257-1-data" author="jhipster" context="faker">
+    <changeSet id="20210330103541-1-data" author="jhipster" context="faker">
         <loadData
                   file="config/liquibase/fake-data/tessere.csv"
                   separator=";"
