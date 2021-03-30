@@ -40,6 +40,8 @@
                   separator=";"
                   tableName="deleghe">
             <column name="id" type="numeric"/>
+            <column name="tessera_id" type="numeric"/>
+            <column name="cittadino_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
