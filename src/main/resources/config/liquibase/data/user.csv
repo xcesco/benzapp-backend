@@ -8,3 +8,4 @@ id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;c
 7;alessio;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Alessio;Giallo;alessio@localhost;;true;it;system;system
 8;pietro;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Pietro;Rosso;pietro@localhost;;true;it;system;system
 9;cesco;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Francesco;Blue;cesco@localhost;;true;it;system;system
+10;fulvio;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Fulvio;Viola;fulvio@localhost;;true;it;system;system

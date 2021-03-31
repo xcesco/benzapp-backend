@@ -20,7 +20,7 @@ module.exports = (config, options) => {
       }),
       new FriendlyErrorsWebpackPlugin(),
       new WebpackNotifierPlugin({
-        title: 'Benzapp',
+        title: 'BenzAPP',
         contentImage: path.join(__dirname, 'logo-benzapp.png'),
       }),
       new BrowserSyncPlugin(
