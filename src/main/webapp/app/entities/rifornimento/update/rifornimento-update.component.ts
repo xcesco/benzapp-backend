@@ -35,7 +35,7 @@ export class RifornimentoUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     data: [null, [Validators.required]],
-    litriErogati: [null, [Validators.required]],
+    litriErogati: [null, [Validators.required, Validators.pattern('((0|([1-9][0-9]*))(\\.[0-9]+)?)')]],
     sconto: [null, [Validators.required]],
     prezzoAlLitro: [null, [Validators.required]],
     tipoCarburante: [null, [Validators.required]],
@@ -62,8 +62,6 @@ export class RifornimentoUpdateComponent implements OnInit {
       }
 
       this.type = type;
-      console.error('tipo', type);
-
       this.updateForm(rifornimento);
 
       this.gestoreService.query().subscribe((res: HttpResponse<IGestore[]>) => {
@@ -186,7 +184,6 @@ export class RifornimentoUpdateComponent implements OnInit {
         this.activePanel = 3;
       }
     });
-    console.error(qrcode);
   }
 
   onReadQRCode($event: KeyboardEvent, qrinfo_stop: HTMLDivElement, qrinfo_run: HTMLDivElement, qrinfo_spinner: HTMLDivElement): void {
@@ -208,7 +205,7 @@ export class RifornimentoUpdateComponent implements OnInit {
         qrinfo_run.hidden = true;
         qrinfo_spinner.hidden = true;
 
-        console.error(this.buffer);
+        // console.error(this.buffer);
 
         const value: IQRCode = JSON.parse(this.buffer);
 
@@ -256,8 +253,6 @@ export class RifornimentoUpdateComponent implements OnInit {
   }
 
   navigateToQRCode(): void {
-    // if (this.type==='')
-    //SMARTPHONE, PC
     if (this.type === 'SMARTPHONE') {
       this.activePanel = 1;
     } else {
@@ -270,5 +265,9 @@ export class RifornimentoUpdateComponent implements OnInit {
       (this.editForm.get('prezzoAlLitro')?.value - this.editForm.get('sconto')?.value) * this.editForm.get('litriErogati')?.value;
     this.importoDovuto = (Math.round(numero * 100) / 100).toFixed(2);
     console.error('err', this.importoDovuto);
+  }
+
+  isOnPC(): boolean {
+    return 'SMARTPHONE' !== this.type;
   }
 }

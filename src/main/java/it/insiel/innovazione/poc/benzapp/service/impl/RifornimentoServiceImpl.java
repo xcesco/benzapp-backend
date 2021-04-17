@@ -1,5 +1,6 @@
 package it.insiel.innovazione.poc.benzapp.service.impl;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import it.insiel.innovazione.poc.benzapp.domain.Device;
 import it.insiel.innovazione.poc.benzapp.domain.Rifornimento;
 import it.insiel.innovazione.poc.benzapp.fcm.FCMService;
@@ -65,7 +66,15 @@ public class RifornimentoServiceImpl implements RifornimentoService {
                     try {
                         fcmService.sendMessageToToken(request);
                     } catch (InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
+                        if (e.getCause() instanceof FirebaseMessagingException) {
+                            if ("registration-token-not-registered".equals(((FirebaseMessagingException) e.getCause()).getErrorCode())) {
+                                deviceRepository.deleteById(device.getId());
+                                log.warn("delete obsleted gcm token" + device.getId());
+                            }
+                        } else {
+                            e.printStackTrace();
+                        }
+                        // cancella devi
                     }
                 }
             }

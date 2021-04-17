@@ -1,0 +1,20 @@
+<div class="row mx-auto my-2">
+  <div *ngFor="let i of numberpad | slice: 0:3" class="col-4">
+    <button type="button" (click)="updateValue(i)" style="width: 6em; height: 6em" class="btn btn-outline-primary">{{ i }}</button>
+  </div>
+</div>
+<div class="row mx-auto my-2">
+  <div *ngFor="let i of numberpad | slice: 3:6" class="col-4">
+    <button type="button" (click)="updateValue(i)" style="width: 6em; height: 6em" class="btn btn-outline-primary">{{ i }}</button>
+  </div>
+</div>
+<div class="row mx-auto my-2">
+  <div *ngFor="let i of numberpad | slice: 6:9" class="col-4">
+    <button type="button" (click)="updateValue(i)" style="width: 6em; height: 6em" class="btn btn-outline-primary">{{ i }}</button>
+  </div>
+</div>
+<div class="row mx-auto my-2">
+  <div *ngFor="let i of numberpad | slice: 9:12" class="col-4">
+    <button type="button" (click)="updateValue(i)" style="width: 6em; height: 6em" class="btn btn-outline-primary">{{ i }}</button>
+  </div>
+</div>

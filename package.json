@@ -83,6 +83,7 @@
     "bootstrap": "4.5.3",
     "bootswatch": "4.5.3",
     "dayjs": "1.10.3",
+    "ng-numeric-keyboard": "^1.0.1",
     "ngx-infinite-scroll": "10.0.1",
     "ngx-webstorage": "7.0.1",
     "rxjs": "6.6.3",

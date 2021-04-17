@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   <div class="col-md-12 col-lg-10 col-xl-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" autocomplete="off">
       <div class="row">
         <div class="col-4">
           <img
@@ -244,7 +244,7 @@
                 <ng-template ngbNavContent>
                   <!-- litri erogati -->
                   <div class="row">
-                    <div class="col-md-12 col-lg-3 form-group align">
+                    <div class="col-md-12 col-lg-4 form-group align">
                       <label class="form-control-label" jhiTranslate="benzappApp.rifornimento.litriErogati" for="field_litriErogati1"
                         >Litri Erogati</label
                       >
@@ -252,7 +252,8 @@
                         <input
                           autofocus
                           #litriErogati
-                          type="number"
+                          type="text"
+                          inputmode="decimal"
                           class="form-control"
                           name="litriErogati"
                           id="field_litriErogati1"
@@ -263,29 +264,13 @@
                           <span class="input-group-text">Litri</span>
                         </div>
                       </div>
-                      <div
-                        *ngIf="
-                          editForm.get('litriErogati')!.invalid &&
-                          (editForm.get('litriErogati')!.dirty || editForm.get('litriErogati')!.touched)
-                        "
-                      >
-                        <small
-                          class="form-text text-danger"
-                          *ngIf="editForm.get('litriErogati')?.errors?.required"
-                          jhiTranslate="entity.validation.required"
-                        >
-                          This field is required.
-                        </small>
-                        <small
-                          class="form-text text-danger"
-                          [hidden]="!editForm.get('litriErogati')?.errors?.number"
-                          jhiTranslate="entity.validation.number"
-                        >
-                          This field should be a number.
-                        </small>
-                      </div>
                     </div>
-                    <div class="col-md-12 col-lg-6 form-group align">
+                    <jhi-numeric-keys
+                      *ngIf="isOnPC()"
+                      class="col-md-12 col-lg-5 m-auto row"
+                      formControlName="litriErogati"
+                    ></jhi-numeric-keys>
+                    <div class="col-md-12 col-lg-3 form-group align">
                       <label>&nbsp;</label>
                       <div class="input-group">
                         <button
