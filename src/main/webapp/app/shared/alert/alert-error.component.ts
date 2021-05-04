@@ -22,6 +22,11 @@ export class AlertErrorComponent implements OnDestroy {
       this.addErrorAlert(errorResponse.message, errorResponse.key, errorResponse.params);
     });
 
+    this.errorListener = eventManager.subscribe('benzappApp.warning', (response: EventWithContent<unknown> | string) => {
+      const errorResponse = (response as EventWithContent<AlertError>).content;
+      this.addWarningAlert(errorResponse.message, errorResponse.key, errorResponse.params);
+    });
+
     this.httpErrorListener = eventManager.subscribe('benzappApp.httpError', (response: EventWithContent<unknown> | string) => {
       const httpErrorResponse = (response as EventWithContent<HttpErrorResponse>).content;
       switch (httpErrorResponse.status) {
@@ -104,5 +109,18 @@ export class AlertErrorComponent implements OnDestroy {
 
   private addErrorAlert(message?: string, translationKey?: string, translationParams?: { [key: string]: unknown }): void {
     this.alertService.addAlert({ type: 'danger', message, translationKey, translationParams }, this.alerts);
+  }
+
+  private addWarningAlert(message?: string, translationKey?: string, translationParams?: { [key: string]: unknown }): void {
+    this.alertService.addAlert(
+      {
+        type: 'warning',
+        message,
+        translationKey,
+        translationParams,
+        timeout: 10000,
+      },
+      this.alerts
+    );
   }
 }

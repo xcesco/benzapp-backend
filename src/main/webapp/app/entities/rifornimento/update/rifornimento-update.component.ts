@@ -15,6 +15,8 @@ import { TesseraService } from 'app/entities/tessera/service/tessera.service';
 import { CittadinoService } from 'app/entities/cittadino/service/cittadino.service';
 import { TipoCarburante } from 'app/entities/enumerations/tipo-carburante.model';
 import { AccountService } from 'app/core/auth/account.service';
+import { NotificaService } from 'app/entities/notifica/service/notifica.service';
+import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 
 @Component({
   selector: 'jhi-rifornimento-update',
@@ -31,6 +33,7 @@ export class RifornimentoUpdateComponent implements OnInit {
   currentTessera: ITessera | null = null;
   isCollapsed = true;
   activePanel = 0;
+  status = true;
 
   editForm = this.fb.group({
     id: [],
@@ -49,8 +52,10 @@ export class RifornimentoUpdateComponent implements OnInit {
     protected gestoreService: GestoreService,
     protected tesseraService: TesseraService,
     protected cittadinoService: CittadinoService,
+    protected notificaService: NotificaService,
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
+    protected eventManager: EventManager,
     private fb: FormBuilder
   ) {}
 
@@ -147,6 +152,10 @@ export class RifornimentoUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  /**
+   * Evento scatenato ogni qual volta viene letto un QRcode a prescindere dalla modalita'
+   * @param qrcode
+   */
   onQRCodeCompleted(qrcode: IQRCode): void {
     console.error(qrcode);
 
@@ -154,6 +163,13 @@ export class RifornimentoUpdateComponent implements OnInit {
       this.activePanel = 4;
       return;
     }
+
+    this.notificaService.queryByTarga(qrcode.targa).subscribe(result => {
+      if (result.body && result.body.length > 0) {
+        this.status = false;
+        this.eventManager.broadcast({ name: 'benzappApp.warning', content: { key: 'warning.interval' } });
+      }
+    });
 
     this.tesseraService.query({ 'codice.equals': qrcode.tesseraNumero }).subscribe(result => {
       this.importoDovuto = '0';
@@ -243,6 +259,7 @@ export class RifornimentoUpdateComponent implements OnInit {
   }
 
   resetForm(): void {
+    this.status = true;
     this.editForm.reset();
     this.activePanel = 0;
   }
@@ -264,10 +281,13 @@ export class RifornimentoUpdateComponent implements OnInit {
     const numero =
       (this.editForm.get('prezzoAlLitro')?.value - this.editForm.get('sconto')?.value) * this.editForm.get('litriErogati')?.value;
     this.importoDovuto = (Math.round(numero * 100) / 100).toFixed(2);
-    console.error('err', this.importoDovuto);
   }
 
   isOnPC(): boolean {
     return 'SMARTPHONE' !== this.type;
+  }
+
+  isStatusOk(): boolean {
+    return this.status;
   }
 }

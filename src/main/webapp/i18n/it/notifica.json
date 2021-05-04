@@ -1,0 +1,25 @@
+{
+  "benzappApp": {
+    "notifica": {
+      "home": {
+        "title": "Elenco notifiche",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Notifica",
+        "createOrEditLabel": "Genera o modifica un Notifica",
+        "notFound": "No Notificas found"
+      },
+      "created": "&Egrave; stato generato un nuovo Notifica con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Notifica identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Notifica con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Notifica {{ id }}?"
+      },
+      "detail": {
+        "title": "Notifica"
+      },
+      "id": "ID",
+      "targa": "Targa",
+      "data": "Data"
+    }
+  }
+}

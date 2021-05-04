@@ -44,6 +44,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'benzappApp.device.home.title' },
         loadChildren: () => import('./device/device.module').then(m => m.DeviceModule),
       },
+      {
+        path: 'notifica',
+        data: { pageTitle: 'benzappApp.notifica.home.title' },
+        loadChildren: () => import('./notifica/notifica.module').then(m => m.NotificaModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

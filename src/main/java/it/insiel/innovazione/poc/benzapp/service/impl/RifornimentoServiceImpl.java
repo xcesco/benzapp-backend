@@ -2,12 +2,15 @@ package it.insiel.innovazione.poc.benzapp.service.impl;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
 import it.insiel.innovazione.poc.benzapp.domain.Device;
+import it.insiel.innovazione.poc.benzapp.domain.Notifica;
 import it.insiel.innovazione.poc.benzapp.domain.Rifornimento;
 import it.insiel.innovazione.poc.benzapp.fcm.FCMService;
 import it.insiel.innovazione.poc.benzapp.fcm.PushNotificationRequest;
 import it.insiel.innovazione.poc.benzapp.repository.DeviceRepository;
+import it.insiel.innovazione.poc.benzapp.repository.NotificaRepository;
 import it.insiel.innovazione.poc.benzapp.repository.RifornimentoRepository;
 import it.insiel.innovazione.poc.benzapp.service.RifornimentoService;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
@@ -27,6 +30,8 @@ public class RifornimentoServiceImpl implements RifornimentoService {
 
     private final Logger log = LoggerFactory.getLogger(RifornimentoServiceImpl.class);
 
+    private final NotificaRepository notificaRepository;
+
     private final RifornimentoRepository rifornimentoRepository;
 
     private final DeviceRepository deviceRepository;
@@ -34,10 +39,12 @@ public class RifornimentoServiceImpl implements RifornimentoService {
     private final FCMService fcmService;
 
     public RifornimentoServiceImpl(
+        NotificaRepository notificaRepository,
         RifornimentoRepository rifornimentoRepository,
         DeviceRepository deviceRepository,
         FCMService fcmService
     ) {
+        this.notificaRepository = notificaRepository;
         this.rifornimentoRepository = rifornimentoRepository;
         this.fcmService = fcmService;
         this.deviceRepository = deviceRepository;
@@ -49,6 +56,12 @@ public class RifornimentoServiceImpl implements RifornimentoService {
         Rifornimento result = rifornimentoRepository.save(rifornimento);
 
         if (rifornimento.getTessera() != null && rifornimento.getTessera().getCittadino() != null) {
+            String targa = rifornimento.getTessera().getTarga();
+            Notifica notifica = notificaRepository.findByTarga(targa).orElse(new Notifica());
+            notifica.setTarga(targa);
+            notifica.setData(ZonedDateTime.now());
+            notificaRepository.save(notifica);
+
             List<Device> deviceList = this.deviceRepository.findAllByOwner(rifornimento.getTessera().getCittadino().getOwner());
             if (deviceList != null) {
                 for (Device device : deviceList) {

@@ -1,0 +1,36 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="notifica">
+      <h2 data-cy="notificaDetailsHeading"><span jhiTranslate="benzappApp.notifica.detail.title">Notifica</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ notifica.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.notifica.targa">Targa</span></dt>
+        <dd>
+          <span>{{ notifica.targa }}</span>
+        </dd>
+        <dt><span jhiTranslate="benzappApp.notifica.data">Data</span></dt>
+        <dd>
+          <span>{{ notifica.data | formatMediumDatetime }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/notifica', notifica.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

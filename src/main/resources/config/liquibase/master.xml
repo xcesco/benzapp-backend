@@ -27,6 +27,7 @@
     <include file="config/liquibase/changelog/20210330103540_added_entity_Rifornimento.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210330103542_added_entity_Delega.xml" relativeToChangelogFile="false"/>
 
+    <include file="config/liquibase/changelog/20210504153730_added_entity_Notifica.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20210330103536_added_entity_constraints_Cittadino.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210330103538_added_entity_constraints_Gestore.xml" relativeToChangelogFile="false"/>

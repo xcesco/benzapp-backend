@@ -63,6 +63,7 @@ public class CacheConfiguration {
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Tessera.class.getName() + ".rifornimentos");
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Delega.class.getName());
             createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Device.class.getName());
+            createCache(cm, it.insiel.innovazione.poc.benzapp.domain.Notifica.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

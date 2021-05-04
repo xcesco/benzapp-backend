@@ -38,10 +38,10 @@
     "reactive": false,
     "skipServer": false,
     "entitySuffix": "",
-    "entities": ["Cittadino", "Fascia", "Gestore", "Marchio", "Rifornimento", "Tessera", "Delega", "Device"],
+    "entities": ["Cittadino", "Fascia", "Gestore", "Marchio", "Rifornimento", "Tessera", "Delega", "Device", "Notifica"],
     "skipCheckLengthOfIdentifier": false,
     "skipFakeData": false,
     "pages": [],
-    "lastLiquibaseTimestamp": 1617100543000
+    "lastLiquibaseTimestamp": 1620142650000
   }
 }

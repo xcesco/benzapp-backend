@@ -18,7 +18,7 @@ application {
     enableSwaggerCodegen true
     enableTranslation true
     jhiPrefix jhi
-    jhipsterVersion "7.0.0-beta.1"
+    jhipsterVersion "7.0.0"
     jwtSecretKey "MmQ3OTk0N2VlOWY2Y2NhNjI0ZGExMGQ5YWFkZjZhM2Q5NmEyZmJhMmNhZTczMzJlNGRmYjJkODgwZGQwZTQ3MzQ2ZTU2Y2JkODQ4MGY2ZmU4YWZmZmQzYzAwYmEwNGJhYThkZmNmM2RmMjM2NzNkZGZkZDQyN2JiMzBjY2JhZTA="
     languages [it]
     messageBroker false
@@ -38,18 +38,7 @@ application {
     withAdminUi true
   }
 
-  entities Device, Fascia, Cittadino, Tessera, Delega, Marchio, Gestore, Rifornimento
-}
-
-entity Device (devices) {
-    owner String required
-    deviceId String required
-}
-
-entity Fascia {
-  descrizione String
-  scontoBenzina Float
-  scontoGasolio Float
+  entities Cittadino, Delega, Device, Fascia, Gestore, Marchio, Notifica, Rifornimento, Tessera
 }
 
 entity Cittadino (cittadini) {
@@ -58,23 +47,16 @@ entity Cittadino (cittadini) {
   codiceFiscale String
   owner String
 }
-
-entity Tessera (tessere) {
-  codice String required
-  dataEmissione ZonedDateTime required
-  immagine ImageBlob
-  targa String required
-  veicolo TipoVeicolo required
-  carburante TipoCarburante required
-}
-
 entity Delega (deleghe)
-
-entity Marchio (marchi) {
-  immagine ImageBlob
-  nome String required
+entity Device (devices) {
+  owner String required
+  deviceId String required
 }
-
+entity Fascia {
+  descrizione String
+  scontoBenzina Float
+  scontoGasolio Float
+}
 entity Gestore (gestori) {
   provincia String
   comune String
@@ -86,7 +68,14 @@ entity Gestore (gestori) {
   gasolioPrezzoAlLitro Float
   owner String
 }
-
+entity Marchio (marchi) {
+  immagine ImageBlob
+  nome String required
+}
+entity Notifica {
+  targa String required
+  data ZonedDateTime required
+}
 entity Rifornimento (rifornimenti) {
   data ZonedDateTime required
   litriErogati Float required
@@ -94,7 +83,14 @@ entity Rifornimento (rifornimenti) {
   prezzoAlLitro Float required
   tipoCarburante TipoCarburante required
 }
-
+entity Tessera (tessere) {
+  codice String required
+  dataEmissione ZonedDateTime required
+  immagine ImageBlob
+  targa String required
+  veicolo TipoVeicolo required
+  carburante TipoCarburante required
+}
 enum TipoImpianto {
   AUTOSTRADALE,
   STRADALE,
@@ -120,6 +116,7 @@ relationship OneToMany {
   Cittadino{tessera} to Tessera{cittadino}
 }
 
-paginate Cittadino, Delega, Gestore, Marchio, Rifornimento, Tessera, Device with pagination
-service Cittadino, Delega, Fascia, Gestore, Marchio, Rifornimento, Tessera, Device with serviceImpl
-filter Cittadino, Delega, Gestore, Rifornimento, Tessera, Device
+paginate Cittadino, Delega, Device, Gestore, Marchio, Notifica, Rifornimento, Tessera with pagination
+service Cittadino, Delega, Device, Fascia, Gestore, Marchio, Notifica, Rifornimento, Tessera with serviceImpl
+filter Cittadino, Delega, Device, Gestore, Notifica, Rifornimento, Tessera
+dto Notifica with mapstruct

@@ -332,9 +332,15 @@
                 <a ngbNavLink><label class="form-control-label" jhiTranslate="benzappApp.rifornimento.riepilogo">Riepilogo</label></a>
                 <ng-template ngbNavContent>
                   <div class="row">
-                    <div class="col-sm-12 col-lg-2 text-center">
+                    <div *ngIf="isStatusOk()" class="col-sm-12 col-lg-2 text-center">
                       <span style="color: Green">
                         <fa-icon size="6x" icon="check"></fa-icon>
+                      </span>
+                    </div>
+
+                    <div *ngIf="!isStatusOk()" class="col-sm-12 col-lg-2 text-center">
+                      <span style="color: Orange">
+                        <fa-icon size="6x" icon="bell"></fa-icon>
                       </span>
                     </div>
 
