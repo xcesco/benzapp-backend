@@ -137,7 +137,7 @@
     }
   },
   "warning": {
-    "interval": "Rilevata anomalia. Si prega di prestazione attenzione al veicolo."
+    "interval": "Pluri rifornimento giornaliero"
   },
   "error": {
     "internalServerError": "Internal server error",
