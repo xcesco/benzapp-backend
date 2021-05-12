@@ -111,4 +111,6 @@ jhipster:
 
 # application:
 app:
+  # tempo di notifica in s
+  notifica-interval: 600
   firebase-configuration-file: fcm/benzapp-poc-firebase-adminsdk-p4yyw-292ee0c4e8.json
